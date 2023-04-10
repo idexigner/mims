@@ -38,7 +38,15 @@
                 </div> -->
                 <!-- /.card-header -->
                 <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                    <table id="table-standard" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Generic Name</th>        
+                                <th>Action</th>                       
+                            </tr>
+                        </thead>
+                    </table>
+                {{-- <table id="table-standard" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                     <th>Generic Name</th>
@@ -634,7 +642,7 @@
                     <th>CSS grade</th>
                     </tr>
                     </tfoot>
-                </table>
+                </table> --}}
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -651,7 +659,8 @@
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog modal-lg">
             <div class="modal-content ">
-            <form class="form-horizontal">
+            <form class="form-horizontal" id="create-generic-form">
+                @csrf
                 <div class="modal-header">
                     <h4 class="modal-title">Add New Generic</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -664,7 +673,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Name <span class="text-red">*</span></label>
                             <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Name">
+                            <input type="text" class="form-control" name="generic_name" placeholder="Name">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -778,15 +787,155 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
                 </div>
             </form>
             </div>
             <!-- /.modal-content -->
         </div>
-    <!-- /.modal-dialog -->
+        <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+
+    <div class="modal fade" id="modal-default2">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+            <form class="form-horizontal" id="edit-generic-form">
+                @csrf
+                <div class="modal-header">
+                    <h4 class="modal-title">Add New Generic</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-5 px-5">
+                    <!-- <form class="form-horizontal"> -->
+                        <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Name <span class="text-red">*</span></label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" name="generic_name" placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Classification <span class="text-red">*</span></label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Classification">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Safety Remark <span class="text-red">*</span></label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Safety Remark">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Indication </label>
+                            <div class="col-sm-9">
+                                <textarea id="s1"></textarea>                          
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Indication Tags</label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Indication Tags">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Dosage Administration </label>
+                            <div class="col-sm-9">
+                                <textarea id="s2"></textarea>                          
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Contraindication Precaution </label>
+                            <div class="col-sm-9">
+                                <textarea id="s3"></textarea>                          
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Composition </label>
+                            <div class="col-sm-9">
+                                <textarea id="s4"></textarea>                          
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Pharmacology </label>
+                            <div class="col-sm-9">
+                                <textarea id="s5"></textarea>                          
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Interaction </label>
+                            <div class="col-sm-9">
+                                <textarea id="s6"></textarea>                          
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Side Effect</label>
+                            <div class="col-sm-9">
+                                <textarea id="s7"></textarea>                          
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Overdose Effect </label>
+                            <div class="col-sm-9">
+                                <textarea id="s8"></textarea>                          
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Storage Condition </label>
+                            <div class="col-sm-9">
+                                <textarea id="s9"></textarea>                          
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Pregnancy Lactation </label>
+                            <div class="col-sm-9">
+                                <textarea id="s10"></textarea>                          
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Is Active </label>
+                            <div class="col-sm-9">
+                                <select class="form-control">
+                                <option>Yes</option>
+                                <option>No</option>
+                                </select>                        
+                            </div>
+                        </div>
+
+
+
+                        
+
+                        <!-- <div class="form-group row">
+                            <div class="offset-sm-2 col-sm-10">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck2">
+                                <label class="form-check-label" for="exampleCheck2">Remember me</label>
+                            </div>
+                            </div>
+                        </div> -->
+                        </div>
+                        <!-- /.card-body -->
+                        <!-- <div class="card-footer">
+                        <button type="submit" class="btn btn-info">Sign in</button>
+                        <button type="submit" class="btn btn-default float-right">Cancel</button>
+                        </div> -->
+                        <!-- /.card-footer -->
+                    <!-- </form> -->
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 @endsection
 
 @push('js-link')
@@ -794,19 +943,47 @@
     <!-- Page specific script -->
     <script>
         $(function () {
-        $("#example1").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
-        //   "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
+
+            
+            $('#table-standard').DataTable({
+                processing: true,
+                serverSide: true,
+                // ajax: " route('generic.index') ",
+                ajax: "{{ url('/') }}/admin/generic",
+                columns: [                  
+                    { data: 'generic_name', name: 'generic_name'},
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
+                ],
+                "language": {
+                "search": "Search posts:",
+                "lengthMenu": "Show _MENU_ posts",
+                "zeroRecords": "No matching posts found",
+                "info": "Showing _START_ to _END_ of _TOTAL_ posts",
+                "infoEmpty": "Showing 0 to 0 of 0 posts",
+                "infoFiltered": "(filtered from _MAX_ total posts)",
+                "paginate": {
+                    "first": "First",
+                    "last": "Last",
+                    "next": "Next",
+                    "previous": "Previous"
+                }
+                },
+                "pageLength": 10
+            });
+
+        // $("#example1").DataTable({
+        //     "responsive": true, "lengthChange": false, "autoWidth": false,
+        // //   "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        // $('#example2').DataTable({
+        //     "paging": true,
+        //     "lengthChange": false,
+        //     "searching": false,
+        //     "ordering": true,
+        //     "info": true,
+        //     "autoWidth": false,
+        //     "responsive": true,
+        // });
     
     
         $('#s1, #s2, #s3, #s4, #s5, #s6, #s7, #s8, #s9, #s10').summernote({
@@ -824,6 +1001,60 @@
             // ['help', ['help']]
             ],
         });
+
+        $('#create-generic-form').submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                // url: " route('generic.store') ",
+                url: " {{url('/')}}/admin/generic/store",
+                type: "POST",
+                data: $(this).serialize(),
+                success: function(response) {
+                    // $('#create-post-form')[0].reset();
+                    $('#table-standard').DataTable().ajax.reload();
+                    $("#modal-default").modal('hide')
+                    alert(response.message);
+                },
+                error: function(xhr, status, error) {
+                    var errors = xhr.responseJSON.errors;
+                    var errorString = '';
+
+                    $.each(errors, function(key, value) {
+                        errorString += value + '\n';
+                    });
+
+                    alert(errorString);
+                }
+            });
+        });
+
+        $('#edit-post-form').submit(function(e) {
+                e.preventDefault();
+
+                var post_id =  1; // $generic->id }};
+
+                $.ajax({
+                    url: "admin/generic/update/" + post_id,
+                    type: "PUT",
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#table-standard').DataTable().ajax.reload();
+                        alert(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                    var errors = xhr.responseJSON.errors;
+                    var errorString = '';
+                    $.each(errors, function(key, value) {
+                        errorString += value + '\n';
+                    });
+
+                    alert(errorString);
+                }
+            });
+        });
+
+
         });
     </script>
 @endpush

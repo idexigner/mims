@@ -32,7 +32,7 @@ class UserRole extends Model
             
         });
 
-        static::updating(function ($user_role) {
+        static::updating(function ($model) {
             $model->role_updated_by = Auth::id();
             $model->role_updated_at = $model->freshTimestamp();
         });
