@@ -3,6 +3,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+
+// Admin routes
+use App\Http\Controllers\Admin\GenericController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,5 +37,15 @@ Route::group(['middleware'=>'guest'],function(){
 Route::group(['middleware'=>'auth'],function(){
     Route::get('home',[AuthController::class,'home'])->name('home');
     Route::get('logout',[AuthController::class,'logout'])->name('logout');
+});
+
+
+Route::prefix('admin')->group(function(){
+
+    //Generic Controller Routes
+    Route::prefix('/generic')->name('generic')->group(function () {
+        Route::get('/', [GenericController::class, 'index'])->name('.');
+    });
+    
 });
 
