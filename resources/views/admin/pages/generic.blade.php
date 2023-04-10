@@ -949,18 +949,26 @@
                 processing: true,
                 serverSide: true,
                 // ajax: " route('generic.index') ",
-                ajax: "{{ url('/') }}/admin/generic",
+                ajax: "/admin/generic",
                 columns: [                  
                     { data: 'generic_name', name: 'generic_name'},
-                    { data: 'action', name: 'action', orderable: false, searchable: false },
+                    // { data: 'action', name: 'action', orderable: false, searchable: false },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                        return '<a href="#" class="edit btn btn-primary btn-sm" data-id="'+row.generic_id+'">Edit</a> <a href="#" class="delete btn btn-danger btn-sm" data-id="'+row.generic_id+'">Delete</a>';
+                        },
+                        orderable: false,
+                        searchable: false
+                    }
                 ],
                 "language": {
-                "search": "Search posts:",
-                "lengthMenu": "Show _MENU_ posts",
-                "zeroRecords": "No matching posts found",
-                "info": "Showing _START_ to _END_ of _TOTAL_ posts",
-                "infoEmpty": "Showing 0 to 0 of 0 posts",
-                "infoFiltered": "(filtered from _MAX_ total posts)",
+                "search": "Search Records:",
+                "lengthMenu": "Show _MENU_ Records",
+                "zeroRecords": "No matching records found",
+                "info": "Showing _START_ to _END_ of _TOTAL_ records",
+                "infoEmpty": "Showing 0 to 0 of 0 records",
+                "infoFiltered": "(filtered from _MAX_ total records)",
                 "paginate": {
                     "first": "First",
                     "last": "Last",
@@ -970,6 +978,33 @@
                 },
                 "pageLength": 10
             });
+
+            
+            // $('#table-standard').DataTable({
+            //     processing: true,
+            //     serverSide: true,
+            //     // ajax: " route('generic.index') ",
+            //     ajax: "{{ url('/') }}/admin/generic",
+            //     columns: [                  
+            //         { data: 'generic_name', name: 'generic_name'},
+            //         { data: 'action', name: 'action', orderable: false, searchable: false },
+            //     ],
+            //     "language": {
+            //     "search": "Search posts:",
+            //     "lengthMenu": "Show _MENU_ posts",
+            //     "zeroRecords": "No matching posts found",
+            //     "info": "Showing _START_ to _END_ of _TOTAL_ posts",
+            //     "infoEmpty": "Showing 0 to 0 of 0 posts",
+            //     "infoFiltered": "(filtered from _MAX_ total posts)",
+            //     "paginate": {
+            //         "first": "First",
+            //         "last": "Last",
+            //         "next": "Next",
+            //         "previous": "Previous"
+            //     }
+            //     },
+            //     "pageLength": 10
+            // });
 
         // $("#example1").DataTable({
         //     "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -1054,6 +1089,59 @@
             });
         });
 
+
+        // handle click event for "Edit" button
+        $('#table-standard').on('click', '.edit', function() {
+            console.log("edit");
+            var id = $(this).data('id');
+            console.log("id=>", id);
+            $.ajax({
+                url: '/admin/generic/edit/'+id,
+                type: 'GET',
+                success: function(response) {
+                    console.log(response);
+
+                    // show the response in a modal
+                    // $('#edit-modal').html(response);
+                    // $('#edit-modal').modal('show');
+                }
+            });
+        });
+
+        // handle click event for "Delete" button
+        $('#table-standard').on('click', '.delete', function() {
+            var id = $(this).data('id');
+            if (confirm("Are you sure you want to delete this post?")) {
+                var currentPage =  $('#table-standard').DataTable().page.info().page;
+                // var pageLength = $('#table-standard').DataTable().page.len();
+                // var searchValue = $('#table-standard').DataTable().search();
+
+                $.ajax({
+                    url: '/admin/generic/destroy/'+id,
+                    type: 'DELETE',
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // console.log(pageLength)
+                        // console.log(searchValue)
+                        // console.log(currentPage)
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Generic record deleted successfully",
+                            timer: 3000,
+                        });
+                        // reload the table
+                        $('#table-standard').DataTable().ajax.reload();
+                        // $('#table-standard').DataTable().ajax.reload(null, false)
+                        $('#table-standard').DataTable().page(currentPage).draw('page');
+                        // $('#table-standard').DataTable().page(currentPage).page.len(pageLength).search(searchValue).draw();
+                    }
+                });
+            }
+        });
 
         });
     </script>

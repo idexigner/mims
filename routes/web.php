@@ -44,6 +44,9 @@ Route::group(['middleware'=>'auth'],function(){
 Route::get('/admin/generic', [GenericController::class, 'index'])->name('generic.index');
     Route::post('/admin/generic/store', [GenericController::class, 'store'])->name('generic.store');
     Route::put('/admin/generic/update/{id}', [GenericController::class, 'update'])->name('generic.update');
+    Route::get('/admin/generic/edit/{id}', [GenericController::class, 'edit'])->name('generic.edit');
+
+    Route::delete('/admin/generic/destroy/{id}', [GenericController::class, 'destroy'])->name('generic.destroy');
 
 Route::prefix('admin')->group(function(){
 

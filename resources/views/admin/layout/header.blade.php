@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="{{ url('/')}}/admin/plugins/summernote/summernote-bs4.min.css">
     <link rel="stylesheet" href="{{ url('/')}}/admin/dist/css/adminlte.min.css">
 
-   
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   
     <style>
       .col-form-label{
