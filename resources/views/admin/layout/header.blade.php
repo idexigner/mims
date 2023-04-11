@@ -22,6 +22,27 @@
       .col-form-label{
         font-weight: 400;
       }
+      .parsley-errors-list {
+        color: #ff0000;
+        font-size: 14px;
+        list-style: none;
+        margin: 5px 0 0;
+        padding: 0;
+      }
+
+      .parsley-errors-list li {
+        margin: 0;
+        padding: 0;
+      }
+
+      .parsley-errors-list li:before {
+        /* content: "\2022";
+        margin-right: 5px; */
+      }
+
+      .parsley-required {
+        font-weight: bold;
+      }
     </style>
 
     @stack('css-link')

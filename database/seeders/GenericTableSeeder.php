@@ -25,9 +25,11 @@ class GenericTableSeeder extends Seeder
         $faker = Faker::create();
         $genericData = [];
 
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 10000; $i++) {
             $genericData[] = [
-                'generic_name' => $faker->name               
+                'generic_name' => $faker->name,
+                'generic_created_by' => 1,    
+                'generic_updated_by' => 1      
             ];
         }
 

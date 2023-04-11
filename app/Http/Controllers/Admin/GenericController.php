@@ -4,28 +4,17 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Generic;
+use App\Traits\LogExceptions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
+
 
 class GenericController extends Controller
 {    
-    
+    use LogExceptions;
     public function index(Request $request)
-    {
-        // dd("asdasd");
-        // if ($request->ajax()) {
-        //     $data = Generic::select('*');
-            
-        //     return DataTables::of($data)
-        //         ->addColumn('action', function ($row) {
-        //             $btn = '<a href="#" class="edit btn btn-primary data-id="'.$post->id.'" btn-sm">Edit</a> ';
-        //             $btn .= '<a href="#" class="delete btn btn-danger btn-sm">Delete</a>';
-
-        //             return $btn;
-        //         })
-        //         ->rawColumns(['action'])
-        //         ->make(true);
-        // }
+    {        
         if ($request->ajax()) {
             // dd("ajax");
             $data = Generic::select('*');
@@ -34,63 +23,72 @@ class GenericController extends Controller
 
         return view('admin.pages.generic');
     }
-    public function storesaa(){
-        dd("Test2");
-    }
-    // public function store(Request $request)
-    // {
-    //     // dd("Test");
-    //     $request->validate([
-    //         'generic_name' => 'required'
-    //     ]);
-
-    //     Generic::create($request->all());
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'Generic created successfully.',
-    //     ]);
-    // }
-
-
+   
     public function store(Request $request)
     {
-        $validator = \Validator::make($request->all(), [
-            'generic_name' => 'required',
-            // 'content' => 'required',
-        ]);
+        try{
+            $validator = Validator::make($request->all(), [
+                'generic_name' => 'required',
+                'generic_classification' => 'required',
+                'generic_safety_remark' => 'required'
+                // 'content' => 'required',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            $obj = new Generic;
+            $obj->generic_name = $request->generic_name ?? '';
+            $obj->generic_classification = $request->generic_classification ?? '';
+            $obj->generic_safety_remark = $request->generic_safety_remark ?? '';
+            $obj->generic_indication = $request->generic_indication ?? '';
+            $obj->generic_indication_tags = $request->generic_indication_tags ?? '';
+            $obj->generic_dosage_administration = $request->generic_dosage_administration ?? '';
+            $obj->generic_contraindication_precaution = $request->generic_contraindication_precaution ?? '';
+            $obj->generic_composition = $request->generic_composition ?? '';
+            $obj->generic_pharmacology = $request->generic_pharmacology ?? '';
+            $obj->generic_interaction = $request->generic_interaction ?? '';
+            $obj->generic_side_effect = $request->generic_side_effect ?? '';
+            $obj->generic_overdoses_effect = $request->generic_overdose_effect ?? '';
+            $obj->generic_storage_condition = $request->generic_storage_condition ?? '';
+            $obj->generic_pregnancy_lactations   = $request->generic_pregnancy_lactation ?? '';
+            $obj->generic_is_active = $request->generic_is_active ?? '1';
+            $obj->save();
+
+            return response()->json([
+                    'message' => 'Generic record created successfully'
+                ], 200);
+
+        } catch (\Exception $ex) {
+
+            $this->logException($ex, $request->route()->getName(), __METHOD__);
+            return response()->json([
+                    'message' => 'Something went wrong!',
+                    'error' => $ex
+                ], 400);
         }
-
-        $post = new Generic;
-        $post->generic_name = $request->generic_name;
-        // $post->content = $request->content;
-        $post->save();
-
-        return response()->json(['message' => 'Post created successfully'], 200);
     }
 
-    // public function edit(Generic $generic)
-    // {
-    //     return response()->json([
-    //         'success' => true,
-    //         'data' => $generic,
-    //     ]);
-    // }
 
     public function edit($id)
     {
-        // dd("test");
-        $post = \DB::table('generic')->where('generic_id', $id)->first();//Generic::findOrFail($id);
-        
-        // dd(isset($post));
-        if($post){
-            return response()->json(['message' => 'Edit', 'data' => $post], 200);
-        }else{
-            return response()->json(['message' => 'Edit', 'data' => $post], 200);
+       try{
 
+            $generic = Generic::findOrFail($id);            
+            return response()->json([
+                'message' => 'Edit', 
+                'data' => $generic
+            ], 200);
+            
+        } catch (\Exception $ex) {
+
+            $this->logException($ex, \Route::currentRouteName(), __METHOD__);
+            return response()->json([
+                    'message' => 'Something went wrong!',
+                    'error' => $ex,
+                    'message' => $ex->getMessage()
+                ], 400);
         }
 
         // return view('posts.edit', compact('post'));
@@ -110,12 +108,12 @@ class GenericController extends Controller
     //     ]);
     // }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'generic_name' => 'required'
         ]);
-
+        $id= 1;
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }

@@ -79,6 +79,14 @@
 <script src="{{ url('/')}}/admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="{{ url('/')}}/admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script src="{{ url('/')}}/admin/plugins/summernote/summernote-bs4.min.js"></script>
+
+{{-- Parsley --}}
+
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.3/parsley.min.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js" ></script>
+
 <!-- AdminLTE App -->
 <script src="{{ url('/')}}/admin/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

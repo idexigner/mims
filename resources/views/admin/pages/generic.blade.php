@@ -14,7 +14,7 @@
             </div>
             <div class="col-sm-6">
 
-            <button type="button" class="btn float-sm-right btn-primary" data-toggle="modal" data-target="#modal-default">Add New Generic</button>
+            <button type="button" class="btn float-sm-right btn-primary add_new">Add New Generic</button>
             <!--             
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -39,12 +39,12 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <table id="table-standard" class="table table-bordered table-striped">
-                        <thead>
+                        {{-- <thead>
                             <tr>
                                 <th>Generic Name</th>        
                                 <th>Action</th>                       
                             </tr>
-                        </thead>
+                        </thead> --}}
                     </table>
                 {{-- <table id="table-standard" class="table table-bordered table-striped">
                     <thead>
@@ -656,7 +656,7 @@
     </section>
     <!-- /.content -->
 
-    <div class="modal fade" id="modal-default">
+    <div class="modal fade" id="modal_create_form">
         <div class="modal-dialog modal-lg">
             <div class="modal-content ">
             <form class="form-horizontal" id="create-generic-form">
@@ -673,121 +673,104 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Name <span class="text-red">*</span></label>
                             <div class="col-sm-9">
-                            <input type="text" class="form-control" name="generic_name" placeholder="Name">
+                            <input type="text" class="form-control" name="generic_name" placeholder="Name" required data-parsley-maxlength="100">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Classification <span class="text-red">*</span></label>
                             <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Classification">
+                            <input type="text" class="form-control" name="generic_classification" placeholder="Classification" required data-parsley-maxlength="100">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Safety Remark <span class="text-red">*</span></label>
                             <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Safety Remark">
+                            <input type="text" class="form-control" name="generic_safety_remark" placeholder="Safety Remark" required data-parsley-maxlength="100">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Indication </label>
                             <div class="col-sm-9">
-                                <textarea id="s1"></textarea>                          
+                                <textarea id="generic_indication" name="generic_indication" class="summernote"></textarea>                          
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Indication Tags</label>
                             <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Indication Tags">
+                            <input type="text" class="form-control" name="generic_indication_tags" placeholder="Indication Tags" data-parsley-maxlength="300">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Dosage Administration </label>
                             <div class="col-sm-9">
-                                <textarea id="s2"></textarea>                          
+                                <textarea id="generic_dosage_administration" name="generic_dosage_administration" class="summernote"></textarea>                          
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Contraindication Precaution </label>
                             <div class="col-sm-9">
-                                <textarea id="s3"></textarea>                          
+                                <textarea id="generic_contraindication_precaution" name="generic_contraindication_precaution" class="summernote"></textarea>                          
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Composition </label>
                             <div class="col-sm-9">
-                                <textarea id="s4"></textarea>                          
+                                <textarea id="generic_composition" name="generic_composition" class="summernote"></textarea>                          
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Pharmacology </label>
                             <div class="col-sm-9">
-                                <textarea id="s5"></textarea>                          
+                                <textarea id="generic_pharmacology" name="generic_pharmacology" class="summernote"></textarea>                          
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Interaction </label>
                             <div class="col-sm-9">
-                                <textarea id="s6"></textarea>                          
+                                <textarea id="generic_interaction" name="generic_interaction" class="summernote"></textarea>                          
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Side Effect</label>
                             <div class="col-sm-9">
-                                <textarea id="s7"></textarea>                          
+                                <textarea id="generic_side_effect" name="generic_side_effect" class="summernote"></textarea>                          
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Overdose Effect </label>
                             <div class="col-sm-9">
-                                <textarea id="s8"></textarea>                          
+                                <textarea id="generic_overdose_effect" name="generic_overdose_effect" class="summernote"></textarea>                          
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Storage Condition </label>
                             <div class="col-sm-9">
-                                <textarea id="s9"></textarea>                          
+                                <textarea id="generic_storage_condition" name="generic_storage_condition" class="summernote"></textarea>                          
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Pregnancy Lactation </label>
                             <div class="col-sm-9">
-                                <textarea id="s10"></textarea>                          
+                                <textarea id="generic_pregnancy_lactation" name="generic_pregnancy_lactation" class="summernote"></textarea>                          
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Is Active </label>
                             <div class="col-sm-9">
-                                <select class="form-control">
-                                <option>Yes</option>
-                                <option>No</option>
+                                <select class="form-control" name="generic_is_active">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
                                 </select>                        
                             </div>
                         </div>
 
-
-
-                        
-
-                        <!-- <div class="form-group row">
-                            <div class="offset-sm-2 col-sm-10">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck2">
-                                <label class="form-check-label" for="exampleCheck2">Remember me</label>
-                            </div>
-                            </div>
-                        </div> -->
-                        </div>
-                        <!-- /.card-body -->
-                        <!-- <div class="card-footer">
-                        <button type="submit" class="btn btn-info">Sign in</button>
-                        <button type="submit" class="btn btn-default float-right">Cancel</button>
-                        </div> -->
-                        <!-- /.card-footer -->
-                    <!-- </form> -->
+                        <input type="hidden" name="id" class="d-none">
+                       
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" data-url="{{ route('generic.store') }}" class="btn btn-primary" id="create_form_btn">Create</button>
+                    <button type="submit" data-url="{{ route('generic.update') }}" class="btn btn-primary" id="update_form_btn">Update</button>
                 </div>
             </form>
             </div>
@@ -797,7 +780,7 @@
     </div>
     <!-- /.modal -->
 
-    <div class="modal fade" id="modal-default2">
+    <div class="modal fade" id="modal_create_form2">
         <div class="modal-dialog modal-lg">
             <div class="modal-content ">
             <form class="form-horizontal" id="edit-generic-form">
@@ -945,18 +928,40 @@
         $(function () {
 
             
-            $('#table-standard').DataTable({
+            var table = $('#table-standard');
+
+            $('#create-generic-form').parsley({
+                trigger: 'focusout'
+            });
+            
+            $('.add_new').on('click', function(){
+
+                $("#create_form_btn").show();
+                $("#update_form_btn").hide();
+
+                $("#create-generic-form")[0].reset();
+                $("textarea.summernote").each(function(){
+                    $(this).summernote('code', '');
+                });
+
+                $("#modal_create_form").modal('show');
+            });
+
+            table.DataTable({
                 processing: true,
                 serverSide: true,
                 // ajax: " route('generic.index') ",
-                ajax: "/admin/generic",
+                ajax: "{{ route('generic.index') }}", //"/admin/generic",
                 columns: [                  
-                    { data: 'generic_name', name: 'generic_name'},
-                    // { data: 'action', name: 'action', orderable: false, searchable: false },
+                    { data: 'generic_name', name: 'generic_name', title: 'Generic Name'},
+                    { data: 'generic_indication_tags', name: 'generic_indication_tags', title: 'Indication Tags', width: '40%' },
+                    { data: 'generic_classification', name: 'generic_classification', title: 'Classification'},
+                    { data: 'generic_safety_remark', name: 'generic_safety_remark', title: 'Safety Remark'},
                     {
                         data: null,
+                        title: 'Action',
                         render: function(data, type, row) {
-                        return '<a href="#" class="edit btn btn-primary btn-sm" data-id="'+row.generic_id+'">Edit</a> <a href="#" class="delete btn btn-danger btn-sm" data-id="'+row.generic_id+'">Delete</a>';
+                            return '<a href="#" class="edit" data-id="'+row.generic_id+'"><i class="fas fa-edit text-success"></i></a> <a href="#" class="delete" data-id="'+row.generic_id+'"><i class="fas fa-trash text-danger"></i></a>';
                         },
                         orderable: false,
                         searchable: false
@@ -980,48 +985,9 @@
             });
 
             
-            // $('#table-standard').DataTable({
-            //     processing: true,
-            //     serverSide: true,
-            //     // ajax: " route('generic.index') ",
-            //     ajax: "{{ url('/') }}/admin/generic",
-            //     columns: [                  
-            //         { data: 'generic_name', name: 'generic_name'},
-            //         { data: 'action', name: 'action', orderable: false, searchable: false },
-            //     ],
-            //     "language": {
-            //     "search": "Search posts:",
-            //     "lengthMenu": "Show _MENU_ posts",
-            //     "zeroRecords": "No matching posts found",
-            //     "info": "Showing _START_ to _END_ of _TOTAL_ posts",
-            //     "infoEmpty": "Showing 0 to 0 of 0 posts",
-            //     "infoFiltered": "(filtered from _MAX_ total posts)",
-            //     "paginate": {
-            //         "first": "First",
-            //         "last": "Last",
-            //         "next": "Next",
-            //         "previous": "Previous"
-            //     }
-            //     },
-            //     "pageLength": 10
-            // });
-
-        // $("#example1").DataTable({
-        //     "responsive": true, "lengthChange": false, "autoWidth": false,
-        // //   "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        // $('#example2').DataTable({
-        //     "paging": true,
-        //     "lengthChange": false,
-        //     "searching": false,
-        //     "ordering": true,
-        //     "info": true,
-        //     "autoWidth": false,
-        //     "responsive": true,
-        // });
+  
     
-    
-        $('#s1, #s2, #s3, #s4, #s5, #s6, #s7, #s8, #s9, #s10').summernote({
+        $('#generic_indication, #generic_dosage_administration, #generic_contraindication_precaution, #generic_composition, #generic_pharmacology, #generic_interaction, #generic_side_effect, #generic_overdose_effect, #generic_storage_condition, #generic_pregnancy_lactation').summernote({
             height:100,
             toolbar: [
             // ['style', ['style']],
@@ -1041,25 +1007,45 @@
             e.preventDefault();
 
             $.ajax({
-                // url: " route('generic.store') ",
-                url: " {{url('/')}}/admin/generic/store",
-                type: "POST",
-                data: $(this).serialize(),
+                url: $("#create_form_btn").data('url'), //" {{url('/')}}/admin/generic/store",
+                type: "POST",             
+                data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
                 success: function(response) {
                     // $('#create-post-form')[0].reset();
-                    $('#table-standard').DataTable().ajax.reload();
-                    $("#modal-default").modal('hide')
-                    alert(response.message);
-                },
-                error: function(xhr, status, error) {
-                    var errors = xhr.responseJSON.errors;
-                    var errorString = '';
-
-                    $.each(errors, function(key, value) {
-                        errorString += value + '\n';
+                    table.DataTable().ajax.reload();
+                    $("#modal_create_form").modal('hide');
+                    Toast.fire({
+                        icon: 'success',
+                        title: response.message, //"Generic record deleted successfully",
+                        timer: 3000,
                     });
 
-                    alert(errorString);
+
+                    // alert(response.message);
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();   
+
+                    if(xhr.responseJSON.messags){
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: xhr.responseJSON.message, //"Generic record deleted successfully",
+                            timer: 3000,
+                        });
+
+                    }else{
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Something went wrong', //"Generic record deleted successfully",
+                            timer: 3000,
+                        });
+                    }
+                                     
                 }
             });
         });
@@ -1074,7 +1060,7 @@
                     type: "PUT",
                     data: $(this).serialize(),
                     success: function(response) {
-                        $('#table-standard').DataTable().ajax.reload();
+                        table.ajax.reload();
                         alert(response.message);
                     },
                     error: function(xhr, status, error) {
@@ -1092,18 +1078,44 @@
 
         // handle click event for "Edit" button
         $('#table-standard').on('click', '.edit', function() {
-            console.log("edit");
+          
             var id = $(this).data('id');
-            console.log("id=>", id);
+            var url = "{{ route('generic.edit', ':id') }}";
+            url = url.replace(':id', id);
+            
             $.ajax({
-                url: '/admin/generic/edit/'+id,
+                url: url,
                 type: 'GET',
                 success: function(response) {
                     console.log(response);
-
+                    var data = response.data;    
                     // show the response in a modal
                     // $('#edit-modal').html(response);
                     // $('#edit-modal').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();   
+
+                    if(xhr.responseJSON.messags){
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: xhr.responseJSON.message, //"Generic record deleted successfully",
+                            timer: 3000,
+                        });
+
+                    }else{
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Something went wrong', //"Generic record deleted successfully",
+                            timer: 3000,
+                        });
+                    }
+                                     
                 }
             });
         });
