@@ -79,6 +79,11 @@
 <script src="{{ url('/')}}/admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="{{ url('/')}}/admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script src="{{ url('/')}}/admin/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- Select2 -->
+<script src="plugins/select2/js/select2.full.min.js"></script>
+
+<!-- bs-custom-file-input -->
+<script src="plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
 {{-- Parsley --}}
 
@@ -92,6 +97,57 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ url('/')}}/admin/dist/js/demo.js"></script>
 
+<script>
+  function declareSummernote(param){
+    $(param).summernote({
+            height:100,
+            toolbar: [
+            // ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline']],
+            // ['fontname', ['fontname']],
+            // ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            // ['height', ['height']],
+            // ['table', ['table']],
+            ['insert', ['link']],//, 'picture', 'hr'
+            ['view', ['fullscreen', 'codeview']],
+            // ['help', ['help']]
+            ],
+        });
+  }
+
+  function initializeDataTable(tableName, ajaxUrl, columnsArray) {
+    var table = $(tableName).DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: ajaxUrl,
+      columns: columnsArray,
+      "language": {
+        "search": "Search Records:",
+        "lengthMenu": "Show _MENU_ Records",
+        "zeroRecords": "No matching records found",
+        "info": "Showing _START_ to _END_ of _TOTAL_ records",
+        "infoEmpty": "Showing 0 to 0 of 0 records",
+        "infoFiltered": "(filtered from _MAX_ total records)",
+        "paginate": {
+          "first": "First",
+          "last": "Last",
+          "next": "Next",
+          "previous": "Previous"
+        }
+      },
+      "pageLength": 10
+    });
+  }
+
+  function formatDate(dateString) {
+    const parts = dateString.split('-');
+    const year = parts[0];
+    const month = parts[1];
+    const day = parts[2];
+    return `${month}/${day}/${year}`;
+  }
+</script>
 @stack('js-link')
 
 

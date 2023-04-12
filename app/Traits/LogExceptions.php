@@ -10,7 +10,6 @@ trait LogExceptions
     public function logException(Exception $e, $routeName, $methodName)
     {
         
-        // Log the exception in the database
         DB::table('error_logs')->insert([
             'route_name' => $routeName,
             'method_name' => $methodName,

@@ -1,6 +1,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@stack('title') - MimsBangladesh</title>
   
     <!-- Google Font: Source Sans Pro -->
@@ -13,6 +14,10 @@
     <link rel="stylesheet" href="{{ url('/')}}/admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ url('/')}}/admin/plugins/summernote/summernote-bs4.min.css">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
+
     <link rel="stylesheet" href="{{ url('/')}}/admin/dist/css/adminlte.min.css">
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

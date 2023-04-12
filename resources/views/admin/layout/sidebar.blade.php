@@ -24,8 +24,8 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item"><!--  menu-open -->
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 General Data
@@ -34,7 +34,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="generic.html" class="nav-link active">
+                <a href="{{ route('generic.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Generic</p>
                 </a>
@@ -46,25 +46,25 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="manufacturer.html" class="nav-link">
+                <a href="{{ route('manufacturer.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manufacturer</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="dosage-form.html" class="nav-link">
+                <a href="{{ route('dosageform.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Dosage Form</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="strength.html" class="nav-link">
+                <a href="{{ route('strength.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Strength</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pack-size.html" class="nav-link">
+                <a href="{{ route('packsize.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pack Size</p>
                 </a>
@@ -73,7 +73,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="scroller.html" class="nav-link">
+            <a href="{{ route('scroller') }}" class="nav-link">
               <i class="nav-icon fas fa-arrow-left"></i>
               <p>Scroller</p>
             </a>
@@ -87,26 +87,26 @@
           </li>
 
           <li class="nav-item">
-            <a href="job.html" class="nav-link">
+            <a href="{{ route('job.index') }}" class="nav-link">
               <i class="nav-icon fas fa-briefcase"></i>
               <p>Job</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="news.html" class="nav-link">
+            <a href="{{ route('news.index') }}" class="nav-link">
               <i class="nav-icon fas fa-newspaper"></i>
               <p>News</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="journal.html" class="nav-link">
+            <a href="{{ route('journal.index') }}" class="nav-link">
               <i class="nav-icon fas fa-folder"></i>
               <p>Journal</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="address.html" class="nav-link">
+            <a href="{{ route('address.index') }}" class="nav-link">
               <i class="nav-icon fas fa-location-arrow"></i>
               <p>Address</p>
             </a>
@@ -118,13 +118,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="special-report.html" class="nav-link">
+            <a href="{{ route('special_report.index') }}" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>Special Report</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a href="video.html" class="nav-link">
+            <a href="{{ route('video.index') }}" class="nav-link">
               <i class="nav-icon fas fa-video"></i>
               <p>Video</p>
             </a>

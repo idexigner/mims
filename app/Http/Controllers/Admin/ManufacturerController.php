@@ -1,27 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Generic;
-use App\Traits\LogExceptions;
+use App\Models\Manufacturer;
 use Illuminate\Http\Request;
+use App\Traits\LogExceptions;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 
-class GenericController extends Controller
-{    
+class ManufacturerController extends Controller
+{
     use LogExceptions;
     public function index(Request $request)
     {        
         if ($request->ajax()) {
-            // dd("ajax");
-            $data = Generic::select('*');
+            // dd("ajax");Manufacturer::with('location')
+            $data = Manufacturer::with('location.country.state.city')->select('*');
             return DataTables::of($data)->make(true);
         }
 
-        return view('admin.pages.generic');
+        return view('admin.pages.manufacturer');
     }
    
     public function store(Request $request)
