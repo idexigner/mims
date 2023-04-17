@@ -19,6 +19,11 @@ use App\Http\Controllers\Admin\SpecialReportController;
 use App\Http\Controllers\Admin\StrengthController;
 use App\Http\Controllers\Admin\AddressController;
 use App\Http\Controllers\Admin\AddressCategoryController;
+use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\IndicationController;
+use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\SiteSettingController;
 
@@ -125,6 +130,15 @@ Route::prefix('/admin')->group(function(){
         Route::delete('/destroy/{id}', [PacksizeController::class, 'destroy'])->name('destroy');
     });
 
+    // Indication Controller
+    Route::prefix('/indication')->name('indication.')->group(function(){
+        Route::get('/', [IndicationController::class, 'index'])->name('index');
+        Route::post('/store', [IndicationController::class, 'store'])->name('store');
+        Route::put('/update', [IndicationController::class, 'update'])->name('update');
+        Route::get('/edit/{id}', [IndicationController::class, 'edit'])->name('edit');
+        Route::delete('/destroy/{id}', [IndicationController::class, 'destroy'])->name('destroy');
+    });
+
     // Job Controller
     Route::prefix('/job')->name('job.')->group(function(){
         Route::get('/', [JobController::class, 'index'])->name('index');
@@ -182,6 +196,15 @@ Route::prefix('/admin')->group(function(){
         Route::delete('/destroy/{id}', [VideoController::class, 'destroy'])->name('destroy');
     });
 
+    // User Controller
+    Route::prefix('/user')->name('user.')->group(function(){
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::put('/update', [UserController::class, 'update'])->name('update');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
+        Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
+    });
+
     Route::get('/scroller', [SiteSettingController::class, 'scroller'])->name('scroller');
     Route::post('/scroller/update', [SiteSettingController::class, 'scroller_update'])->name('scroller.update');
 
@@ -192,30 +215,95 @@ Route::prefix('/admin')->group(function(){
     //     Route::put('/update/{id}', [GenericController::class, 'update'])->name('update');
     // });
 
+
+
+    Route::prefix('/setting')->name('setting.')->group(function(){
+
+        // Country Controller
+        Route::prefix('/country')->name('country.')->group(function(){
+            Route::get('/', [CountryController::class, 'index'])->name('index');
+            Route::post('/store', [CountryController::class, 'store'])->name('store');
+            Route::put('/update', [CountryController::class, 'update'])->name('update');
+            Route::get('/edit/{id}', [CountryController::class, 'edit'])->name('edit');
+            Route::delete('/destroy/{id}', [CountryController::class, 'destroy'])->name('destroy');
+        });
+
+        // State Controller
+        Route::prefix('/state')->name('state.')->group(function(){
+            Route::get('/', [StateController::class, 'index'])->name('index');
+            Route::post('/store', [StateController::class, 'store'])->name('store');
+            Route::put('/update', [StateController::class, 'update'])->name('update');
+            Route::get('/edit/{id}', [StateController::class, 'edit'])->name('edit');
+            Route::delete('/destroy/{id}', [StateController::class, 'destroy'])->name('destroy');
+            Route::get('/fetch_state_by_country/{id}', [StateController::class, 'fetch_state_by_country'])->name('fetch_country');
+
+            
+        });
+
+        // City Controller
+        Route::prefix('/city')->name('city.')->group(function(){
+            Route::get('/', [CityController::class, 'index'])->name('index');
+            Route::post('/store', [CityController::class, 'store'])->name('store');
+            Route::put('/update', [CityController::class, 'update'])->name('update');
+            Route::get('/edit/{id}', [CityController::class, 'edit'])->name('edit');
+            Route::delete('/destroy/{id}', [CityController::class, 'destroy'])->name('destroy');
+        });
+
+        // Address Category Controller
+        Route::prefix('/address/category')->name('address.category.')->group(function(){
+            Route::get('/', [AddressCategoryController::class, 'index'])->name('index');
+            Route::post('/store', [AddressCategoryController::class, 'store'])->name('store');
+            Route::put('/update', [AddressCategoryController::class, 'update'])->name('update');
+            Route::get('/edit/{id}', [AddressCategoryController::class, 'edit'])->name('edit');
+            Route::delete('/destroy/{id}', [AddressCategoryController::class, 'destroy'])->name('destroy');
+        });
+
+    });
     
 
-    // Route::get('/', [GenericController::class, 'index'])->name('posts.index');
-    // Route::get('/posts', [GenericController::class, 'index'])->name('posts.get');
-    // Route::get('/posts/create', 'PostController@create')->name('posts.create');
-    // Route::post('/posts', 'PostController@store')->name('posts.store');
-    // Route::get('/posts/{id}/edit', 'PostController@edit')->name('posts.edit');
-    // Route::put('/posts/{id}', 'PostController@update')->name('posts.update');
-    // Route::delete('/posts/{id}', 'PostController@destroy')->name('posts.destroy');
 
-
-    // Route::get('/', 'PostController@index')->name('posts.index');
-    // Route::get('/posts', 'PostController@getPosts')->name('posts.get');
-    // Route::get('/posts/create', 'PostController@create')->name('posts.create');
-    // Route::post('/posts', 'PostController@store')->name('posts.store');
-    // Route::get('/posts/{id}/edit', 'PostController@edit')->name('posts.edit');
-    // Route::put('/posts/{id}', 'PostController@update')->name('posts.update');
-    // Route::delete('/posts/{id}', 'PostController@destroy')->name('posts.destroy');
-    
 });
 
 
 
-Route::get('/link-storage', function () {
+// Artisan Routes
+
+Route::get('route-cache', function () {
+    Artisan::call('route:cache');
+    dd("config route cache executed");
+});
+Route::get('route-clear', function () {
+    Artisan::call('route:clear');
+    dd("config route clear executed");
+});
+Route::get('config-cache', function () {
+    Artisan::call('config:cache');
+    dd("config cache executed");
+});
+Route::get('cache-clear', function () {
+    Artisan::call('cache:clear');
+    dd("Cache is cleared");
+});
+Route::get('config-clear', function () {
+    Artisan::call('config:clear');
+    dd("config clear executed");
+});
+Route::get('view-clear', function () {
+    Artisan::call('view:clear');
+    dd("routes are cleared");
+});
+Route::get('storage-link', function () {
     Artisan::call('storage:link');
-    return 'Storage link created successfully.';
+    dd("storage link created");
+});
+
+Route::get('clear-all', function () {
+    Artisan::call('route:cache');
+    Artisan::call('route:clear');
+    Artisan::call('config:cache');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
+    Artisan::call('storage:link');
+    dd("All Clear");
 });

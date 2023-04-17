@@ -80,10 +80,10 @@
 <script src="{{ url('/')}}/admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script src="{{ url('/')}}/admin/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- Select2 -->
-<script src="plugins/select2/js/select2.full.min.js"></script>
+<script src="{{ url('/')}}/admin/plugins/select2/js/select2.full.min.js"></script>
 
 <!-- bs-custom-file-input -->
-<script src="plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<script src="{{ url('/')}}/admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
 {{-- Parsley --}}
 

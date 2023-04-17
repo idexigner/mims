@@ -7,41 +7,41 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use App\Traits\LogExceptions;
-use App\Models\AddressCategory;
+use App\Models\City;
 
-class AddressCategoryController extends Controller
+class CityController extends Controller
 {
     use LogExceptions;
     public function index(Request $request)
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = AddressCategory::select('*');
+            $data = City::with('state', 'state.country')->select('*');
             return DataTables::of($data)->make(true);
         }
 
-        return view('admin.pages.address_category');
+        return view('admin.pages.city');
     }
    
     public function store(Request $request)
     {
         try{
             $validator = Validator::make($request->all(), [
-                'address_category_title' => 'required'
-                
+                'city_name' => 'required'
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
-            $obj = new AddressCategory();
-            $obj->address_category_title = $request->address_category_title ?? '';
-            $obj->address_category_is_active = $request->address_category_is_active ?? '1';
+            $obj = new City();
+            $obj->city_name = $request->city_name ?? '';
+            $obj->city_state_id = $request->city_state_id ?? 1 ;
+            $obj->city_is_active = $request->city_is_active ?? '1';
             $obj->save();
 
             return response()->json([
-                    'message' => 'Address Category record created successfully'
+                    'message' => 'City record created successfully'
                 ], 200);
 
         } catch (\Exception $ex) {
@@ -59,7 +59,7 @@ class AddressCategoryController extends Controller
     {
        try{
 
-            $data = AddressCategory::findOrFail($id);            
+            $data = City::with('state.country')->findOrFail($id);            
             return response()->json([
                 'message' => 'Edit', 
                 'data' => $data
@@ -84,20 +84,21 @@ class AddressCategoryController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'address_category_title' => 'required',                
+                'city_name' => 'required',                
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
-            $obj = AddressCategory::findOrFail($request->id);
-            $obj->address_category_title = $request->address_category_title ?? '';
-            $obj->address_category_is_active = $request->address_category_is_active ?? '1';
+            $obj = City::findOrFail($request->id);
+            $obj->city_name = $request->city_name ?? '';
+            $obj->city_state_id = $request->city_state_id ?? '';
+            $obj->city_is_active = $request->city_is_active ?? '1';
             $obj->save();
 
             return response()->json([
-                'message' => 'Address Category record updated successfully'
+                'message' => 'City record updated successfully'
             ], 200);
         } catch (\Exception $ex) {
 
@@ -112,11 +113,11 @@ class AddressCategoryController extends Controller
     public function destroy($id)
     {
         try{
-            $obj = AddressCategory::findOrFail($id);
+            $obj = City::findOrFail($id);
             $obj->delete();
 
             return response()->json([
-                'message' => 'Address Category record deleted successfully'
+                'message' => 'City record deleted successfully'
                 ], 200);
         } catch (\Exception $ex) {
 

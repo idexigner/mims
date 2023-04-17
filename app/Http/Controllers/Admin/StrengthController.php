@@ -97,7 +97,7 @@ class StrengthController extends Controller
             $obj->save();
 
             return response()->json([
-                'message' => 'Dosage Form record updated successfully'
+                'message' => 'Strength record updated successfully'
             ], 200);
         } catch (\Exception $ex) {
 
