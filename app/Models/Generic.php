@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 class Generic extends Model
 {
     use HasFactory;
-    protected $table = 'generic';
+   
     protected $primaryKey = 'generic_id';
     public $timestamps = true;
     const CREATED_AT = 'generic_created_at';
     const UPDATED_AT = 'generic_updated_at';
-
+    protected $table = 'generic';
     protected $fillable = [
         'generic_name',
         'generic_classification',
@@ -37,6 +37,11 @@ class Generic extends Model
         'generic_updated_by',
         'generic_updated_at'
     ];
+
+    public function brands()
+    {
+        return $this->hasMany(Brand::class, 'brand_generic_id');
+    }
 
     protected static function booted()
     {

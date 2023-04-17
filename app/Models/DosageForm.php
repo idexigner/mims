@@ -25,6 +25,11 @@ class DosageForm extends Model
         'dosageform_updated_at'
     ];
 
+    public function brands()
+    {
+        return $this->hasMany(Brand::class, 'brand_dosage_form_id');
+    }
+
     protected static function booted()
     {
 

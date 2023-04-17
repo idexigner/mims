@@ -22,6 +22,15 @@ class CityController extends Controller
 
         return view('admin.pages.city');
     }
+
+    public function fetch_city_by_state($state_id)
+    {        
+        $data = City::select('*')->where('city_state_id',$state_id)->get();
+        return response()->json([
+            'message' => 'Fetch', 
+            'data' => $data
+        ], 200);
+    }
    
     public function store(Request $request)
     {

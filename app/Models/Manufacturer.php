@@ -29,6 +29,11 @@ class Manufacturer extends Model
         'manufacturer_updated_at'
     ];
 
+    public function brands()
+    {
+        return $this->hasMany(Brand::class, 'brand_manufacturer_id');
+    }
+
     public function location()
     {
         return $this->belongsTo(Location::class, 'manufacturer_location_id', 'location_id');
@@ -48,6 +53,8 @@ class Manufacturer extends Model
             $model->manufacturer_updated_at = $model->freshTimestamp();
         });
     }
+
+
 
    
 }

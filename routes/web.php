@@ -25,7 +25,9 @@ use App\Http\Controllers\Admin\IndicationController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\SiteSettingController;
+
 
 
 
@@ -247,6 +249,8 @@ Route::prefix('/admin')->group(function(){
             Route::put('/update', [CityController::class, 'update'])->name('update');
             Route::get('/edit/{id}', [CityController::class, 'edit'])->name('edit');
             Route::delete('/destroy/{id}', [CityController::class, 'destroy'])->name('destroy');
+            Route::get('/fetch_city_by_state/{id}', [CityController::class, 'fetch_city_by_state'])->name('fetch_city');
+
         });
 
         // Address Category Controller
@@ -256,6 +260,15 @@ Route::prefix('/admin')->group(function(){
             Route::put('/update', [AddressCategoryController::class, 'update'])->name('update');
             Route::get('/edit/{id}', [AddressCategoryController::class, 'edit'])->name('edit');
             Route::delete('/destroy/{id}', [AddressCategoryController::class, 'destroy'])->name('destroy');
+        });
+
+         // Location Controller
+         Route::prefix('/location')->name('location.')->group(function(){
+            Route::get('/', [LocationController::class, 'index'])->name('index');
+            Route::post('/store', [LocationController::class, 'store'])->name('store');
+            Route::put('/update', [LocationController::class, 'update'])->name('update');
+            Route::get('/edit/{id}', [LocationController::class, 'edit'])->name('edit');
+            Route::delete('/destroy/{id}', [LocationController::class, 'destroy'])->name('destroy');
         });
 
     });

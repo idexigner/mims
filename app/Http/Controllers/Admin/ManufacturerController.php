@@ -16,9 +16,10 @@ class ManufacturerController extends Controller
     use LogExceptions;
     public function index(Request $request)
     {        
+
         if ($request->ajax()) {
             // dd("ajax");Manufacturer::with('location')
-            $data = Manufacturer::with('location.country.state.city')->select('*');
+            $data = Manufacturer::with('location')->select('*');
             return DataTables::of($data)->make(true);
         }
 
@@ -29,9 +30,9 @@ class ManufacturerController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'generic_name' => 'required',
-                'generic_classification' => 'required',
-                'generic_safety_remark' => 'required'
+                'manufacturer_name' => 'required',
+                'manufacturer_location_id' => 'required'
+               
                 // 'content' => 'required',
             ]);
 
@@ -39,26 +40,20 @@ class ManufacturerController extends Controller
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
-            $obj = new Generic;
-            $obj->generic_name = $request->generic_name ?? '';
-            $obj->generic_classification = $request->generic_classification ?? '';
-            $obj->generic_safety_remark = $request->generic_safety_remark ?? '';
-            $obj->generic_indication = $request->generic_indication ?? '';
-            $obj->generic_indication_tags = $request->generic_indication_tags ?? '';
-            $obj->generic_dosage_administration = $request->generic_dosage_administration ?? '';
-            $obj->generic_contraindication_precaution = $request->generic_contraindication_precaution ?? '';
-            $obj->generic_composition = $request->generic_composition ?? '';
-            $obj->generic_pharmacology = $request->generic_pharmacology ?? '';
-            $obj->generic_interaction = $request->generic_interaction ?? '';
-            $obj->generic_side_effect = $request->generic_side_effect ?? '';
-            $obj->generic_overdose_effect = $request->generic_overdose_effect ?? '';
-            $obj->generic_storage_condition = $request->generic_storage_condition ?? '';
-            $obj->generic_pregnancy_lactation   = $request->generic_pregnancy_lactation ?? '';
-            $obj->generic_is_active = $request->generic_is_active ?? '1';
+            $obj = new Manufacturer();
+            $obj->manufacturer_name = $request->manufacturer_name ?? '';
+            $obj->manufacturer_email = $request->manufacturer_email ?? '';
+            $obj->manufacturer_phone = $request->manufacturer_phone ?? '';
+            $obj->manufacturer_mobile = $request->manufacturer_mobile ?? '';
+            $obj->manufacturer_fax = $request->manufacturer_fax ?? '';
+
+            $obj->manufacturer_location_id = $request->manufacturer_location_id ?? '';
+            
+            $obj->manufacturer_is_active = $request->manufacturer_is_active ?? '1';
             $obj->save();
 
             return response()->json([
-                    'message' => 'Generic record created successfully'
+                    'message' => 'Manufacturer record created successfully'
                 ], 200);
 
         } catch (\Exception $ex) {
@@ -76,10 +71,10 @@ class ManufacturerController extends Controller
     {
        try{
 
-            $generic = Generic::findOrFail($id);            
+            $data = Manufacturer::findOrFail($id);            
             return response()->json([
                 'message' => 'Edit', 
-                'data' => $generic
+                'data' => $data
             ], 200);
             
         } catch (\Exception $ex) {
@@ -101,36 +96,26 @@ class ManufacturerController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'generic_name' => 'required',
-                'generic_classification' => 'required',
-                'generic_safety_remark' => 'required'
-                // 'content' => 'required',
+                'manufacturer_name' => 'required',
+                'manufacturer_location_id' => 'required'
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
-            $obj = Generic::findOrFail($request->id);
-            $obj->generic_name = $request->generic_name ?? '';
-            $obj->generic_classification = $request->generic_classification ?? '';
-            $obj->generic_safety_remark = $request->generic_safety_remark ?? '';
-            $obj->generic_indication = "asas";//$request->generic_indication ?? '';
-            $obj->generic_indication_tags = $request->generic_indication_tags ?? '';
-            $obj->generic_dosage_administration = $request->generic_dosage_administration ?? '';
-            $obj->generic_contraindication_precaution = $request->generic_contraindication_precaution ?? '';
-            $obj->generic_composition = $request->generic_composition ?? '';
-            $obj->generic_pharmacology = $request->generic_pharmacology ?? '';
-            $obj->generic_interaction = $request->generic_interaction ?? '';
-            $obj->generic_side_effect = $request->generic_side_effect ?? '';
-            $obj->generic_overdose_effect = $request->generic_overdose_effect ?? '';
-            $obj->generic_storage_condition = $request->generic_storage_condition ?? '';
-            $obj->generic_pregnancy_lactation   = $request->generic_pregnancy_lactation ?? '';
-            $obj->generic_is_active = $request->generic_is_active ?? '1';
+            $obj = Manufacturer::findOrFail($request->id);
+            $obj->manufacturer_name = $request->manufacturer_name ?? '';
+            $obj->manufacturer_email = $request->manufacturer_email ?? '';
+            $obj->manufacturer_phone = $request->manufacturer_phone ?? '';
+            $obj->manufacturer_mobile = $request->manufacturer_mobile ?? '';
+            $obj->manufacturer_fax = $request->manufacturer_fax ?? '';
+            $obj->manufacturer_location_id = $request->manufacturer_location_id ?? '';
+            $obj->manufacturer_is_active = $request->manufacturer_is_active ?? '1';
             $obj->save();
 
             return response()->json([
-                'message' => 'Generic record updated successfully'
+                'message' => 'Manufacturer record updated successfully'
             ], 200);
         } catch (\Exception $ex) {
 
@@ -145,11 +130,11 @@ class ManufacturerController extends Controller
     public function destroy($id)
     {
         try{
-            $obj = Generic::findOrFail($id);
+            $obj = Manufacturer::findOrFail($id);
             $obj->delete();
 
             return response()->json([
-                'message' => 'Generic record deleted successfully'
+                'message' => 'Manufacturer record deleted successfully'
                 ], 200);
         } catch (\Exception $ex) {
 

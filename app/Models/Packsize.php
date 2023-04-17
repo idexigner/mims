@@ -25,6 +25,11 @@ class Packsize extends Model
         'packsize_updated_at'
     ];
 
+    public function brands()
+    {
+        return $this->hasMany(Brand::class, 'brand_pack_size_id');
+    }
+
     protected static function booted()
     {
 

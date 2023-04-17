@@ -2,33 +2,46 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use App\Traits\LogExceptions;
-use App\Models\Brand;
+use App\Models\Location;
 
-
-class BrandController extends Controller
+class LocationController extends Controller
 {
     use LogExceptions;
     public function index(Request $request)
     {        
         if ($request->ajax()) {
-            // dd("ajax");with('')->
-            $data = Brand::select('*');
+            // dd("ajax");
+            $data = Location::with('country','state','city')->select('*');
             return DataTables::of($data)->make(true);
         }
 
-        return view('admin.pages.brand');
+        return view('admin.pages.location');
+    }
+
+   
+    public function fetch_state_by_country($country_id)
+    {        
+        $data = Location::select('*')->where('location_country_id',$country_id)->get();
+        return response()->json([
+            'message' => 'Fetch', 
+            'data' => $data
+        ], 200);
     }
    
     public function store(Request $request)
     {
         try{
             $validator = Validator::make($request->all(), [
-                'brand_name' => 'required'
+                'location_country_id' => 'required',
+                'location_state_id' => 'required',
+                'location_city_id' => 'required',
+                'location_address' => 'required',
                 
             ]);
 
@@ -36,13 +49,18 @@ class BrandController extends Controller
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
-            $obj = new Brand();
-            $obj->brand_name = $request->brand_name ?? '';
-            $obj->brand_is_active = $request->brand_is_active ?? '1';
+            $obj = new Location();
+            $obj->location_country_id = $request->location_country_id ?? '1';
+            $obj->location_state_id = $request->location_state_id ?? '1';
+            $obj->location_city_id = $request->location_city_id ?? '1';
+            $obj->location_address = $request->location_address ?? '1';
+            $obj->location_longitude = $request->location_longitude ?? '1';
+            $obj->location_latitude = $request->location_latitude ?? '1';
+            $obj->location_is_active = $request->location_is_active ?? '1';
             $obj->save();
 
             return response()->json([
-                    'message' => 'Brand record created successfully'
+                    'message' => 'Location record created successfully'
                 ], 200);
 
         } catch (\Exception $ex) {
@@ -60,7 +78,7 @@ class BrandController extends Controller
     {
        try{
 
-            $data = Brand::findOrFail($id);            
+            $data = Location::findOrFail($id);            
             return response()->json([
                 'message' => 'Edit', 
                 'data' => $data
@@ -85,20 +103,29 @@ class BrandController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'brand_name' => 'required',                
+                'location_country_id' => 'required',
+                'location_state_id' => 'required',
+                'location_city_id' => 'required',
+                'location_address' => 'required',
+         
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
-            $obj = Brand::findOrFail($request->id);
-            $obj->brand_name = $request->brand_name ?? '';
-            $obj->brand_is_active = $request->brand_is_active ?? '1';
+            $obj = Location::findOrFail($request->id);
+            $obj->location_country_id = $request->location_country_id ?? '1';
+            $obj->location_state_id = $request->location_state_id ?? '1';
+            $obj->location_city_id = $request->location_city_id ?? '1';
+            $obj->location_address = $request->location_address ?? '1';
+            $obj->location_longitude = $request->location_longitude ?? '1';
+            $obj->location_latitude = $request->location_latitude ?? '1';
+            $obj->location_is_active = $request->location_is_active ?? '1';
             $obj->save();
 
             return response()->json([
-                'message' => 'Brand record updated successfully'
+                'message' => 'Location record updated successfully'
             ], 200);
         } catch (\Exception $ex) {
 
@@ -113,11 +140,11 @@ class BrandController extends Controller
     public function destroy($id)
     {
         try{
-            $obj = Brand::findOrFail($id);
+            $obj = Location::findOrFail($id);
             $obj->delete();
 
             return response()->json([
-                'message' => 'Brand record deleted successfully'
+                'message' => 'Location record deleted successfully'
                 ], 200);
         } catch (\Exception $ex) {
 

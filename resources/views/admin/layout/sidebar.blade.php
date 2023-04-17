@@ -175,6 +175,13 @@
                 <p>Address Category</p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="{{ route('setting.location.index') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Location</p>
+              </a>
+            </li>
            
           </ul>
         </li>

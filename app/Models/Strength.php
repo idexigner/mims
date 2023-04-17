@@ -25,6 +25,11 @@ class Strength extends Model
         'strength_updated_at'
     ];
 
+    public function brands()
+    {
+        return $this->hasMany(Brand::class, 'brand_strength_id');
+    }
+
     protected static function booted()
     {
 
