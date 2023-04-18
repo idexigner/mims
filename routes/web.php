@@ -346,3 +346,13 @@ Route::get('clear-all', function () {
     Artisan::call('storage:link');
     dd("All Clear");
 });
+
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    return 'Database migration complete!';
+});
+
+Route::get('/optimize', function () {
+    Artisan::call('optimize');
+    return 'Application optimized!';
+});

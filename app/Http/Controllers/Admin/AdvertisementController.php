@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use App\Traits\LogExceptions;
-use App\Models\Strength;
+use App\Models\Advertisement;
 
 class AdvertisementController extends Controller
 {
@@ -16,17 +16,17 @@ class AdvertisementController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Strength::select('*');
+            $data = Advertisement::select('*');
             return DataTables::of($data)->make(true);
         }
 
-        return view('admin.pages.strength');
+        return view('admin.pages.advertisement');
     }
    
     public function list(Request $request)
     {
         $search = $request->input('query');
-        $data = Strength::where('strength_name', 'LIKE', '%' . $search . '%')->limit(20)->get();
+        $data = Advertisement::where('advertisement_name', 'LIKE', '%' . $search . '%')->limit(20)->get();
         return response()->json($data);
     }
 
@@ -34,7 +34,7 @@ class AdvertisementController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'strength_name' => 'required'
+                'advertisement_name' => 'required'
                 
             ]);
 
@@ -42,13 +42,13 @@ class AdvertisementController extends Controller
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
-            $obj = new Strength();
-            $obj->strength_name = $request->strength_name ?? '';
-            $obj->strength_is_active = $request->strength_is_active ?? '1';
+            $obj = new Advertisement();
+            $obj->advertisement_name = $request->advertisement_name ?? '';
+            $obj->advertisement_is_active = $request->advertisement_is_active ?? '1';
             $obj->save();
 
             return response()->json([
-                    'message' => 'Strength record created successfully'
+                    'message' => 'Advertisement record created successfully'
                 ], 200);
 
         } catch (\Exception $ex) {
@@ -66,7 +66,7 @@ class AdvertisementController extends Controller
     {
        try{
 
-            $data = Strength::findOrFail($id);            
+            $data = Advertisement::findOrFail($id);            
             return response()->json([
                 'message' => 'Edit', 
                 'data' => $data
@@ -91,20 +91,20 @@ class AdvertisementController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'strength_name' => 'required',                
+                'advertisement_name' => 'required',                
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
-            $obj = Strength::findOrFail($request->id);
-            $obj->strength_name = $request->strength_name ?? '';
-            $obj->strength_is_active = $request->strength_is_active ?? '1';
+            $obj = Advertisement::findOrFail($request->id);
+            $obj->advertisement_name = $request->advertisement_name ?? '';
+            $obj->advertisement_is_active = $request->advertisement_is_active ?? '1';
             $obj->save();
 
             return response()->json([
-                'message' => 'Strength record updated successfully'
+                'message' => 'Advertisement record updated successfully'
             ], 200);
         } catch (\Exception $ex) {
 
@@ -119,11 +119,11 @@ class AdvertisementController extends Controller
     public function destroy($id)
     {
         try{
-            $obj = Strength::findOrFail($id);
+            $obj = Advertisement::findOrFail($id);
             $obj->delete();
 
             return response()->json([
-                'message' => 'Strength record deleted successfully'
+                'message' => 'Advertisement record deleted successfully'
                 ], 200);
         } catch (\Exception $ex) {
 
