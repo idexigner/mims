@@ -48,6 +48,9 @@ class VideoController extends Controller
                 ], 200);
 
         } catch (\Exception $ex) {
+            return response()->json([
+                'message' => 'Errror'
+            ], 500);
 
             $this->logException($ex, $request->route()->getName(), __METHOD__);
             return response()->json([

@@ -2,11 +2,14 @@
 
 namespace App\Exceptions;
 
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\Traits\LogExceptions;
 
 class Handler extends ExceptionHandler
 {
+    use LogExceptions;
     /**
      * A list of the exception types that are not reported.
      *
@@ -37,5 +40,18 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+       
+    }
+
+    public function render($request, Throwable $ex)
+    {
+        // dd($ex);
+        
+        // $this->logException($ex, $request->route()->getName(), __METHOD__);
+        // return response()->json([
+        //         'message' => 'Something went wrong!',
+        //         'error' => $ex
+        //     ], 400);
     }
 }

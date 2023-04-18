@@ -585,7 +585,13 @@
 
                         $("input[name=id]").val(data.manufacturer_id);
                         $("input[name=manufacturer_name]").val(data.manufacturer_name);
-                        $("select[name=strength_is_active]").val(data.strength_is_active);
+                        $("input[name=manufacturer_email]").val(data.manufacturer_email);
+                        $("input[name=manufacturer_phone]").val(data.manufacturer_phone);
+                        $("input[name=manufacturer_mobile]").val(data.manufacturer_mobile);
+                        $("select[name=manufacturer_location_id]").val(data.manufacturer_location_id).trigger('change');
+
+                        $("select[name=strength_is_active]").val(data.strength_is_active);                        
+
                         
                         $("#modal_create_form").modal('show');
                         $("#create_form_btn").hide();

@@ -356,7 +356,7 @@
 
                         $("input[name=id]").val(data.address_id);
                         $("input[name=address_title]").val(data.address_title);
-                        $("input[name=address_category]").val(data.address_category).trigger('change');
+                        $("select[name=address_category]").val(data.address_category).trigger('change');
                         $('textarea[name=address_detail]').summernote().summernote('code', data.address_detail);
                         $("input[name=address_contact]").val(data.address_contact);
                         $("select[name=address_is_active]").val(data.address_is_active);

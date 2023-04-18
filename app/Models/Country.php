@@ -29,6 +29,11 @@ class Country extends Model
         return $this->hasMany(State::class, 'state_country_id', 'country_id');
     }
 
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class, 'doctor_country_id', 'country_id');
+    }
+
     protected static function booted()
     {
 

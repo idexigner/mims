@@ -24,6 +24,13 @@ class GenericController extends Controller
         return view('admin.pages.generic');
     }
    
+    public function list(Request $request)
+    {
+        $search = $request->input('query');
+        $generics = Generic::where('generic_name', 'LIKE', '%' . $search . '%')->limit(20)->get();
+        return response()->json($generics);
+    }
+
     public function store(Request $request)
     {
         try{

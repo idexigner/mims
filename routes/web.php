@@ -19,8 +19,10 @@ use App\Http\Controllers\Admin\SpecialReportController;
 use App\Http\Controllers\Admin\StrengthController;
 use App\Http\Controllers\Admin\AddressController;
 use App\Http\Controllers\Admin\AddressCategoryController;
+use App\Http\Controllers\Admin\AdvertisementController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\IndicationController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\UserController;
@@ -80,6 +82,7 @@ Route::prefix('/admin')->group(function(){
     // Generic Controller
     Route::prefix('/generic')->name('generic.')->group(function(){
         Route::get('/', [GenericController::class, 'index'])->name('index');
+        Route::get('/list', [GenericController::class, 'list'])->name('list');
         Route::post('/store', [GenericController::class, 'store'])->name('store');
         Route::put('/update', [GenericController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [GenericController::class, 'edit'])->name('edit');
@@ -90,6 +93,7 @@ Route::prefix('/admin')->group(function(){
     //Brand Controller
     Route::prefix('/brand')->name('brand.')->group(function(){
         Route::get('/', [BrandController::class, 'index'])->name('index');
+        Route::get('/list', [BrandController::class, 'list'])->name('list');
         Route::post('/store', [BrandController::class, 'store'])->name('store');
         Route::put('/update', [BrandController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('edit');
@@ -99,6 +103,7 @@ Route::prefix('/admin')->group(function(){
     // Manufacturer Controller
     Route::prefix('/manufacturer')->name('manufacturer.')->group(function(){
         Route::get('/', [ManufacturerController::class, 'index'])->name('index');
+        Route::get('/list', [ManufacturerController::class, 'list'])->name('list');
         Route::post('/store', [ManufacturerController::class, 'store'])->name('store');
         Route::put('/update', [ManufacturerController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [ManufacturerController::class, 'edit'])->name('edit');
@@ -108,6 +113,7 @@ Route::prefix('/admin')->group(function(){
     // DosageForm Controller
     Route::prefix('/dosageform')->name('dosageform.')->group(function(){
         Route::get('/', [DosageFormController::class, 'index'])->name('index');
+        Route::get('/list', [DosageFormController::class, 'list'])->name('list');
         Route::post('/store', [DosageFormController::class, 'store'])->name('store');
         Route::put('/update', [DosageFormController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [DosageFormController::class, 'edit'])->name('edit');
@@ -117,6 +123,7 @@ Route::prefix('/admin')->group(function(){
     // Strength Controller
     Route::prefix('/strength')->name('strength.')->group(function(){
         Route::get('/', [StrengthController::class, 'index'])->name('index');
+        Route::get('/list', [StrengthController::class, 'list'])->name('list');
         Route::post('/store', [StrengthController::class, 'store'])->name('store');
         Route::put('/update', [StrengthController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [StrengthController::class, 'edit'])->name('edit');
@@ -126,6 +133,7 @@ Route::prefix('/admin')->group(function(){
     // Packsize Controller
     Route::prefix('/packsize')->name('packsize.')->group(function(){
         Route::get('/', [PacksizeController::class, 'index'])->name('index');
+        Route::get('/list', [PacksizeController::class, 'list'])->name('list');
         Route::post('/store', [PacksizeController::class, 'store'])->name('store');
         Route::put('/update', [PacksizeController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [PacksizeController::class, 'edit'])->name('edit');
@@ -139,6 +147,24 @@ Route::prefix('/admin')->group(function(){
         Route::put('/update', [IndicationController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [IndicationController::class, 'edit'])->name('edit');
         Route::delete('/destroy/{id}', [IndicationController::class, 'destroy'])->name('destroy');
+    });
+
+     // Doctor Controller
+     Route::prefix('/doctor')->name('doctor.')->group(function(){
+        Route::get('/', [DoctorController::class, 'index'])->name('index');
+        Route::post('/store', [DoctorController::class, 'store'])->name('store');
+        Route::put('/update', [DoctorController::class, 'update'])->name('update');
+        Route::get('/edit/{id}', [DoctorController::class, 'edit'])->name('edit');
+        Route::delete('/destroy/{id}', [DoctorController::class, 'destroy'])->name('destroy');
+    });
+
+    // Advertisement Controller
+    Route::prefix('/advertisement')->name('advertisement.')->group(function(){
+        Route::get('/', [AdvertisementController::class, 'index'])->name('index');
+        Route::post('/store', [AdvertisementController::class, 'store'])->name('store');
+        Route::put('/update', [AdvertisementController::class, 'update'])->name('update');
+        Route::get('/edit/{id}', [AdvertisementController::class, 'edit'])->name('edit');
+        Route::delete('/destroy/{id}', [AdvertisementController::class, 'destroy'])->name('destroy');
     });
 
     // Job Controller

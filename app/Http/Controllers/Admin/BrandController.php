@@ -15,9 +15,10 @@ class BrandController extends Controller
     use LogExceptions;
     public function index(Request $request)
     {        
+        
         if ($request->ajax()) {
             // dd("ajax");with('')->
-            $data = Brand::select('*');
+            $data = Brand::with('dosage_form', 'generic', 'manufacturer')->select('*');
             return DataTables::of($data)->make(true);
         }
 
@@ -28,8 +29,14 @@ class BrandController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'brand_name' => 'required'
-                
+                'brand_type' => 'required',
+                'brand_name' => 'required',
+                'brand_generic_id' => 'required',
+                'brand_manufacturer_id' => 'required',
+                'brand_dosage_form_id' => 'required',
+                'brand_strength_id' => 'required',
+                'brand_pack_size_id' => 'required',
+                'brand_price' => 'required'
             ]);
 
             if ($validator->fails()) {
@@ -37,7 +44,26 @@ class BrandController extends Controller
             }
 
             $obj = new Brand();
+            $obj->brand_type = $request->brand_type ?? '';
             $obj->brand_name = $request->brand_name ?? '';
+            $obj->brand_generic_id = $request->brand_generic_id ?? '1';
+            $obj->brand_manufacturer_id = $request->brand_manufacturer_id ?? '1';
+            $obj->brand_dosage_form_id = $request->brand_dosage_form_id ?? '1';
+            $obj->brand_strength_id = $request->brand_strength_id ?? '1';
+            $obj->brand_pack_size_id = $request->brand_pack_size_id ?? '1';
+           
+            if ($request->hasFile('brand_image')) {
+                $file = $request->file('brand_image');
+                $brand_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+                $file->storeAs('public/images/brand', $brand_image);
+            }
+            $obj->brand_image = $request->brand_image ?? '';
+
+            $obj->brand_price = $request->brand_price ?? '';
+            $obj->brand_is_hightlight = $request->brand_is_hightlight ?? '0';
+            $obj->brand_is_new_product = $request->brand_is_new_product ?? '0';
+            $obj->brand_is_new_brand = $request->brand_is_new_brand ?? '0';
+            $obj->brand_is_new_presentation = $request->brand_is_new_presentation ?? '0';
             $obj->brand_is_active = $request->brand_is_active ?? '1';
             $obj->save();
 
@@ -85,7 +111,14 @@ class BrandController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'brand_name' => 'required',                
+                'brand_type' => 'required',
+                'brand_name' => 'required',
+                'brand_generic_id' => 'required',
+                'brand_manufacturer_id' => 'required',
+                'brand_dosage_form_id' => 'required',
+                'brand_strength_id' => 'required',
+                'brand_pack_size_id' => 'required',
+                'brand_price' => 'required'  
             ]);
 
             if ($validator->fails()) {
@@ -93,7 +126,27 @@ class BrandController extends Controller
             }
 
             $obj = Brand::findOrFail($request->id);
+            $obj->brand_type = $request->brand_type ?? '';
             $obj->brand_name = $request->brand_name ?? '';
+            $obj->brand_generic_id = $request->brand_generic_id ?? '1';
+            $obj->brand_manufacturer_id = $request->brand_manufacturer_id ?? '1';
+            $obj->brand_dosage_form_id = $request->brand_dosage_form_id ?? '1';
+            $obj->brand_strength_id = $request->brand_strength_id ?? '1';
+            $obj->brand_pack_size_id = $request->brand_pack_size_id ?? '1';
+           
+            if ($request->hasFile('brand_image')) {
+                $file = $request->file('brand_image');
+                $brand_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+                $file->storeAs('public/images/brand', $brand_image);
+                $obj->brand_image = $request->brand_image ?? '';
+            }
+           
+
+            $obj->brand_price = $request->brand_price ?? '';
+            $obj->brand_is_hightlight = $request->brand_is_hightlight ?? '0';
+            $obj->brand_is_new_product = $request->brand_is_new_product ?? '0';
+            $obj->brand_is_new_brand = $request->brand_is_new_brand ?? '0';
+            $obj->brand_is_new_presentation = $request->brand_is_new_presentation ?? '0';
             $obj->brand_is_active = $request->brand_is_active ?? '1';
             $obj->save();
 

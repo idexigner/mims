@@ -1,7 +1,7 @@
 @extends('admin.layout.main')
 
 
-@push('title') Strength @endpush
+@push('title') Doctor @endpush
 
 @section('main-section')
 
@@ -10,11 +10,11 @@
         <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1>Strength List</h1>
+            <h1>Doctor List</h1>
             </div>
             <div class="col-sm-6">
 
-                <button type="button" class="btn float-sm-right btn-primary add_new">Add New Strength</button>
+                <button type="button" class="btn float-sm-right btn-primary add_new">Add New Doctor</button>
            
             </div>
         </div>
@@ -50,10 +50,10 @@
     <div class="modal fade" id="modal_create_form">
         <div class="modal-dialog modal-lg">
             <div class="modal-content ">
-            <form class="form-horizontal" id="create-form">
+            <form class="form-horizontal" id="create-form" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title">Add New Strength Record</h4>
+                    <h4 class="modal-title">Add New Doctor Record</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -62,17 +62,135 @@
                     <!-- <form class="form-horizontal"> -->
                         <div class="card-body">
                             
+                            
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Name <span class="text-red">*</span></label>
                                 <div class="col-sm-9">
-                                <input type="text" class="form-control" placeholder="Name" name="strength_name" required data-parsley-maxlength="200">
+                                <input type="text" class="form-control" placeholder="Name" name="doctor_name" required data-parsley-maxlength="200">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Email ID</label>
+                                <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Email ID" name="doctor_email" data-parsley-type="email">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Phone No (Personal)</label>
+                                <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Phone No (Personal)" name="doctor_phone_personal" data-parsley-pattern="/^[0-9+]+$/">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Phone No (Clinic)</label>
+                                <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Phone No (Clinic)" name="doctor_phone_clinic" data-parsley-pattern="/^[0-9+]+$/">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Specialization</label>
+                                <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Specialization" name="doctor_specialization" data-parsley-maxlength="200">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Achievement</label>
+                                <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Achievement" name="doctor_achievement" data-parsley-maxlength="200">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Experience</label>
+                                <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Experience" name="doctor_experience" data-parsley-maxlength="200">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Profession Degree</label>
+                                <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Profession Degree" name="doctor_profession_degree" data-parsley-maxlength="200">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Gender </label>
+                                <div class="col-sm-9">
+                                <select class="form-control" name="doctor_gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>                        
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Certificate</label>
+                                <div class="col-sm-9">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="doctor_certificate" name="doctor_certificate">
+                                        <label class="custom-file-label" for="doctor_certificate">Choose file</label>
+                                      </div>
+                                </div>
+                            </div>
+                             <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Image</label>
+                                <div class="col-sm-9">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="doctor_image" name="doctor_image">
+                                        <label class="custom-file-label" for="doctor_image">Choose file</label>
+                                      </div>
+                                </div>
+                            </div>
+
+                           
+                            
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Country</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control select2" style="width: 100%;" name="doctor_country_id">
+                                        <option selected="selected">Select Item</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">State</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control select2" style="width: 100%;" name="doctor_state_id">
+                                        <option selected="selected">Select Item</option>
+                                      
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">City</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control select2" style="width: 100%;" name="doctor_city_id">
+                                        <option selected="selected">Select Item</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Zip Code</label>
+                                <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Zip Code" name="doctor_zip_code">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Bio Notes</label>
+                                <div class="col-sm-9">
+                                  <textarea id="doctor_bio_notes" name="doctor_bio_notes" class="summernote"></textarea>                          
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Address </label>
+                                <div class="col-sm-9">
+                                  <textarea id="doctor_address" name="doctor_address" class="summernote"></textarea>                          
                                 </div>
                             </div>
                             
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Is Active </label>
                                 <div class="col-sm-9">
-                                <select class="form-control" name="strength_is_active">
+                                <select class="form-control" name="doctor_is_active">
                                     <option value="1">Yes</option>
                                     <option value="0">No</option>
                                 </select>                        
@@ -89,8 +207,8 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" data-url="{{ route('strength.store') }}" class="btn btn-primary" id="create_form_btn">Create</button>
-                    <button type="submit" data-url="{{ route('strength.update') }}" class="btn btn-primary" id="update_form_btn">Update</button>
+                    <button type="submit" data-url="{{ route('doctor.store') }}" class="btn btn-primary" id="create_form_btn">Create</button>
+                    <button type="submit" data-url="{{ route('doctor.update') }}" class="btn btn-primary" id="update_form_btn">Update</button>
                 </div>
             </form>
             </div>
@@ -115,19 +233,231 @@
                 trigger: 'focusout'
             });
 
+            $('.select2').select2()
+            bsCustomFileInput.init();
+
+            //Initializing summernote
+            var str_summernote = '#doctor_bio_notes, #doctor_address';
+            declareSummernote(str_summernote);
+
+            fetchCountry();
+
+            var shouldFetchState = false;
+            var shouldFetchCity = false;
+
+            var selectedStateId = null;
+            var selectedCityId = null;
+            function fetchCountry(){
+                shouldFetchState = false;
+                $.ajax({
+                    url: "{{ route('setting.country.index') }}", 
+                    type: 'GET',             
+                    // data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    success: function(response) {
+
+                        
+                        console.log(response);
+                        var data = response.data;
+                        console.log(data);
+                        
+                        var select2El = $('select[name="doctor_country_id"]');
+                        
+                        select2El.select2('destroy');
+                        select2El.empty();
+                        
+                        select2El.append($('<option value="" selected="selected"></option>').text('Select Item'));
+                        
+                        $.each(data, function(index, value) {
+                            select2El.append($('<option></option>').attr('value', value.country_id).text(value.country_name));
+                        });
+
+                        select2El.select2();
+                        shouldFetchState = true;
+                    },
+                    error: function(xhr, status, error) {
+                        console.group("Error Block");
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        console.groupEnd();   
+
+                        if(xhr.responseJSON.message){
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: xhr.responseJSON.message, //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+
+                        }else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Something went wrong', //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+                        }
+                                        
+                    }
+                });
+            }
+    
+            function fetchState(){
+                console.log("fetchState Trigger")
+                var id = $("select[name=doctor_country_id]").val();
+                var url = "{{ route('setting.state.fetch_country', ':id') }}";
+                url = url.replace(':id', id);
+                $.ajax({
+                    url: url, 
+                    type: 'GET',             
+                    // data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    success: function(response) {
+                        console.log(response);
+                        var data = response.data;
+                        console.log(data);
+                        
+                        var select2El = $('select[name="doctor_state_id"]');
+                        
+                        select2El.select2('destroy');
+                        select2El.empty();
+                        
+                        select2El.append($('<option value="" selected="selected"></option>').text('Select Item'));
+                        
+                        $.each(data, function(index, value) {
+                            select2El.append($('<option></option>').attr('value', value.state_id).text(value.state_name));
+                        });
+
+                        select2El.select2();
+                        shouldFetchCity = true;
+                        if(selectedStateId != null){
+                            $("select[name=doctor_state_id]").val(selectedStateId).trigger('change');
+
+                        }
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        console.group("Error Block");
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        console.groupEnd();   
+
+                        if(xhr.responseJSON.message){
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: xhr.responseJSON.message, //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+
+                        }else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Something went wrong', //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+                        }
+                                        
+                    }
+                });
+            }
+
+            $('select[name=doctor_country_id]').on('change', function(){
+                console.log('onchange trigger')
+                console.log(shouldFetchState)
+                if (shouldFetchState) {
+                    console.log('onchange if trigger');
+                    fetchState();
+                } else {
+                    shouldFetchState = true;
+                }
+            });
+
+
+            function fetchCity(){
+                console.log("fetchCity Trigger")
+                var id = $("select[name=doctor_state_id]").val();
+                var url = "{{ route('setting.city.fetch_city', ':id') }}";
+                url = url.replace(':id', id);
+                $.ajax({
+                    url: url, 
+                    type: 'GET',             
+                    // data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    success: function(response) {
+                        console.log(response);
+                        var data = response.data;
+                        console.log(data);
+                        
+                        var select2El = $('select[name="doctor_city_id"]');
+                        
+                        select2El.select2('destroy');
+                        select2El.empty();
+                        
+                        select2El.append($('<option value="" selected="selected"></option>').text('Select Item'));
+                        
+                        $.each(data, function(index, value) {
+                            select2El.append($('<option></option>').attr('value', value.city_id).text(value.city_name));
+                        });
+
+                        select2El.select2();
+                        if(selectedCityId != null){
+                            $("select[name=doctor_city_id]").val(selectedCityId).trigger('change');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.group("Error Block");
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        console.groupEnd();   
+
+                        if(xhr.responseJSON.message){
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: xhr.responseJSON.message, //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+
+                        }else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Something went wrong', //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+                        }
+                                        
+                    }
+                });
+            }
+
+            $('select[name=doctor_state_id]').on('change', function(){
+                console.log('onchange trigger')
+                console.log(shouldFetchCity)
+                if (shouldFetchCity) {
+                    console.log('onchange if trigger');
+                    fetchCity();
+                } else {
+                    shouldFetchCity = true;
+                }
+            });
+
             
 
 
              //initializing the datatable from main.blade.php function
             var tableName = '#table-standard';
-            var ajaxUrl = "{{ route('strength.index') }}";
+            var ajaxUrl = "{{ route('doctor.index') }}";
             var columnsArray = [                  
-                    { data: 'strength_name', name: 'strength_name', title: 'Strength Name', width: '75%'},
+                    { data: 'doctor_name', name: 'doctor_name', title: 'Name'},
+                    { data: 'doctor_email', name: 'doctor_email', title: 'Email'},
+                    { data: 'doctor_specialization', name: 'doctor_specialization', title: 'Specialization'},
+                    { data: 'doctor_experience', name: 'doctor_experience', title: 'Experience'},
+                    { data: 'doctor_profession_degree', name: 'doctor_profession_degree', title: 'Professional Degre'},
                     {
                         data: null,
                         title: 'Action',
                         render: function(data, type, row) {
-                            return '<a href="#" class="edit" data-id="'+row.strength_id+'"><i class="fas fa-edit text-success"></i></a> <a href="#" class="delete" data-id="'+row.strength_id+'"><i class="fas fa-trash text-danger"></i></a>';
+                            return '<a href="#" class="edit" data-id="'+row.doctor_id+'"><i class="fas fa-edit text-success"></i></a> <a href="#" class="delete" data-id="'+row.doctor_id+'"><i class="fas fa-trash text-danger"></i></a>';
                         },
                         orderable: false,
                         searchable: false
@@ -141,8 +471,9 @@
 
                 $("#create_form_btn").show();
                 $("#update_form_btn").hide();
-                $("#modal_create_form .modal-title").text("Add New Strength Record");
-
+                $("#modal_create_form .modal-title").text("Add New Doctor Record");
+                selectedCityId = null;
+                selectedStateId = null;
 
                 $("#create-form")[0].reset();               
 
@@ -164,8 +495,14 @@
                 $.ajax({
                     url: url, 
                     type: type,             
-                    data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    data: new FormData(this),//$(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function(response) {
+                        console.log("resposne=->", response)
                         // $('#create-post-form')[0].reset();
                         table.DataTable().ajax.reload();
                         $("#modal_create_form").modal('hide');
@@ -208,11 +545,12 @@
             // handle click event for "Edit" button
             table.on('click', '.edit', function() {
             
-                $("#modal_create_form .modal-title").text("Update Strength Form Record");
+                $("#modal_create_form .modal-title").text("Update Doctor Form Record");
 
                 var id = $(this).data('id');
-                var url = "{{ route('strength.edit', ':id') }}";
+                var url = "{{ route('doctor.edit', ':id') }}";
                 url = url.replace(':id', id);
+                
                 
                 $.ajax({
                     url: url,
@@ -222,9 +560,41 @@
                         var data = response.data;  
                         console.log("data==>", data.generic_indication)
 
-                        $("input[name=id]").val(data.strength_id);
-                        $("input[name=strength_name]").val(data.strength_name);
-                        $("select[name=strength_is_active]").val(data.strength_is_active);
+                        $("input[name=id]").val(data.doctor_id);
+                        $("input[name=doctor_name]").val(data.doctor_name);
+                        $("input[name=doctor_email]").val(data.doctor_email);
+                        $("input[name=doctor_phone_personal]").val(data.doctor_phone_personal);
+                        $("input[name=doctor_phone_clinic]").val(data.doctor_phone_clinic);
+                        $("input[name=doctor_specialization]").val(data.doctor_specialization);
+                        $("input[name=doctor_achievement]").val(data.doctor_achievement);
+                        $("input[name=doctor_experience]").val(data.doctor_experience);
+                        $("input[name=doctor_profession_degree]").val(data.doctor_profession_degree);
+                        $("select[name=doctor_gender]").val(data.doctor_gender);
+
+                        $("input[name=doctor_certificate]").next('.custom-file-label').addClass("selected").html(data.doctor_certificate.substring(data.doctor_certificate.lastIndexOf("__") + 2));
+                        $("input[name=doctor_image]").next('.custom-file-label').addClass("selected").html(data.doctor_image.substring(data.doctor_image.lastIndexOf("__") + 2));
+
+                        if(data.doctor_country_id != ''){
+                            $("select[name=doctor_country_id]").val(data.doctor_country_id).trigger('change');                        
+
+                        }
+                        selectedStateId = data.doctor_state_id;
+                        selectedCityId = data.doctor_city_id;
+
+                        // $("select[name=doctor_state_id]").val(data.doctor_state_id).trigger('change');
+                        // $("select[name=doctor_city_id]").val(data.doctor_city_id).trigger('change');
+
+                        $("input[name=doctor_zip_code]").val(data.doctor_zip_code);
+                        
+                        $('textarea[name=doctor_bio_notes]').summernote({
+                            focus: true
+                        }).summernote('code', data.doctor_bio_notes);
+
+                        $('textarea[name=doctor_address]').summernote({
+                            focus: true
+                        }).summernote('code', data.doctor_address);
+
+                        $("select[name=doctor_is_active]").val(data.doctor_is_active);
                         
                         $("#modal_create_form").modal('show');
                         $("#create_form_btn").hide();
@@ -285,7 +655,7 @@
                     }).then((result) => {
                     if (result.isConfirmed) {
                         var currentPage =  table.DataTable().page.info().page;
-                        var url = "{{ route('strength.destroy', ':id') }}";
+                        var url = "{{ route('doctor.destroy', ':id') }}";
                         url = url.replace(':id', id);
                         $.ajax({
                             url: url,
@@ -298,7 +668,7 @@
                                 
                                 Toast.fire({
                                     icon: 'success',
-                                    title: "Strength record deleted successfully",
+                                    title: "Doctor record deleted successfully",
                                     timer: 3000,
                                 });
                                 // reload the table

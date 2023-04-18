@@ -40,7 +40,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="brand.html" class="nav-link">
+              <a href="{{ route('brand.index') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Brand</p>
               </a>
@@ -86,7 +86,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="doctor.html" class="nav-link">
+          <a href="{{ route('doctor.index') }}" class="nav-link">
             <i class="nav-icon fas fa-user-md"></i>
             <p>Doctor</p>
           </a>
@@ -118,7 +118,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="advertisement.html" class="nav-link">
+          <a href="{{ route('advertisement.index') }}" class="nav-link">
             <i class="nav-icon fas fa-ad"></i>
             <p>Advertisement</p>
           </a>

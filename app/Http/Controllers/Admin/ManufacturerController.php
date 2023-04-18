@@ -26,6 +26,13 @@ class ManufacturerController extends Controller
         return view('admin.pages.manufacturer');
     }
    
+    public function list(Request $request)
+    {
+        $search = $request->input('query');
+        $data = Manufacturer::where('manufacturer_name', 'LIKE', '%' . $search . '%')->limit(20)->get();
+        return response()->json($data);
+    }
+
     public function store(Request $request)
     {
         try{

@@ -30,6 +30,12 @@ class City extends Model
         return $this->belongsTo(State::class, 'city_state_id', 'state_id');
     }
 
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class, 'doctor_city_id', 'city_id');
+    }
+
+
     protected static function booted()
     {
 
