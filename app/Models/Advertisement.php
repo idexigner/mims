@@ -15,7 +15,18 @@ class Advertisement extends Model
     const UPDATED_AT = 'advertisement_updated_at';
 
     protected $fillable = [
-        'advertisement_name',
+        'advertisement_title',
+        'advertisement_organization',
+        'advertisement_category',
+        'advertisement_link',
+        'advertisement_publish',
+        'advertisement_unpublish',
+        'advertisement_image',
+        'advertisement_generic_id',
+        'advertisement_brand_id',
+        'advertisement_indication_id',
+        'advertisement_position',
+        'advertisement_is_featured',
         'advertisement_is_active',
         'advertisement_is_deleted',
         'advertisement_created_by',
@@ -24,9 +35,25 @@ class Advertisement extends Model
         'advertisement_updated_at'
     ];
 
-    public function brands()
+ 
+    public function generic()
     {
-        return $this->hasMany(Brand::class, 'brand_advertisement_id');
+        return $this->belongsTo(Generic::class, 'advertisement_generic_id');
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'advertisement_brand_id');
+    }
+
+    public function indication()
+    {
+        return $this->belongsTo(Indication::class, 'advertisement_indication_id');
+    }
+
+    public function advertisement_position()
+    {
+        return $this->belongsTo(AdvertisementPosition::class, 'advertisement_position');
     }
 
     protected static function booted()

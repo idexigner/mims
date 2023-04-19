@@ -56,7 +56,7 @@
     <div class="modal fade" id="modal_create_form">
         <div class="modal-dialog modal-lg">
             <div class="modal-content ">
-            <form class="form-horizontal" id="create-form">
+            <form class="form-horizontal" id="create-form" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h4 class="modal-title">Add New Advertisement Record</h4>
@@ -78,7 +78,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Advertisement For </label>
                                 <div class="col-sm-9">
-                                <select class="form-control" onchange="changeAdvertisement(this.value)">
+                                <select class="form-control" name="advertisement_category" onchange="changeAdvertisement(this.value)">
                                     <option value="">Select Item</option>
                                     <option value="generic">Generic</option>
                                     <option value="brand">Brand</option>
@@ -89,44 +89,36 @@
                             <div class="form-group row d-none" id="generic">
                                 <label class="col-sm-3 col-form-label">Generic</label>
                                 <div class="col-sm-9">
-                                <select class="form-control select2" style="width:100%">
+                                <select class="form-control select2" style="width:100%" name="advertisement_generic_id">
                                     <option value="">Select Item</option>
-                                    <option value="">Option 1</option>  
-                                    <option value="">Option 2</option> 
-                                    <option value="">Option 3</option>    
+                                 
                                 </select>                        
                                 </div>
                             </div>
                             <div class="form-group row d-none" id="brand">
                                 <label class="col-sm-3 col-form-label">Brand</label>
                                 <div class="col-sm-9">
-                                <select class="form-control select2" style="width:100%">
+                                <select class="form-control select2" style="width:100%" name="advertisement_brand_id">
                                     <option value="">Select Item</option>
-                                    <option value="">Option 1</option>  
-                                    <option value="">Option 2</option> 
-                                    <option value="">Option 3</option>    
+  
                                 </select>                        
                                 </div>
                             </div>
                             <div class="form-group row d-none" id="indication">
                                 <label class="col-sm-3 col-form-label">Indication</label>
                                 <div class="col-sm-9">
-                                <select class="form-control select2" style="width:100%">
+                                <select class="form-control select2" style="width:100%" name="advertisement_indication_id">
                                     <option value="">Select Item</option>
-                                    <option value="">Option 1</option>  
-                                    <option value="">Option 2</option> 
-                                    <option value="">Option 3</option>    
+   
                                 </select>                        
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Advertisement Position <span class="text-danger">*</span></label>
                                 <div class="col-sm-9">
-                                <select class="form-control select2" style="width:100%">
+                                <select class="form-control select2" style="width:100%" required name="advertisement_position">
                                     <option value="">Select Item</option>
-                                    <option value="">Option 1</option>  
-                                    <option value="">Option 2</option> 
-                                    <option value="">Option 3</option>    
+ 
                                 </select>                        
                                 </div>
                             </div>
@@ -135,8 +127,8 @@
                                 <label class="col-sm-3 col-form-label">Image<span class="text-red">*</span></label>
                                 <div class="col-sm-9">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                        <input type="file" class="custom-file-input" name="advertisement_image" required id="advertisement_image">
+                                        <label class="custom-file-label" for="advertisement_image">Choose file</label>
                                       </div>
                                 </div>
                             </div>
@@ -144,22 +136,44 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Title</label>
                                 <div class="col-sm-9">
-                                <input type="text" class="form-control" placeholder="Title">
+                                <input type="text" class="form-control" placeholder="Title" name="advertisement_title" data-parsley-maxlength="200">
                                 </div>
                             </div>
                            
                             <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Published Date <span class="text-red">*</span></label>
+                                <div class="col-sm-9">
+                                    <div class="input-group date" id="advertisement_publish" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#advertisement_publish" name="advertisement_publish" required/>
+                                        <div class="input-group-append" data-target="#advertisement_publish" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Unpublished Date <span class="text-red">*</span></label>
                                 <div class="col-sm-9">
-                                    <div class="input-group date" id="publishDate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#publishDate"/>
-                                        <div class="input-group-append" data-target="#publishDate" data-toggle="datetimepicker">
+                                    <div class="input-group date" id="advertisement_unpublish" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#advertisement_unpublish" name="advertisement_unpublish" required/>
+                                        <div class="input-group-append" data-target="#advertisement_unpublish" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Is Featured </label>
+                                <div class="col-sm-9">
+                                <select class="form-control" name="advertisement_is_featured">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>                        
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Is Active </label>
                                 <div class="col-sm-9">
@@ -219,7 +233,8 @@
 
             bsCustomFileInput.init();
 
-            $('#applicationDeadline').datetimepicker({
+           
+            $('#advertisement_publish').datetimepicker({
                 format: 'L',
                 icons: {
                     // Define the icons for Today and Clear buttons
@@ -237,7 +252,7 @@
                     clearClass: 'btn btn-danger btn-sm'
                 }
             });
-            $('#publishDate').datetimepicker({
+            $('#advertisement_unpublish').datetimepicker({
                 format: 'L',
                 icons: {
                     // Define the icons for Today and Clear buttons
@@ -256,6 +271,129 @@
                 }
             });
 
+
+            fetchPosition();
+
+            function fetchPosition(){
+                $.ajax({
+                    url: "{{ route('setting.advertisement.position.fetch') }}", 
+                    type: 'GET',             
+                    // data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    success: function(response) {
+                        console.log(response);
+                        var data = response.data;
+                        console.log(data);
+                        
+                        var select2El = $('select[name="advertisement_position"]');
+                        
+                        select2El.select2('destroy');
+                        select2El.empty();
+                        
+                        select2El.append($('<option value="" selected="selected"></option>').text('Select Item'));
+                        
+                        $.each(data, function(index, value) {
+                            select2El.append($('<option></option>').attr('value', value.advertisement_position_id).text(value.advertisement_position_name));
+                        });
+
+                        select2El.select2();
+                    },
+                    error: function(xhr, status, error) {
+                        console.group("Error Block");
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        console.groupEnd();   
+
+                        if(xhr.responseJSON.messags){
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: xhr.responseJSON.message, //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+
+                        }else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Something went wrong', //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+                        }
+                                        
+                    }
+                });
+            }
+
+
+            //Initializing generic dropdown
+            var genericUrl = "{{ route('generic.list') }}";
+            var genericFormat = {
+                id: function(item) {
+                    return item.generic_id;
+                },
+                text: function(item) {
+                    return item.generic_name;
+                }
+            };
+            initSelect2Dropdown($('select[name=advertisement_generic_id]'), genericUrl, genericFormat);
+
+
+            //Initializing brand dropdown
+            var brandUrl = "{{ route('brand.list') }}";
+            var brandFormat = {
+                id: function(item) {
+                    return item.brand_id;
+                },
+                text: function(item) {
+                    return item.brand_name;
+                }
+            };
+            initSelect2Dropdown($('select[name=advertisement_brand_id]'), brandUrl, brandFormat);
+
+
+            //Initializing indication dropdown
+            var indicationUrl = "{{ route('indication.list') }}";
+            var indicationFormat = {
+                id: function(item) {
+                    return item.indication_id;
+                },
+                text: function(item) {
+                    return item.indication_name;
+                }
+            };
+            initSelect2Dropdown($('select[name=advertisement_indication_id]'), indicationUrl, indicationFormat);
+
+
+
+
+            //generic function for dropdown
+            function initSelect2Dropdown($dropdown, url, format) {
+                $dropdown.select2({
+                    ajax: {
+                        url: url,
+                        dataType: 'json',
+                        delay: 250,
+                        data: function(params) {
+                            return {
+                                query: params.term
+                            }
+                        },
+                        processResults: function(data) {
+                            return {
+                                results: $.map(data, function(item) {
+                                    return {
+                                        id: format.id(item),
+                                        text: format.text(item)
+                                    }
+                                })
+                            }
+                        },
+                        cache: true
+                    },
+                    placeholder: 'Select Item',
+                    minimumInputLength: 1
+                });
+            }
             
 
 
@@ -263,7 +401,11 @@
             var tableName = '#table-standard';
             var ajaxUrl = "{{ route('advertisement.index') }}";
             var columnsArray = [                  
-                    { data: 'advertisement_title', name: 'advertisement_title', title: 'Title', width: '75%'},
+                    { data: 'advertisement_name', name: 'advertisement_name', title: 'Name'},
+                    { data: 'advertisement_category', name: 'advertisement_category', title: 'Advertisement For'},
+                    { data: 'advertisement_unpublish', name: 'advertisement_unpublish', title: 'Unpublish Date'},
+                    { data: 'advertisement_position.advertisement_position_name', name: 'advertisement_position.advertisement_position_name', title: 'Position'},
+
                     {
                         data: null,
                         title: 'Action',
@@ -294,6 +436,22 @@
             //For Creating and updating the record
             $('#create-form').submit(function(e) {
                 e.preventDefault();
+                v = $("select[name=advertisement_category]").val();
+                if(v == "generic"){
+                    $("select[name=advertisement_brand_id]").val(null).trigger('change');
+                    $("select[name=advertisement_indication_id]").val(null).trigger('change');
+
+                } else if (v == "brand"){
+                    $("select[name=advertisement_generic_id]").val(null).trigger('change');
+                    $("select[name=advertisement_indication_id]").val(null).trigger('change');
+
+                } else if (v == "indication"){
+                    $("select[name=advertisement_generic_id]").val(null).trigger('change');
+                    $("select[name=advertisement_brand_id]").val(null).trigger('change');
+
+                } 
+
+                
                 var url = $("#create_form_btn").data('url');
                 var type = "POST";
                 
@@ -361,10 +519,57 @@
                     success: function(response) {
                         console.log(response);
                         var data = response.data;  
-                        console.log("data==>", data.generic_indication)
+                        console.log("data==>", data)
 
                         $("input[name=id]").val(data.advertisement_id);
                         $("input[name=advertisement_name]").val(data.advertisement_name);
+                        $("select[name=advertisement_category]").val(data.advertisement_category);
+                        
+
+                        var url = "{{ route('generic.edit', ':id') }}";
+                        url = url.replace(':id', data.advertisement_generic_id);
+                        $.ajax({
+                            url: url,
+                            dataType: 'json',
+                            success: function(d) {                                
+                                var option = new Option(d.data.generic_name, d.data.generic_id, true, true);
+                                $("select[name=advertisement_generic_id]").append(option).trigger('change');
+                            }
+                        });
+
+                        var url = "{{ route('brand.edit', ':id') }}";
+                        url = url.replace(':id', data.advertisement_brand_id);
+                        $.ajax({
+                            url: url,
+                            dataType: 'json',
+                            success: function(d) {                                
+                                var option = new Option(d.data.generic_name, d.data.generic_id, true, true);
+                                $("select[name=advertisement_brand_id]").append(option).trigger('change');
+                            }
+                        });
+
+                        var url = "{{ route('indication.edit', ':id') }}";
+                        url = url.replace(':id', data.advertisement_indication_id);
+                        $.ajax({
+                            url: url,
+                            dataType: 'json',
+                            success: function(d) {                                
+                                var option = new Option(d.data.generic_name, d.data.generic_id, true, true);
+                                $("select[name=advertisement_indication_id]").append(option).trigger('change');
+                            }
+                        });
+
+
+                        
+                        $("select[name=advertisement_position]").val(data.advertisement_position).trigger('change');
+
+
+                        $("input[name=advertisement_image]").next('.custom-file-label').addClass("selected").html(data.advertisement_image.substring(data.advertisement_image.lastIndexOf("__") + 2));
+                        $("input[name=advertisement_title]").val(data.advertisement_title);
+                        $("input[name=advertisement_publish]").val(formatDate(data.advertisement_publish));
+                        $("input[name=advertisement_unpublish]").val(formatDate(data.advertisement_unpublish));
+
+                        $("select[name=advertisement_is_featured]").val(data.advertisement_is_featured);
                         $("select[name=advertisement_is_active]").val(data.advertisement_is_active);
                         
                         $("#modal_create_form").modal('show');

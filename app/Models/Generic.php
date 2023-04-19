@@ -43,6 +43,11 @@ class Generic extends Model
         return $this->hasMany(Brand::class, 'brand_generic_id');
     }
 
+    public function advertisements()
+    {
+        return $this->hasMany(Advertisement::class, 'advertisement_generic_id');
+    }
+
     protected static function booted()
     {
 

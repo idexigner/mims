@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\StrengthController;
 use App\Http\Controllers\Admin\AddressController;
 use App\Http\Controllers\Admin\AddressCategoryController;
 use App\Http\Controllers\Admin\AdvertisementController;
+use App\Http\Controllers\Admin\AdvertisementPositionController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DoctorController;
@@ -143,6 +144,8 @@ Route::prefix('/admin')->group(function(){
     // Indication Controller
     Route::prefix('/indication')->name('indication.')->group(function(){
         Route::get('/', [IndicationController::class, 'index'])->name('index');
+        Route::get('/list', [IndicationController::class, 'list'])->name('list');
+
         Route::post('/store', [IndicationController::class, 'store'])->name('store');
         Route::put('/update', [IndicationController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [IndicationController::class, 'edit'])->name('edit');
@@ -295,6 +298,17 @@ Route::prefix('/admin')->group(function(){
             Route::put('/update', [LocationController::class, 'update'])->name('update');
             Route::get('/edit/{id}', [LocationController::class, 'edit'])->name('edit');
             Route::delete('/destroy/{id}', [LocationController::class, 'destroy'])->name('destroy');
+        });
+
+        // Advertisement Position Controller
+        Route::prefix('/advertisement/position')->name('advertisement.position.')->group(function(){
+            Route::get('/', [AdvertisementPositionController::class, 'index'])->name('index');
+            Route::post('/store', [AdvertisementPositionController::class, 'store'])->name('store');
+            Route::put('/update', [AdvertisementPositionController::class, 'update'])->name('update');
+            Route::get('/edit/{id}', [AdvertisementPositionController::class, 'edit'])->name('edit');
+            Route::delete('/destroy/{id}', [AdvertisementPositionController::class, 'destroy'])->name('destroy');
+            Route::get('/fetch', [AdvertisementPositionController::class, 'fetch'])->name('fetch');
+
         });
 
     });

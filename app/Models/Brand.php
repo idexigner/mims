@@ -66,6 +66,11 @@ class Brand extends Model
     {
         return $this->belongsTo(Packsize::class, 'brand_pack_size_id');
     }
+
+    public function advertisements()
+    {
+        return $this->hasMany(Advertisement::class, 'advertisement_brand_id');
+    }
     
     protected static function booted()
     {

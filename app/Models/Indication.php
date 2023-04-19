@@ -24,6 +24,11 @@ class Indication extends Model
         'indication_updated_at'
     ];
 
+    public function advertisements()
+    {
+        return $this->hasMany(Advertisement::class, 'advertisement_indication_id');
+    }
+
     protected static function booted()
     {
 

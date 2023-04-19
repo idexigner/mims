@@ -16,7 +16,7 @@ class AdvertisementController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Advertisement::select('*');
+            $data = Advertisement::with('advertisement_position')->select('*');
             return DataTables::of($data)->make(true);
         }
 
@@ -34,7 +34,12 @@ class AdvertisementController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'advertisement_name' => 'required'
+                'advertisement_organization' => 'required',
+                'advertisement_position' => 'required',
+                'advertisement_publish' => 'required',
+                'advertisement_unpublish' => 'required',
+                'advertisement_image' => 'required',
+             
                 
             ]);
 
@@ -43,7 +48,27 @@ class AdvertisementController extends Controller
             }
 
             $obj = new Advertisement();
-            $obj->advertisement_name = $request->advertisement_name ?? '';
+            $obj->advertisement_title = $request->advertisement_title ?? '';
+            $obj->advertisement_organization = $request->advertisement_organization ?? '';
+            $obj->advertisement_category = $request->advertisement_category ?? '';
+            $obj->advertisement_link = $request->advertisement_link ?? '';
+            $obj->advertisement_publish = ($request->advertisement_publish)? date('Y-m-d', strtotime($request->advertisement_publish)): '';
+            $obj->advertisement_unpublish = ($request->advertisement_unpublish)? date('Y-m-d', strtotime($request->advertisement_unpublish)): '';
+
+            if ($request->hasFile('advertisement_image')) {
+                $file = $request->file('advertisement_image');
+                $advertisement_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+                $file->storeAs('public/images/advertisement', $advertisement_image);
+            }
+            $obj->advertisement_image = $advertisement_image ?? '';
+
+            $obj->advertisement_generic_id = $request->advertisement_generic_id == 'Select Item' ? null : $request->advertisement_generic_id;
+            $obj->advertisement_brand_id = $request->advertisement_brand_id == 'Select Item' ? null : $request->advertisement_brand_id;
+            $obj->advertisement_indication_id = $request->advertisement_indication_id == 'Select Item' ? null : $request->advertisement_indication_id;
+
+            $obj->advertisement_position = $request->advertisement_position ?? '';
+            $obj->advertisement_is_featured = $request->advertisement_is_featured ?? '';
+
             $obj->advertisement_is_active = $request->advertisement_is_active ?? '1';
             $obj->save();
 
@@ -91,7 +116,11 @@ class AdvertisementController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'advertisement_name' => 'required',                
+                'advertisement_organization' => 'required',
+                'advertisement_position' => 'required',
+                'advertisement_publish' => 'required',
+                'advertisement_unpublish' => 'required',
+               
             ]);
 
             if ($validator->fails()) {
@@ -99,7 +128,28 @@ class AdvertisementController extends Controller
             }
 
             $obj = Advertisement::findOrFail($request->id);
-            $obj->advertisement_name = $request->advertisement_name ?? '';
+            $obj->advertisement_title = $request->advertisement_title ?? '';
+            $obj->advertisement_organization = $request->advertisement_organization ?? '';
+            $obj->advertisement_category = $request->advertisement_category ?? '';
+            $obj->advertisement_link = $request->advertisement_link ?? '';
+            $obj->advertisement_publish = ($request->advertisement_publish)? date('Y-m-d', strtotime($request->advertisement_publish)): '';
+            $obj->advertisement_unpublish = ($request->advertisement_unpublish)? date('Y-m-d', strtotime($request->advertisement_unpublish)): '';
+
+            if ($request->hasFile('advertisement_image')) {
+                $file = $request->file('advertisement_image');
+                $advertisement_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+                $file->storeAs('public/images/advertisement', $advertisement_image);
+                $obj->advertisement_image = $advertisement_image ?? '';
+
+            }
+
+            $obj->advertisement_generic_id = $request->advertisement_generic_id == 'Select Item' ? null : $request->advertisement_generic_id;
+            $obj->advertisement_brand_id = $request->advertisement_brand_id == 'Select Item' ? null : $request->advertisement_brand_id;
+            $obj->advertisement_indication_id = $request->advertisement_indication_id == 'Select Item' ? null : $request->advertisement_indication_id;
+
+            $obj->advertisement_position = $request->advertisement_position ?? '';
+            $obj->advertisement_is_featured = $request->advertisement_is_featured ?? '';
+
             $obj->advertisement_is_active = $request->advertisement_is_active ?? '1';
             $obj->save();
 

@@ -182,6 +182,13 @@
                 <p>Location</p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="{{ route('setting.advertisement.position.index') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Advertisement Position</p>
+              </a>
+            </li>
            
           </ul>
         </li>
