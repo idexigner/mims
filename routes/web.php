@@ -29,7 +29,11 @@ use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\MigrationLiveController;
 use App\Http\Controllers\SiteSettingController;
+use Illuminate\Support\Facades\DB;
+
+
 
 
 
@@ -156,7 +160,7 @@ Route::prefix('/admin')->group(function(){
      Route::prefix('/doctor')->name('doctor.')->group(function(){
         Route::get('/', [DoctorController::class, 'index'])->name('index');
         Route::post('/store', [DoctorController::class, 'store'])->name('store');
-        Route::put('/update', [DoctorController::class, 'update'])->name('update');
+        Route::post('/update', [DoctorController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [DoctorController::class, 'edit'])->name('edit');
         Route::delete('/destroy/{id}', [DoctorController::class, 'destroy'])->name('destroy');
     });
@@ -370,3 +374,13 @@ Route::get('/optimize', function () {
     Artisan::call('optimize');
     return 'Application optimized!';
 });
+
+Route::get('/migrate_live', function(){
+
+   
+
+   });
+
+
+   Route::get('/migrate_live', [MigrationLiveController::class, 'index']);
+

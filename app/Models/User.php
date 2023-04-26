@@ -59,4 +59,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function module()
+    {
+        return $this->hasOne(UserModuleMapping::class, 'module_user_id');
+    }
 }

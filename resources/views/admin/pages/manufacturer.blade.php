@@ -102,6 +102,51 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Country <span class="text-red">*</span></label>
+                                <div class="col-sm-9">
+                                    <select class="form-control select2" style="width: 100%;" name="location_country_id" required>
+                                        <option selected>Select Item</option>
+                                    </select>
+              
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">State<span class="text-red">*</span></label>
+                                <div class="col-sm-9">
+                                    <select class="form-control select2" style="width: 100%;" name="location_country_id" required>
+                                        <option selected>Select Item</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">City<span class="text-red">*</span></label>
+                                <div class="col-sm-9">
+                                    <select class="form-control select2" style="width: 100%;" name="location_country_id" required>
+                                        <option selected>Select Item</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Address<span class="text-red">*</span></label>
+                                <div class="col-sm-9">
+                                    <textarea id="location_address" class="summernote form-control" name="location_address" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Longitude</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="Longitude" name="location_longitude" data-parsley-pattern="^[0-9]+(\.[0-9]+)?$">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Latitude</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="Latitude" name="location_latitude" data-parsley-pattern="^[0-9]+(\.[0-9]+)?$">
+                                </div>
+                            </div>
+                            {{-- <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Address<span class="text-red">*</span></label>
                                 <div class="col-sm-8">
                                     <select class="form-control select2" style="width: 100%;" name="manufacturer_location_id" required >
@@ -112,7 +157,7 @@
                                 <div class="col-sm-1">
                                     <button type="button" class="btn btn-primary add_address btn-block" >+</button>
                                 </div>
-                            </div>
+                            </div> --}}
                             
                         
 

@@ -120,6 +120,7 @@ class DoctorController extends Controller
     public function update(Request $request)
     {
         try{
+            // dd($request->all());
             $validator = Validator::make($request->all(), [
                 'doctor_name' => 'required',                
             ]);

@@ -489,7 +489,7 @@
                 
                 if($('#create_form_btn').is(':hidden')){
                     url = $("#update_form_btn").data('url');
-                    type = "PUT";
+                    // type = "PUT";
                 }
                 
                 $.ajax({
