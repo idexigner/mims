@@ -541,7 +541,9 @@
                         });
 
                         $("input[name=brand_price]").val(data.brand_price);
-                        $("input[name=brand_image]").next('.custom-file-label').addClass("selected").html(data.brand_image.substring(data.brand_image.lastIndexOf("__") + 2));
+                        if (data.brand_image) {
+                            $("input[name=brand_image]").next('.custom-file-label').addClass("selected").html(data.brand_image.substring(data.brand_image.lastIndexOf("__") + 2));
+                        }
 
                         $("select[name=brand_is_hightlight]").val(data.brand_is_hightlight);
                         $("select[name=brand_is_new_product]").val(data.brand_is_new_product);

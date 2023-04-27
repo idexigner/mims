@@ -19,15 +19,218 @@ class MigrationLiveController extends Controller
         // $this->migrate_packsize();
         // $this->migrate_manufacturer();
         // $this->migrate_brand();
-
         // $this->migrate_location();
-
         // $this->migrate_country();
         // $this->migrate_state();
         // $this->migrate_city();
         // $this->migrate_doctor();
         // $this->migrate_job();
         // $this->migrate_news();
+        // $this->migrate_journal();
+        // $this->migrate_address();
+        // $this->migrate_address_category();
+        // $this->migrate_special_report();
+        // $this->migrate_advertisement();
+        $this->migrate_advertisement_position();
+
+    }
+
+
+    // function migrate_advertisement(){
+    //     try{
+    //         DB::connection('mysql')->table('advertisement')->truncate();
+    //                 // Get the data from the source table
+    //                 $advertisements = DB::connection('db_live')->select('SELECT * FROM mims_advertisementinformation');
+
+    //                 // Map the columns to match the destination table
+    //                 $mappedData = array_map(function ($advertisement) {
+    //                     return [
+    //                         'advertisement_id' => $advertisement->ID,
+    //                         'advertisement_organization' => $advertisement->Organization,
+    //                         'advertisement_title' => $advertisement->Title,
+    //                         'advertisement_name' => $advertisement->BodyText,
+    //                         'advertisement_link' => $advertisement->LinkURL,
+    //                         'advertisement_name' => $advertisement->ImagePath,
+    //                         'advertisement_name' => $advertisement->PublishDate,
+    //                         'advertisement_name' => $advertisement->UnpublishedDate,
+    //                         'advertisement_name' => $advertisement->AdvertisementPositionID,
+    //                         'advertisement_name' => $advertisement->ApplicableFor,
+    //                         'advertisement_is_active' => 1,
+    //                         'advertisement_is_deleted' => $advertisement->IsDeleted,
+    //                         'advertisement_created_by' => 1,
+    //                         'advertisement_created_at' => $advertisement->LastUpdate,
+    //                         'advertisement_updated_by' => 1,
+    //                         'advertisement_updated_at' => $advertisement->LastUpdate,
+    //                     ];
+    //                 }, $advertisements);
+
+    //         // Insert the data into the destination table
+    //         DB::connection('mysql')->table('advertisement')->insert($mappedData);
+    //     }catch(Exception $ex){
+    //         dd($ex->getMessage());
+    //     }
+    // }
+
+    function migrate_advertisement_position(){
+        try{
+            DB::connection('mysql')->table('advertisement_position')->truncate();
+                    // Get the data from the source table
+                    $advertisement_positions = DB::connection('db_live')->select('SELECT * FROM mims_advertisementpositioninformation');
+
+                    // Map the columns to match the destination table
+                    $mappedData = array_map(function ($advertisement_position) {
+                        return [
+                            'advertisement_position_id' => $advertisement_position->ID,
+                            'advertisement_position_name' => $advertisement_position->Name,
+                            'advertisement_position_class_name' => $advertisement_position->ClassName,
+                            'advertisement_position_width' => $advertisement_position->ImageWidth,
+                            'advertisement_position_height' => $advertisement_position->ImageHeight,
+                            'advertisement_position_number' => $advertisement_position->NumberOfAdvertisement,
+                            'advertisement_position_interval' => $advertisement_position->Interval,
+                            'advertisement_position_price' => $advertisement_position->PriceInBDT,
+                            'advertisement_position_is_active' => 1,
+                            'advertisement_position_is_deleted' => $advertisement_position->IsDeleted,
+                            'advertisement_position_created_by' => 1,
+                            'advertisement_position_created_at' => $advertisement_position->LastUpdate,
+                            'advertisement_position_updated_by' => 1,
+                            'advertisement_position_updated_at' => $advertisement_position->LastUpdate,
+                        ];
+                    }, $advertisement_positions);
+
+            // Insert the data into the destination table
+            DB::connection('mysql')->table('advertisement_position')->insert($mappedData);
+        }catch(Exception $ex){
+            dd($ex->getMessage());
+        }
+    }
+
+    function migrate_special_report(){
+        try{
+            DB::connection('mysql')->table('special_report')->truncate();
+                    // Get the data from the source table
+                    $special_reports = DB::connection('db_live')->select('SELECT * FROM mims_specialreports');
+
+                    // Map the columns to match the destination table
+                    $mappedData = array_map(function ($special_report) {
+                        return [
+                            'special_report_id' => $special_report->ID,
+                            'special_report_title' => $special_report->Title,
+                            'special_report_description' => $special_report->Description,
+                            'special_report_link_address' => $special_report->LinkAddress,
+                            'special_report_image' => $special_report->ImagePath,
+                            'special_report_is_active' => 1,
+                            'special_report_is_deleted' => $special_report->IsDeleted,
+                            'special_report_created_by' => 1,
+                            'special_report_created_at' => $special_report->LastUpdate,
+                            'special_report_updated_by' => 1,
+                            'special_report_updated_at' => $special_report->LastUpdate,
+                        ];
+                    }, $special_reports);
+
+            // Insert the data into the destination table
+            DB::connection('mysql')->table('special_report')->insert($mappedData);
+        }catch(Exception $ex){
+            dd($ex->getMessage());
+        }
+    }
+
+    function migrate_address_category(){
+        try{
+            DB::connection('mysql')->table('address_category')->truncate();
+                    // Get the data from the source table
+                    $address_categorys = DB::connection('db_live')->select('SELECT * FROM mims_addresscategory');
+
+                    // Map the columns to match the destination table
+                    $mappedData = array_map(function ($address_category) {
+                        return [
+                            'address_category_id' => $address_category->ID,
+                            'address_category_title' => $address_category->Name,
+                            'address_category_is_active' => $address_category->IsActive,
+                            'address_category_is_deleted' => $address_category->IsDeleted,
+                            'address_category_created_by' => 1,
+                            'address_category_created_at' => $address_category->LastUpdate,
+                            'address_category_updated_by' => 1,
+                            'address_category_updated_at' => $address_category->LastUpdate,
+                        ];
+                    }, $address_categorys);
+
+            // Insert the data into the destination table
+            DB::connection('mysql')->table('address_category')->insert($mappedData);
+        }catch(Exception $ex){
+            dd($ex->getMessage());
+        }
+    }
+
+    function migrate_address(){
+        try{
+            DB::connection('mysql')->table('address')->truncate();
+                    // Get the data from the source table
+                    $addresss = DB::connection('db_live')->select('SELECT * FROM mims_addressinformation');
+
+                    // Map the columns to match the destination table
+                    $mappedData = array_map(function ($address) {
+                        return [
+                            'address_id' => $address->ID,
+                            'address_category' => $address->AddressCategoryID,
+                            'address_title' => $address->Name,
+                            'address_detail' => $address->Address,
+                            'address_contact' => $address->ContactNumber,
+                            'address_is_active' => 1,
+                            'address_is_deleted' => $address->IsDeleted,
+                            'address_created_by' => 1,
+                            'address_created_at' => $address->LastUpdate,
+                            'address_updated_by' =>1,
+                            'address_updated_at' => $address->LastUpdate,
+                        ];
+                    }, $addresss);
+
+            // Insert the data into the destination table
+            DB::connection('mysql')->table('address')->insert($mappedData);
+        }catch(Exception $ex){
+            dd($ex->getMessage());
+        }
+    }
+
+    function migrate_journal(){
+        try{
+            DB::connection('mysql')->table('journal')->truncate();
+                    // Get the data from the source table
+                    $journals = DB::connection('db_live')->select('SELECT * FROM mims_journalinformation');
+
+                    // Map the columns to match the destination table
+                    $mappedData = array_map(function ($journal) {
+                        $journal_category = $journal->JournalCategoryID;
+                        if($journal_category == 1){
+                            $journal_category = "Cardiovascular";
+                        }else if($journal_category == 2){
+                            $journal_category = "Research Method";
+                        }else if($journal_category == 3){
+                            $journal_category = "Resource";
+                        }else if($journal_category == 4){
+                            $journal_category = "Dental";
+                        }else {
+                            $journal_category = "Library";
+                        }
+                        return [
+                            'journal_id' => $journal->ID,
+                            'journal_title' => $journal->Title,
+                            'journal_category' => $journal_category,
+                            'journal_type' => $journal->JournalType,
+                            'journal_image' => $journal->JournalPath,
+                            'journal_is_active' => 1,
+                            'journal_is_deleted' => $journal->IsDeleted,
+                            'journal_created_by' => 1,
+                            'journal_created_at' => $journal->LastUpdate,
+                            'journal_updated_by' => 1,
+                            'journal_updated_at' => $journal->LastUpdate,
+                        ];
+                    }, $journals);
+
+            // Insert the data into the destination table
+            DB::connection('mysql')->table('journal')->insert($mappedData);
+        }catch(Exception $ex){
+            dd($ex->getMessage());
+        }
     }
 
     function migrate_news(){
@@ -49,7 +252,7 @@ class MigrationLiveController extends Controller
                             'news_is_deleted' => $news->IsDeleted,
                             'news_created_by' => 1,
                             'news_created_at' => $news->LastUpdate,
-                            'news_updated_by' => 0,
+                            'news_updated_by' => 1,
                             'news_updated_at' => $news->LastUpdate,
                         ];
                     }, $newss);
@@ -63,12 +266,25 @@ class MigrationLiveController extends Controller
 
     function migrate_job(){
         try{
-            DB::connection('mysql')->table('job')->truncate();
-                    // Get the data from the source table
-                    $jobs = DB::connection('db_live')->select('SELECT * FROM mims_jobinformation');
+         
 
-                    // Map the columns to match the destination table
-                    $mappedData = array_map(function ($job) {
+
+            DB::connection('mysql')->table('job')->truncate();
+            
+            // Get the total count of records
+            $totalCount = DB::connection('db_live')->table('mims_jobinformation')->count();
+
+            // Set the limit and offset values
+            $limit = 500;
+            $offset = 0;
+
+            // Loop through the records and migrate them in chunks
+            while ($offset < $totalCount) {
+                // Get the records for the current chunk
+                $jobs = DB::connection('db_live')->select('SELECT * FROM mims_jobinformation LIMIT ? OFFSET ?', [$limit, $offset]);
+
+                // Map the columns to match the destination table
+                $mappedData = array_map(function ($job) {
 
                         $job_category = $job->JobCategory;
                         if($job_category == 1){
@@ -76,7 +292,8 @@ class MigrationLiveController extends Controller
                         }else{
                             $job_category = "Medical";
                         }
-                        return [
+
+                    return [
                             'job_id' => $job->ID,
                             'job_category' => $job_category,
                             'job_title' => $job->Title,
@@ -85,7 +302,7 @@ class MigrationLiveController extends Controller
                             'job_organization_logo' => $job->OrganizationLogo,
                             'job_position' => $job->Position,
                             'job_application_deadline' => $job->ApplicationDeadline,
-                            'job_salary' => $job->Salary,
+                            'job_salary' => (double)$job->Salary,
                             'job_educational_requirement' => $job->EducationalRequirement,
                             'job_experience_requirement' => $job->ExperienceRequirement,
                             'job_vacancy' => $job->NumberOfVacancy,
@@ -102,13 +319,17 @@ class MigrationLiveController extends Controller
                             'job_is_deleted' => $job->IsDeleted,
                             'job_created_by' => 1,
                             'job_created_at' => $job->LastUpdate,
-                            'job_updated_by' => 0,
+                            'job_updated_by' => 1,
                             'job_updated_at' => $job->LastUpdate,
-                        ];
-                    }, $jobs);
+                    ];
+                }, $jobs);
 
-            // Insert the data into the destination table
-            DB::connection('mysql')->table('job')->insert($mappedData);
+                // Insert the data into the destination table
+                DB::connection('mysql')->table('job')->insert($mappedData);
+
+                // Update the offset for the next chunk
+                $offset += $limit;
+            }
         }catch(Exception $ex){
             dd($ex->getMessage());
         }
@@ -116,14 +337,26 @@ class MigrationLiveController extends Controller
 
     function migrate_doctor(){
         try{
+            
             DB::connection('mysql')->table('doctor')->truncate();
-                    // Get the data from the source table
-                    $doctors = DB::connection('db_live')->select('SELECT * FROM mims_doctorinformation');
+                   
+            
+            // Get the total count of records
+            $totalCount = DB::connection('db_live')->table('mims_doctorinformation')->count();
 
-                    // Map the columns to match the destination table
-                    $mappedData = array_map(function ($doctor) {
-                        return [
-                            'doctor_id' => $doctor->ID,
+            // Set the limit and offset values
+            $limit = 1000;
+            $offset = 0;
+
+            // Loop through the records and migrate them in chunks
+            while ($offset < $totalCount) {
+                // Get the records for the current chunk
+                $doctors = DB::connection('db_live')->select('SELECT * FROM mims_doctorinformation LIMIT ? OFFSET ?', [$limit, $offset]);
+
+                // Map the columns to match the destination table
+                $mappedData = array_map(function ($doctor) {
+                    return [
+                        'doctor_id' => $doctor->ID,
                             'doctor_name' => $doctor->Name,
                             'doctor_email' => $doctor->email_id,
                             'doctor_specialization' => $doctor->Specialization,
@@ -132,9 +365,9 @@ class MigrationLiveController extends Controller
                             'doctor_address' => $doctor->clinic_address,
                             // 'doctor_name' => $doctor->clinic_line1,
                             // 'doctor_name' => $doctor->clinic_line2,
-                            'doctor_country_id' => $doctor->clinic_country_id,
-                            'doctor_state_id' => $doctor->clinic_state_id,
-                            'doctor_city_id' => $doctor->clinic_city_id,
+                            'doctor_country_id' => ($doctor->clinic_country_id != '') ? $doctor->clinic_country_id : null,
+                            'doctor_state_id' => ($doctor->clinic_state_id != '') ? $doctor->clinic_state_id : null, 
+                            'doctor_city_id' => ($doctor->clinic_city_id != '') ? $doctor->clinic_city_id : null,
                             'doctor_zip_code' => $doctor->clinic_zipcode,
                             'doctor_profession_degree' => $doctor->ProfessionDegree,
                             'doctor_gender' => $doctor->Gender,
@@ -153,13 +386,17 @@ class MigrationLiveController extends Controller
                             'doctor_is_deleted' => $doctor->IsDeleted,
                             'doctor_created_by' => 1,
                             'doctor_created_at' => $doctor->LastUpdate,
-                            'doctor_updated_by' => 0,
+                            'doctor_updated_by' => 1,
                             'doctor_updated_at' => $doctor->LastUpdate,
-                        ];
-                    }, $doctors);
+                    ];
+                }, $doctors);
 
-            // Insert the data into the destination table
-            DB::connection('mysql')->table('doctor')->insert($mappedData);
+                // Insert the data into the destination table
+                DB::connection('mysql')->table('doctor')->insert($mappedData);
+
+                // Update the offset for the next chunk
+                $offset += $limit;
+            }
         }catch(Exception $ex){
             dd($ex->getMessage());
         }
@@ -181,7 +418,7 @@ class MigrationLiveController extends Controller
                             'city_is_deleted' => $city->IsDeleted,
                             'city_created_by' => 1,
                             'city_created_at' => $city->LastUpdate,
-                            'city_updated_by' => 0,
+                            'city_updated_by' => 1,
                             'city_updated_at' => $city->LastUpdate,
                         ];
                     }, $citys);
@@ -209,7 +446,7 @@ class MigrationLiveController extends Controller
                             'state_is_deleted' => $state->IsDeleted,
                             'state_created_by' => 1,
                             'state_created_at' => $state->LastUpdate,
-                            'state_updated_by' => 0,
+                            'state_updated_by' => 1,
                             'state_updated_at' => $state->LastUpdate,
                         ];
                     }, $states);
@@ -225,7 +462,7 @@ class MigrationLiveController extends Controller
         try{
             DB::connection('mysql')->table('country')->truncate();
                     // Get the data from the source table
-                    $countrys = DB::connection('db_live')->select('SELECT * FROM mims_countryinformation');
+                    $countrys = DB::connection('db_live')->select('SELECT * FROM mims_country');
 
                     // Map the columns to match the destination table
                     $mappedData = array_map(function ($country) {
@@ -236,7 +473,7 @@ class MigrationLiveController extends Controller
                             'country_is_deleted' => $country->IsDeleted,
                             'country_created_by' => 1,
                             'country_created_at' => $country->LastUpdate,
-                            'country_updated_by' => 0,
+                            'country_updated_by' => 1,
                             'country_updated_at' => $country->LastUpdate,
                         ];
                     }, $countrys);
@@ -251,30 +488,46 @@ class MigrationLiveController extends Controller
     function migrate_location(){
         try{
             DB::connection('mysql')->table('location')->truncate();
-                    // Get the data from the source table
-                    $locations = DB::connection('db_live')->select('SELECT * FROM mims_location');
+                   
+            // --------------------------------------------------
+            // Get the total count of records
+            $totalCount = DB::connection('db_live')->table('mims_location')->count();
 
-                    // Map the columns to match the destination table
-                    $mappedData = array_map(function ($location) {
-                        return [
-                            'location_id' => $location->ID,
-                            'location_country_id' => $location->CountryID,
-                            'location_state_id' => $location->StateID,
-                            'location_city_id' => $location->CityID,
-                            'location_address' => $location->Address,
-                            'location_longitude' => $location->Longitude,
-                            'location_latitude' => $location->Latitude,                     
-                            'location_is_active' => 1,
-                            'location_is_deleted' => $location->IsDeleted,
-                            'location_created_by' => 1,
-                            'location_created_at' => $location->LastUpdate,
-                            'location_updated_by' => 0,
-                            'location_updated_at' => $location->LastUpdate,
-                        ];
-                    }, $locations);
+            // Set the limit and offset values
+            $limit = 1000;
+            $offset = 0;
 
-            // Insert the data into the destination table
-            DB::connection('mysql')->table('location')->insert($mappedData);
+            // Loop through the records and migrate them in chunks
+            while ($offset < $totalCount) {
+                // Get the records for the current chunk
+                $locations = DB::connection('db_live')->select('SELECT * FROM mims_location LIMIT ? OFFSET ?', [$limit, $offset]);
+
+                // Map the columns to match the destination table
+                $mappedData = array_map(function ($location) {
+                    return [
+                        'location_id' => $location->ID,
+                        'location_country_id' => $location->CountryID,
+                        'location_state_id' => $location->StateID,
+                        'location_city_id' => $location->CityID,
+                        'location_address' => $location->Address,
+                        'location_longitude' => $location->Longitude,
+                        'location_latitude' => $location->Latitude,                     
+                        'location_is_active' => 1,
+                        'location_is_deleted' => $location->IsDeleted,
+                        'location_created_by' => 1,
+                        'location_created_at' => $location->LastUpdate,
+                        'location_updated_by' => 1,
+                        'location_updated_at' => $location->LastUpdate,
+                    ];
+                }, $locations);
+
+                // Insert the data into the destination table
+                DB::connection('mysql')->table('location')->insert($mappedData);
+
+                // Update the offset for the next chunk
+                $offset += $limit;
+            }
+
         }catch(Exception $ex){
             dd($ex->getMessage());
         }
@@ -282,40 +535,61 @@ class MigrationLiveController extends Controller
 
 
     function migrate_brand(){
-        try{
+        try {
             DB::connection('mysql')->table('brand')->truncate();
-                    // Get the data from the source table
-                    $brands = DB::connection('db_live')->select('SELECT * FROM mims_brandinformation');
+        
+            // Get the total count of records
+            $totalCount = DB::connection('db_live')->table('mims_brandinformation')->count();
 
-                    // Map the columns to match the destination table
-                    $mappedData = array_map(function ($brand) {
-                        return [
-                            'brand_id' => $brand->ID,
-                            'brand_name' => $brand->Name,
-                            'brand_type' => $brand->ProductType,
-                            'brand_generic_id' => $brand->GenericID,
-                            'brand_manufacturer_id' => $brand->ManufacturerID,
-                            'brand_dosage_form_id' => $brand->DosageFormID,
-                            'brand_strength_id' => $brand->StrengthID,
-                            'brand_pack_size_id' => $brand->PackSizeID,
-                            'brand_image' => $brand->ImagePath,
-                            'brand_price' => $brand->PriceInBDT,
-                            'brand_is_hightlight' => $brand->IsHighlighted,
-                            'brand_is_new_product' => $brand->IsNewProduct,
-                            'brand_is_new_brand' => $brand->IsNewBrand,
-                            'brand_is_new_presentation' => $brand->IsNewPresentation,
-                            'brand_is_active' => $brand->IsActive,
-                            'brand_is_deleted' => $brand->IsDeleted,
-                            'brand_created_by' => 1,
-                            'brand_created_at' => $brand->LastUpdate,
-                            'brand_updated_by' => 0,
-                            'brand_updated_at' => now(),
-                        ];
-                    }, $brands);
+            // Set the limit and offset values
+            $limit = 1000;
+            $offset = 0;
 
-            // Insert the data into the destination table
-            DB::connection('mysql')->table('brand')->insert($mappedData);
-        }catch(Exception $ex){
+            // Loop through the records and migrate them in chunks
+            while ($offset < $totalCount) {
+                // Get the records for the current chunk
+                $brands = DB::connection('db_live')->select('SELECT * FROM mims_brandinformation LIMIT ? OFFSET ?', [$limit, $offset]);
+
+                // Map the columns to match the destination table
+                $mappedData = array_map(function ($brand) {
+                    $brand_type = $brand->ProductType;
+                    if($brand_type == 1 ){
+                        $brand_type = "Regular";
+                    }else{
+                        $brand_type = "Herbal";
+                    }
+                    return [
+                        'brand_id' => $brand->ID,
+                        'brand_name' => $brand->Name,
+                        'brand_type' => $brand_type,
+                        'brand_generic_id' => $brand->GenericID,
+                        'brand_manufacturer_id' => $brand->ManufacturerID,
+                        'brand_dosage_form_id' => $brand->DosageFormID,
+                        'brand_strength_id' => $brand->StrengthID,
+                        'brand_pack_size_id' => $brand->PackSizeID,
+                        'brand_image' => $brand->ImagePath,
+                        'brand_price' => $brand->PriceInBDT,
+                        'brand_is_hightlight' => $brand->IsHighlighted,
+                        'brand_is_new_product' => $brand->IsNewProduct,
+                        'brand_is_new_brand' => $brand->IsNewBrand,
+                        'brand_is_new_presentation' => $brand->IsNewPresentation,
+                        'brand_is_active' => $brand->IsActive,
+                        'brand_is_deleted' => $brand->IsDeleted,
+                        'brand_created_by' => 1,
+                        'brand_created_at' => $brand->LastUpdate,
+                        'brand_updated_by' => 1,
+                        'brand_updated_at' => $brand->LastUpdate,
+                    ];
+                }, $brands);
+
+                // Insert the data into the destination table
+                DB::connection('mysql')->table('brand')->insert($mappedData);
+
+                // Update the offset for the next chunk
+                $offset += $limit;
+            
+            }
+        } catch (Exception $ex) {
             dd($ex->getMessage());
         }
     }
@@ -340,8 +614,8 @@ class MigrationLiveController extends Controller
                             'manufacturer_is_deleted' => $manufacturer->IsDeleted,
                             'manufacturer_created_by' => 1,
                             'manufacturer_created_at' => $manufacturer->LastUpdate,
-                            'manufacturer_updated_by' => 0,
-                            'manufacturer_updated_at' => now(),
+                            'manufacturer_updated_by' => 1,
+                            'manufacturer_updated_at' => $manufacturer->LastUpdate,
                         ];
                     }, $manufacturers);
 
@@ -367,8 +641,8 @@ class MigrationLiveController extends Controller
                             'packsize_is_deleted' => $packsize->IsDeleted,
                             'packsize_created_by' => 1,
                             'packsize_created_at' => $packsize->LastUpdate,
-                            'packsize_updated_by' => 0,
-                            'packsize_updated_at' => now(),
+                            'packsize_updated_by' => 1,
+                            'packsize_updated_at' => $packsize->LastUpdate,
                         ];
                     }, $packsizes);
 
@@ -394,7 +668,7 @@ class MigrationLiveController extends Controller
                             'strength_is_deleted' => $strength->IsDeleted,
                             'strength_created_by' => 1,
                             'strength_created_at' => $strength->LastUpdate,
-                            'strength_updated_by' => 0,
+                            'strength_updated_by' => 1,
                             'strength_updated_at' => $strength->LastUpdate,
                         ];
                     }, $strengths);
@@ -421,8 +695,8 @@ class MigrationLiveController extends Controller
                             'dosageform_is_deleted' => $dosageForm->IsDeleted,
                             'dosageform_created_by' => 1,
                             'dosageform_created_at' => $dosageForm->LastUpdate,
-                            'dosageform_updated_by' => 0,
-                            'dosageform_updated_at' => now(),
+                            'dosageform_updated_by' => 1,
+                            'dosageform_updated_at' => $dosageForm->LastUpdate,
                         ];
                     }, $dosageForms);
 
@@ -433,6 +707,8 @@ class MigrationLiveController extends Controller
         }
     }
     function migrate_generic(){
+
+        DB::connection('mysql')->table('generic')->truncate();
         // Get the data from the source table (mims_genericinformation)
         $data = DB::connection('db_live')->table('mims_genericinformation')->get();
 
@@ -476,7 +752,7 @@ class MigrationLiveController extends Controller
                 $newItem[$newKey] = $newValue;
             }
             $newItem['generic_created_at'] = now();
-            $newItem['generic_updated_by'] = 0;
+            $newItem['generic_updated_by'] = 1;
             $newItem['generic_updated_at'] = now();
             return $newItem;
         });

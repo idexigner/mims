@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('address_title', 300);
             $table->integer('address_category');
             $table->text('address_detail');
-            $table->string('address_contact', 20);
+            $table->string('address_contact', 200);
             $table->tinyInteger('address_is_active')->nullable()->default(1);
             $table->tinyInteger('address_is_deleted')->nullable()->default(0);
             $table->integer('address_created_by');

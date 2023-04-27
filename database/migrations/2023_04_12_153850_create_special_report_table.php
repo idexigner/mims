@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('special_report', function (Blueprint $table) {
             $table->id('special_report_id');
             $table->string('special_report_title', 300);
-            $table->text('special_report_description');
+            $table->text('special_report_description')->nullable();
             $table->string('special_report_link_address', 1200)->nullable();            
             $table->string('special_report_image', 100)->nullable();
             $table->tinyInteger('special_report_is_active')->nullable()->default(1);

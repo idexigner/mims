@@ -31,7 +31,12 @@ use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\MigrationLiveController;
 use App\Http\Controllers\SiteSettingController;
+
+use App\Http\Controllers\Web\HomeController;
+
 use Illuminate\Support\Facades\DB;
+
+
 
 
 
@@ -53,10 +58,10 @@ use Illuminate\Support\Facades\DB;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/',[HomeController::class,'index'])->name('home');
 
 
 Route::group(['middleware'=>'guest'],function(){
@@ -70,7 +75,7 @@ Route::group(['middleware'=>'guest'],function(){
 
 
 Route::group(['middleware'=>'auth'],function(){
-    Route::get('home',[AuthController::class,'home'])->name('home');
+    // Route::get('home',[AuthController::class,'home'])->name('home');
     Route::get('logout',[AuthController::class,'logout'])->name('logout');
 });
 
@@ -375,11 +380,7 @@ Route::get('/optimize', function () {
     return 'Application optimized!';
 });
 
-Route::get('/migrate_live', function(){
 
-   
-
-   });
 
 
    Route::get('/migrate_live', [MigrationLiveController::class, 'index']);

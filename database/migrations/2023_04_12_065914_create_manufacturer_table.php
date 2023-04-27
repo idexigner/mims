@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id('manufacturer_id');
             $table->string('manufacturer_name', 200);
             $table->string('manufacturer_email', 100)->nullable();
-            $table->string('manufacturer_phone', 20)->nullable();
-            $table->string('manufacturer_mobile', 20)->nullable();
-            $table->string('manufacturer_fax', 20)->nullable();
-            $table->integer('manufacturer_location_id');
+            $table->string('manufacturer_phone', 100)->nullable();
+            $table->string('manufacturer_mobile', 100)->nullable();
+            $table->string('manufacturer_fax', 100)->nullable();
+            $table->integer('manufacturer_location_id')->nullable();
             $table->tinyInteger('manufacturer_is_active')->nullable()->default(1);
             $table->tinyInteger('manufacturer_is_deleted')->nullable()->default(0);
             $table->integer('manufacturer_created_by');
