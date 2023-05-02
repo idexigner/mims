@@ -16,7 +16,7 @@ class VideoController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Video::select('*');
+            $data = Video::select('*')->orderBy('video_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

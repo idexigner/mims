@@ -16,7 +16,7 @@ class JournalController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Journal::select('*');
+            $data = Journal::select('*')->orderBy('journal_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

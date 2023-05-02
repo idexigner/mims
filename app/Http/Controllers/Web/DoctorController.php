@@ -3,26 +3,24 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 use App\Traits\LogExceptions;
 
-
-class BrandController extends Controller
+class DoctorController extends Controller
 {
     use LogExceptions;
-    public function get_brand(Request $request){
+    public function get_home_doctor(Request $request){
         try{
 
-            $data = Brand::select('brand_id', 'brand_name', 'brand_type')
-                ->where($request->condition, 1)
-                ->where('brand_is_active',1)
-                ->orderBy('brand_id', 'DESC')
-                ->limit($request->limit ?? 7)
+            $data = Doctor::select('doctor_id', 'doctor_name', 'doctor_specialization', 'doctor_image')
+                ->where('doctor_is_active', 1)
+                ->where('doctor_is_featured',1)
+                ->limit(3)
                 ->get();      
 
             return response()->json([
-                'message' => 'Get Brand', 
+                'message' => 'Get Doctor', 
                 'data' => $data
             ], 200);
 

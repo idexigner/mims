@@ -3,26 +3,24 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
+use App\Models\SpecialReport;
 use Illuminate\Http\Request;
 use App\Traits\LogExceptions;
 
-
-class BrandController extends Controller
+class SpecialReportController extends Controller
 {
     use LogExceptions;
-    public function get_brand(Request $request){
+    public function get_home_special_report(){
         try{
 
-            $data = Brand::select('brand_id', 'brand_name', 'brand_type')
-                ->where($request->condition, 1)
-                ->where('brand_is_active',1)
-                ->orderBy('brand_id', 'DESC')
-                ->limit($request->limit ?? 7)
+            $data = SpecialReport::select('*')
+                ->where('special_report_is_active', 1)
+                ->where('special_report_is_featured',1)
+                ->limit(10)
                 ->get();      
 
             return response()->json([
-                'message' => 'Get Brand', 
+                'message' => 'Get Special Report', 
                 'data' => $data
             ], 200);
 

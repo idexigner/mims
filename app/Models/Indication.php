@@ -24,6 +24,11 @@ class Indication extends Model
         'indication_updated_at'
     ];
 
+    public function generics()
+    {
+        return $this->belongsToMany(Generic::class, 'indication_generic_mapping', 'indication_mapping_indication_id', 'indication_mapping_generic_id');
+    }
+
     public function advertisements()
     {
         return $this->hasMany(Advertisement::class, 'advertisement_indication_id');

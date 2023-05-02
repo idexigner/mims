@@ -18,7 +18,7 @@ class BrandController extends Controller
         
         if ($request->ajax()) {
             // dd("ajax");with('')->
-            $data = Brand::with('dosage_form', 'generic', 'manufacturer')->select('*');
+            $data = Brand::with('dosage_form', 'generic', 'manufacturer')->select('*')->orderBy('brand_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

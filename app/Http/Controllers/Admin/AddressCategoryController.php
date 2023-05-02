@@ -16,7 +16,7 @@ class AddressCategoryController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = AddressCategory::select('*');
+            $data = AddressCategory::select('*')->orderBy('address_category_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

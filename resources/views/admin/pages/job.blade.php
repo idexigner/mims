@@ -19,8 +19,9 @@
             </div>
             <div class="col-sm-6">
 
+                
                 <button type="button" class="btn float-sm-right btn-primary add_new">Add New Job</button>
-           
+                <button type="button" class="btn float-sm-right btn-danger delete_all mr-5">Delete All</button>
             </div>
         </div>
         </div><!-- /.container-fluid -->
@@ -134,10 +135,10 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Image<span class="text-red">*</span></label>
+                                <label class="col-sm-3 col-form-label">Image</label>
                                 <div class="col-sm-9">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="job_image" name="job_image" required accept="image/*">
+                                        <input type="file" class="custom-file-input" id="job_image" name="job_image" accept="image/*">
                                         <label class="custom-file-label" for="job_image">Choose file</label>
                                       </div>
                                 </div>
@@ -145,7 +146,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Salary</label>
                                 <div class="col-sm-9">
-                                <input type="text" class="form-control" placeholder="Salary" name="job_salary" data-parsley-pattern="^[0-9.]+$">
+                                <input type="text" class="form-control" placeholder="Salary" name="job_salary">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -552,6 +553,53 @@
                     } 
                 })
             });
+
+            $('.delete_all').on('click', function(){
+                Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel!',
+                    timer: 5000,
+                    timerProgressBar: true,
+                    onOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                    }).fire({
+                    icon: 'warning',
+                    title: 'Are you sure you want to delete all Jobs?',
+                    text: "You won't be able to revert this!",
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        var currentPage =  table.DataTable().page.info().page;
+                        var url = "{{ route('job.destroy_all') }}";
+                        
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                "_token": "{{ csrf_token() }}"
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: "All Job record deleted successfully",
+                                    timer: 3000,
+                                });
+                                // reload the table
+                                table.DataTable().ajax.reload();
+                                table.DataTable().page(currentPage).draw('page');
+                            }
+                        });
+                    } 
+                })
+            });
+            
             
         });
     </script>

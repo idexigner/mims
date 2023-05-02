@@ -99,6 +99,16 @@
                                 <input type="text" class="form-control" name="generic_indication_tags" placeholder="Indication Tags" data-parsley-maxlength="300">
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Indication Tags2</label>
+                                <div class="col-sm-9">
+                                    <div class="indication_tag2">
+
+                                    </div>
+                                {{-- <input type="text" class="form-control" name="generic_indication_tags" placeholder="Indication Tags" data-parsley-maxlength="300"> --}}
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Dosage Administration </label>
                                 <div class="col-sm-9">
@@ -306,8 +316,8 @@
                     success: function(response) {
                         console.log(response);
                         var data = response.data;  
-                        console.log("data==>", data.generic_indication)
-
+                        console.log("data==>", data)
+                        console.log("data==>", data.indications)
                         $("input[name=id]").val(data.generic_id);
                         $("input[name=generic_name]").val(data.generic_name);
                         $("input[name=generic_classification]").val(data.generic_classification);
@@ -318,6 +328,8 @@
 
                         $("input[name=generic_indication_tags]").val(data.generic_indication_tags);
 
+
+                        // indication_tag2
                         $('textarea[name=generic_dosage_administration]').summernote().summernote('code', data.generic_dosage_administration);
 
                         $('textarea[name=generic_contraindication_precaution]').summernote().summernote('code', data.generic_contraindication_precaution);

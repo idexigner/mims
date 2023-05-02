@@ -17,7 +17,7 @@ class GenericController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Generic::select('*');
+            $data = Generic::with('indications')->select('*')->orderBy('generic_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

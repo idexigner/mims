@@ -3,26 +3,27 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
+use App\Models\Video;
 use Illuminate\Http\Request;
 use App\Traits\LogExceptions;
+use Carbon\Carbon;
 
 
-class BrandController extends Controller
+class VideoController extends Controller
 {
     use LogExceptions;
-    public function get_brand(Request $request){
+    public function get_home_video(Request $request){
         try{
-
-            $data = Brand::select('brand_id', 'brand_name', 'brand_type')
-                ->where($request->condition, 1)
-                ->where('brand_is_active',1)
-                ->orderBy('brand_id', 'DESC')
-                ->limit($request->limit ?? 7)
+          
+            $data = Video::select('*')               
+                ->where('video_is_featured', 1)
+                ->where('video_is_active', 1)
+                ->orderBy('video_id', 'DESC')
+                ->limit(10)
                 ->get();      
 
             return response()->json([
-                'message' => 'Get Brand', 
+                'message' => 'Get Video', 
                 'data' => $data
             ], 200);
 

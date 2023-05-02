@@ -16,7 +16,7 @@ class PacksizeController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Packsize::select('*');
+            $data = Packsize::select('*')->orderBy('packsize_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

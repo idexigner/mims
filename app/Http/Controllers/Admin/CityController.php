@@ -16,7 +16,7 @@ class CityController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = City::with('state', 'state.country')->select('*');
+            $data = City::with('state', 'state.country')->select('*')->orderBy('city_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

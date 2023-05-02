@@ -16,7 +16,7 @@ class CountryController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Country::select('*');
+            $data = Country::select('*')->orderBy('country_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

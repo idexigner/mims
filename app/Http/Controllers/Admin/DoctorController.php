@@ -16,7 +16,7 @@ class DoctorController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Doctor::select('*');
+            $data = Doctor::select('*')->orderBy('doctor_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

@@ -487,7 +487,7 @@
                         var url = "{{ route('generic.edit', ':id') }}";
                         url = url.replace(':id', data.brand_generic_id);
                         $.ajax({
-                            url: url,
+                            url: ,
                             dataType: 'json',
                             success: function(d) {                                
                                 var option = new Option(d.data.generic_name, d.data.generic_id, true, true);

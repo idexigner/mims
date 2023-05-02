@@ -16,7 +16,7 @@ class AdvertisementController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Advertisement::with('advertisement_position')->select('*');
+            $data = Advertisement::with('advertisement_position')->select('*')->orderBy('advertisement_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

@@ -19,7 +19,7 @@ class ManufacturerController extends Controller
 
         if ($request->ajax()) {
             // dd("ajax");Manufacturer::with('location')
-            $data = Manufacturer::with('location')->select('*');
+            $data = Manufacturer::with('location')->select('*')->orderBy('manufacturer_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

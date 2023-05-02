@@ -16,7 +16,7 @@ class SpecialReportController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = SpecialReport::select('*');
+            $data = SpecialReport::select('*')->orderBy('special_report_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

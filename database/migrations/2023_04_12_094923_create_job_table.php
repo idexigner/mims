@@ -24,7 +24,8 @@ return new class extends Migration
             $table->date('job_application_deadline');
             $table->date('job_publish_date');
             $table->string('job_image', 1000)->nullable();
-            $table->double('job_salary', 8,2)->nullable();
+            $table->string('job_salary', 100)->nullable();
+            // $table->double('job_salary', 8,2)->nullable();
             $table->text('job_educational_requirement')->nullable();
             $table->text('job_experience_requirement')->nullable();
             $table->integer('job_vacancy')->nullable();

@@ -7,6 +7,11 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Generic;
+use App\Models\Indication;
+use App\Models\IndicationMapping;
+
+
 
 
 class MigrationLiveController extends Controller
@@ -31,8 +36,46 @@ class MigrationLiveController extends Controller
         // $this->migrate_address_category();
         // $this->migrate_special_report();
         // $this->migrate_advertisement();
-        $this->migrate_advertisement_position();
+        // $this->migrate_advertisement_position();
 
+        $this->convert_indication_tags();
+
+    }
+
+    function convert_indication_tags(){
+        try{
+            // Get all the generic records
+            $generics = Generic::all();
+
+            // Loop through the generics and process their indication tags
+            foreach ($generics as $generic) {
+                // Get the indication tags for this generic
+                $tags = explode(',', $generic->generic_indication_tags);
+            
+
+                // Loop through the tags and create or update the Indication records
+                foreach ($tags as $tag) {
+                    $indication = Indication::where('indication_name', $tag)->first();
+
+                    // If the indication doesn't exist, create it
+                    if (!$indication) {
+                        $indication = Indication::create([
+                            'indication_name' => $tag,
+                        ]);
+                    }
+
+                
+
+                    // Create or update the IndicationMapping record
+                    $mapping = IndicationMapping::updateOrCreate([
+                        'indication_mapping_generic_id' => $generic->generic_id,
+                        'indication_mapping_indication_id' => $indication->indication_id,
+                    ]);
+                }
+            }
+        }catch(Exception $ex){
+                    dd($ex->getMessage());
+                }
     }
 
 

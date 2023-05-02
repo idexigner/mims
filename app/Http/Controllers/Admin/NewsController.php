@@ -16,7 +16,7 @@ class NewsController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = News::select('*');
+            $data = News::select('*')->orderBy('news_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

@@ -16,7 +16,7 @@ class StrengthController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Strength::select('*');
+            $data = Strength::select('*')->orderBy('strength_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

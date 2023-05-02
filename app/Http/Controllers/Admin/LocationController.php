@@ -17,7 +17,7 @@ class LocationController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Location::with('country','state','city')->select('*');
+            $data = Location::with('country','state','city')->select('*')->orderBy('location_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

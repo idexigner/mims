@@ -16,7 +16,7 @@ class DosageFormController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = DosageForm::select('*');
+            $data = DosageForm::select('*')->orderBy('dosageform_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

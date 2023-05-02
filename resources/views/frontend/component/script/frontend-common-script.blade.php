@@ -1,6 +1,24 @@
 <script>
     var youTubeVideos = [];
 
+    var frontCommonMethods = {
+        youtubeVideoIndex: '',
+        youtubeFullScreen: function(videoLink) {
+            console.log(videoLink);
+            var videoLink = videoLink.replace(/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/, '$5');
+
+            frontCommonMethods.youtubeVideoIndex = videoLink;
+            $('#youtube-fullScreen').html('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' + videoLink + '?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=1" frameborder="0" allowfullscreen></iframe>');
+            $('#youtube-fullScreen').show();
+            $('#youtubeFullScreenModal').show();
+        },
+        closeYoutubeScreen: function() {
+            frontCommonMethods.youtubeVideoIndex = '';
+            $('#youtube-fullScreen').html('');
+            $('#youtube-fullScreen').hide();
+            $('#youtubeFullScreenModal').hide();
+        },
+    }
     
     var frontenndCommonMethods2 = {
 

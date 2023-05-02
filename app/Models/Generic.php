@@ -10,11 +10,13 @@ class Generic extends Model
 {
     use HasFactory;
    
-    protected $primaryKey = 'generic_id';
+   
     public $timestamps = true;
     const CREATED_AT = 'generic_created_at';
     const UPDATED_AT = 'generic_updated_at';
     protected $table = 'generic';
+
+    protected $primaryKey = 'generic_id';
     protected $fillable = [
         'generic_name',
         'generic_classification',
@@ -37,6 +39,11 @@ class Generic extends Model
         'generic_updated_by',
         'generic_updated_at'
     ];
+
+    public function indications()
+    {
+        return $this->belongsToMany(Indication::class, 'indication_generic_mapping', 'indication_mapping_generic_id', 'indication_mapping_indication_id');
+    }
 
     public function brands()
     {

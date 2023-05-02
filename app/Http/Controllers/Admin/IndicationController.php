@@ -16,7 +16,7 @@ class IndicationController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Indication::select('*');
+            $data = Indication::select('*')->orderBy('indication_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

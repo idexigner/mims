@@ -122,6 +122,7 @@
       serverSide: true,
       ajax: ajaxUrl,
       columns: columnsArray,
+      "order": [],
       "language": {
         "search": "Search Records:",
         "lengthMenu": "Show _MENU_ Records",

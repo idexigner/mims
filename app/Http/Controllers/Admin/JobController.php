@@ -17,7 +17,7 @@ class JobController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Job::select('*');
+            $data = Job::select('*')->orderBy('job_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 
@@ -214,6 +214,26 @@ class JobController extends Controller
 
             return response()->json([
                 'message' => 'Job record deleted successfully'
+                ], 200);
+        } catch (\Exception $ex) {
+
+            $this->logException($ex, \Route::currentRouteName(), __METHOD__);
+            return response()->json([
+                    'message' => 'Something went wrong!',
+                    'error' => $ex,
+                    'message' => $ex->getMessage()
+                ], 400);
+        }
+    }
+
+    public function destroy_all()
+    {
+        try{
+            $obj = Job::truncate();
+         
+
+            return response()->json([
+                'message' => 'All Job record deleted successfully'
                 ], 200);
         } catch (\Exception $ex) {
 

@@ -3,26 +3,27 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
+use App\Models\News;
 use Illuminate\Http\Request;
 use App\Traits\LogExceptions;
+use Carbon\Carbon;
 
-
-class BrandController extends Controller
+class NewsController extends Controller
 {
     use LogExceptions;
-    public function get_brand(Request $request){
+    public function get_home_news(Request $request){
         try{
-
-            $data = Brand::select('brand_id', 'brand_name', 'brand_type')
-                ->where($request->condition, 1)
-                ->where('brand_is_active',1)
-                ->orderBy('brand_id', 'DESC')
-                ->limit($request->limit ?? 7)
+            $today = Carbon::today()->toDateString();
+            $data = News::select('*')                
+                ->where('news_is_active', 1)
+                ->whereDate('news_publish_date', '<=', $today)
+                ->whereDate('news_unpublish_date', '>=', $today)
+                ->orderBy('news_id', 'DESC')
+                ->limit(5)
                 ->get();      
 
             return response()->json([
-                'message' => 'Get Brand', 
+                'message' => 'Get News', 
                 'data' => $data
             ], 200);
 

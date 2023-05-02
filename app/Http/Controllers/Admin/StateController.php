@@ -16,7 +16,7 @@ class StateController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = State::with('country')->select('*');
+            $data = State::with('country')->select('*')->orderBy('state_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

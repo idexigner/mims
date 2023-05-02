@@ -8,6 +8,39 @@
 
 <!-- banner -->
 <style>
+/* 
+    .youtube-video {
+        width: 240px;
+        height: 160px;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    } */
+
+     .youtube-video {
+        width: 240px !important;
+        height: 160px;
+        display: inline-block !important;
+    }
+    .youtube-video-wrapper {
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    }
+    .youtube-video-wrapper img {
+        display: none;
+    }
+
+    .youtube-video h4 a{
+        color: #111;
+        margin-top: 5px
+    }
+    .youtube-video h4 a:hover{
+        color: #3fb93b;
+    }
     span.bahuthard {
         /* position: absolute; */
         background: red;
@@ -552,63 +585,7 @@
                     <div class="section-header drug-update-header">
                         <span><i class="fa fa-user-md un-mesh_icon" aria-hidden="true"></i></span> Our Doctors
                     </div>
-                    <div class="row">
-                        <!-- Start Single Person -->
-                        <div class="col-md-4">
-                            <div class="single-person">
-                                <div class="person-image">
-                                    <!-- <a href="#">
-                      <img src="https://i.ibb.co/G2CBWvb/person1.jpg" alt="">
-                    </a> -->
-                                    <span class="icon">
-                                        <i class="fa-solid fa-user-doctor"></i>
-                                    </span>
-                                </div>
-                                <div class="person-info">
-                                    <h3 class="full-name"> <a href="index.php/Doctor/getAllDoctorInformation"> Dr. M.
-                                            Khalequjaman </a>
-                                    </h3>
-                                    <span class="speciality"> ORTHOPEDICS </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="single-person">
-                                <div class="person-image">
-                                    <!-- <a href="#">
-                      <img src="https://i.ibb.co/nbpNr4r/person2.jpg" alt="">
-                    </a> -->
-                                    <span class="icon">
-                                        <i class="fa-solid fa-user-doctor"></i>
-                                    </span>
-                                </div>
-                                <div class="person-info">
-                                    <h3 class="full-name"> <a href="index.php/Doctor/getAllDoctorInformation"> Dr. G. M.
-                                            Ruhul Kuddus </a>
-                                    </h3>
-                                    <span class="speciality"> ORTHOPEDICS </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="single-person">
-                                <div class="person-image">
-                                    <!-- <a href="#">
-                      <img src="https://i.ibb.co/25zdRMr/person3.jpg" alt="">
-                    </a> -->
-                                    <span class="icon">
-                                        <i class="fa-solid fa-user-doctor"></i>
-                                    </span>
-                                </div>
-                                <div class="person-info">
-                                    <h3 class="full-name"><a href="index.php/Doctor/getAllDoctorInformation"> Dr. Md. Nazmul
-                                            Huda </a>
-                                    </h3>
-                                    <span class="speciality"> ORTHOPEDICS </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- / End Single Person -->
+                    <div class="row doctor_row">                       
                     </div>
                 </div>
             </div>
@@ -699,63 +676,18 @@
                 <div class="uk_tabs">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">medical</a>
+                            <a class="nav-link active" id="medical_job-tab" data-toggle="tab" href="#medical_job" role="tab" aria-controls="medical_job" aria-selected="true">medical</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">pharma</a>
+                            <a class="nav-link" id="pharma_job-tab" data-toggle="tab" href="#pharma_job" role="tab" aria-controls="pharma_job" aria-selected="false">pharma</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-                            <a href="index.php/Job/showJobDetail?JobID=">
-                                <div class="media-list-left-image">
-                                    <div class="media">
-                                        <div class="media-left">
+                        <div class="tab-pane fade show active" id="medical_job" role="tabpanel" aria-labelledby="medical_job-tab"></div>
+                        <div class="tab-pane fade" id="pharma_job" role="tabpanel" aria-labelledby="pharma_job-tab"></div>
 
-                                            <img src="#" class="media-object">
-
-                                        </div>
-                                        <div class="media-body">
-                                            <span class="bahuthard">New</span>
-                                            <h4 class="media-heading">
-
-                                            </h4>
-                                            <p>
-
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-
-
-                        </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-                            <a href="index.php/Job/showJobDetail?JobID=">
-                                <div class="media-list-left-image">
-                                    <div class="media">
-                                        <div class="media-left">
-
-                                            <img src="#" class="media-object">
-
-                                        </div>
-                                        <div class="media-body">
-                                            <span class="bahuthard">New</span>
-                                            <h4 class="media-heading">
-
-                                            </h4>
-                                            <p>
-
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                        </div>
+                        
                     </div>
                 </div>
 
@@ -769,27 +701,9 @@
                     <a class="section-header-view-all-btn no-outline" href="#">See
                         All News</a>
                 </div>
-                <div class="container ">
+                <div class="container pharma_news">
 
-                    <a href="index.php/News/showIndividualNewsDetail?NewsID=">
-                        <div class="media-list-left-image">
-                            <div class="media">
-                                <div class="media-left">
-
-                                    <img src="#" class="media-object">
-
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">
-
-                                    </h4>
-                                    <p>
-
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                    
 
                 </div>
             </div>
@@ -879,7 +793,7 @@
         </div>
     </div>
 
-    <div class=" home-special-report-slider-container container" id="my_tub">
+    <div class=" home-sphome-youtube-video-sliderecial-report-slider-container container" id="my_tub">
 
 
 
@@ -897,17 +811,7 @@
                     Videos</a>
             </div>
             <!--<div id="home-youtube-slider" class="home-youtube-list"></div>-->
-            <div class="slider">
-
-
-                <div class="youtube-video">
-                    <a href="#" onclick="frontendCommonMethods.youtubeFullScreen()"> <img src="#">
-                    </a>
-                    <h4> <a href="#" onclick="frontendCommonMethods.youtubeFullScreen()">
-
-                        </a> </h4>
-                </div>
-
+            <div  id="home-youtube-video-slider">
 
             </div>
         </div>
@@ -924,7 +828,7 @@
 <div style="display: none" id="youtubeFullScreenModal" class="fullScreenImage">
     <div style="height: 60px">
         <!--		<div class="fb-share-button" data-href="http://localhost/mims/Video/getAllVideo?id=q-1TAxlkOvg" data-layout="box_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%2Fmims%2FVideo%2FgetAllVideo%3Fid%3Dq-1TAxlkOvg&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>-->
-        <a style="float: right; padding: 10px" class="btn-closeView" onclick="frontendCommonMethods.closeYoutubeScreen()" title="Close"><img width="40px" height="40px" src="#"></a>
+        <a style="float: right; padding: 10px" class="btn-closeView" onclick="frontendCommonMethods.closeYoutubeScreen()" title="Close"><img width="40px" height="40px" src="https://mimsbangladesh.com/application/views/images/icons/close.png"></a>
         <!--		<a style="float: right; padding: 10px" class="btn-closeView" onclick="frontendCommonMethods.facebookShare()" title="Facebook Share"><img width="40px" height="40px" src="-->
 
         <!--application/views/images/icons/facebook-share.png"></a>-->
@@ -938,54 +842,54 @@
     $('.slick-next.slick-arrow:before').css('background-image', '../frontend/images/icons/right-arrow-white.png');
     $('.slick-prev.slick-arrow.slick-disabled:before').css('background-image', '../frontend/images/icons/left-arrow-white.png');
     $('.slick-next.slick-arrow.slick-dbefore').css('background-image', '../frontend/images/icons/right-arrow-white.png');
-    frontendCommonMethods2.getAdvertisement(['home-product-slider'], 3);
-    frontendCommonMethods.getCommonAdvertisement(['home-advert-container-top', 'home-advert-container-mid']);
-    drugObject.productType = "REGULAR_PRODUCT";
-    drugObject.getSpecialReports();
-    // drugObject.getMimsLearning();
-    drugObject.getJobCirculars();
-    drugObject.getLocalNews();
-    drugObject.getInternationalHealth();
-    drugObject.getImportantAddress();
-    drugObject.getNewBrands(0);
-    drugObject.getNewPresentations(0);
-    drugObject.getNewProducts(0);
-    drugObject.getHighlightedBrands();
-    frontendCommonMethods.getNumberOfVisitor();
-    drugObject.getAllDrugInfoForAutoComplete('brand');
-    frontendCommonMethods.mainMenuActivation('home');
+    // frontendCommonMethods2.getAdvertisement(['home-product-slider'], 3);
+    // frontendCommonMethods.getCommonAdvertisement(['home-advert-container-top', 'home-advert-container-mid']);
+    // drugObject.productType = "REGULAR_PRODUCT";
+    // drugObject.getSpecialReports();
+    // // drugObject.getMimsLearning();
+    // drugObject.getJobCirculars();
+    // drugObject.getLocalNews();
+    // drugObject.getInternationalHealth();
+    // drugObject.getImportantAddress();
+    // drugObject.getNewBrands(0);
+    // drugObject.getNewPresentations(0);
+    // drugObject.getNewProducts(0);
+    // drugObject.getHighlightedBrands();
+    // frontendCommonMethods.getNumberOfVisitor();
+    // drugObject.getAllDrugInfoForAutoComplete('brand');
+    // frontendCommonMethods.mainMenuActivation('home');
     $(document).ready(function() {
         // $.getScript("http://connect.facebook.net/en_US/all.js# xfbml=1", function () {
         // 	FB.init({ appId: 'xxxxxxxx', status: true, cookie: true, xfbml: true });
         // });
     });
-    youTubeVideos = "";
-    var individual_youtube = '';
-    var youtube_title = '';
-    for (var youtube_no = 0; youtube_no < 4; youtube_no++) {
-        youtube_title = youTubeVideos[youtube_no].Title;
-        youtube_title = youtube_title.length > 65 ? youtube_title.substr(0, 60) + ' ...' : youtube_title;
-        individual_youtube = '<div class="home-special-report-slide">' +
-            '<a onclick="frontendCo mmonMethods.youtubeFullScreen(' + youtube_no + ')"><img src="' + youTubeVideos[youtube_no].thumbnail + '"  alt="">' +
-            '<p class="home-special-report-slide-title">' + youtube_title + '</p>' +
-            '</di v>';
-        $('.home-youtube-list').append(individual_youtube);
-    }
-    $('#home-youtube-slider').slick({
-        slidesToScroll: 1,
-        slidesToShow: 4,
-        autoplay: true,
-        autoplaySpeed: 1000,
-        infinite: false,
-        arrows: true,
-        responsive: [{
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 2,
-                arrows: false,
-            }
-        }]
-    });
+    // youTubeVideos = "";
+    // var individual_youtube = '';
+    // var youtube_title = '';
+    // for (var youtube_no = 0; youtube_no < 4; youtube_no++) {
+    //     youtube_title = youTubeVideos[youtube_no].Title;
+    //     youtube_title = youtube_title.length > 65 ? youtube_title.substr(0, 60) + ' ...' : youtube_title;
+    //     individual_youtube = '<div class="home-special-report-slide">' +
+    //         '<a onclick="frontendCo mmonMethods.youtubeFullScreen(' + youtube_no + ')"><img src="' + youTubeVideos[youtube_no].thumbnail + '"  alt="">' +
+    //         '<p class="home-special-report-slide-title">' + youtube_title + '</p>' +
+    //         '</di v>';
+    //     $('.home-youtube-list').append(individual_youtube);
+    // }
+    // $('#home-youtube-slider').slick({
+    //     slidesToScroll: 1,
+    //     slidesToShow: 4,
+    //     autoplay: true,
+    //     autoplaySpeed: 1000,
+    //     infinite: false,
+    //     arrows: true,
+    //     responsive: [{
+    //         breakpoint: 480,
+    //         settings: {
+    //             slidesToShow: 2,
+    //             arrows: false,
+    //         }
+    //     }]
+    // });
 </script>
 
 <script>
@@ -1058,6 +962,426 @@
 @push('js-link')
 
 <script>
+
+    $(document).ready(function() {
+
+
+        drugUpdate.getNewProduct();
+        drugUpdate.getNewBrand();
+        drugUpdate.getNewPresentation();
+        homeMethods.getDoctor();
+        homeMethods.getSpecialReport();
+        homeMethods.getMedicalJob();
+        homeMethods.getPharmaJob();
+        homeMethods.getNews();
+        homeMethods.getVideo();
+    });
+
+
+    var drugUpdate = {
+        getNewProduct: function(){
+            $.ajax({
+                url: "{{ route('web_get_brand')}}",
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    condition: 'brand_is_new_product',
+                    limit: 7
+                },
+                success: function(response) {
+                    // console.log(response);
+                
+
+                    $('.new-product-information').html('<h4>New Products</h4>');
+                    $.each(response.data, function(index, brand) {
+
+                        $('.new-product-information').append(
+                            `<a href='${brand.brand_id}'>${brand.brand_name.toUpperCase()}</a>`
+                        );
+                    });
+                    $('.new-product-information').append(`<a href='showall'>See More</a>`);
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();
+                }
+            });
+        },
+        getNewBrand: function(){
+            $.ajax({
+                url: "{{ route('web_get_brand')}}",
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    condition: 'brand_is_new_brand',
+                    limit: 7
+                },
+                success: function(response) {
+                    // console.log(response);
+                
+
+                    $('.new-brand-information').html('<h4>New Brands</h4>');
+                    $.each(response.data, function(index, brand) {
+
+                        $('.new-brand-information').append(
+                            `<a href='${brand.brand_id}'>${brand.brand_name.toUpperCase()}</a>`
+                        );
+                    });
+                    $('.new-brand-information').append(`<a href='showall'>See More</a>`);
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();
+                }
+            });
+        },
+        getNewPresentation: function(){
+            $.ajax({
+                url: "{{ route('web_get_brand')}}",
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    condition: 'brand_is_new_presentation',
+                    limit: 7
+                },
+                success: function(response) {
+                    // console.log(response);
+                
+
+                    $('.new-presentation-information').html('<h4>New Products</h4>');
+                    $.each(response.data, function(index, brand) {
+
+                        $('.new-presentation-information').append(
+                            `<a href='${brand.brand_id}'>${brand.brand_name.toUpperCase()}</a>`
+                        );
+                    });
+                    $('.new-presentation-information').append(`<a href='showall'>See More</a>`);
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();
+                }
+            });
+        },
+    }
+
+    var homeMethods = {
+        getDoctor: function(){
+            $.ajax({
+                url: "{{ route('web_get_home_doctor')}}",
+                type: 'GET',
+                dataType: 'json',
+                // data: {
+                //     condition: 'brand_is_new_product',
+                //     limit: 7
+                // },
+                success: function(response) {
+                    // console.log(response);
+                
+                    $.each(response.data, function(index, doctor) {
+
+                        $('.doctor_row').append(`
+                            <div class="col-md-4">
+                                <div class="single-person">
+                                    <div class="person-image">
+                                        <span class="icon">
+                                            <i class="fa-solid fa-user-doctor"></i>
+                                        </span>
+                                    </div>
+                                    <div class="person-info">
+                                        <h3 class="full-name"> <a href="index.php/Doctor/getAllDoctorInformation">${doctor.doctor_name} </a>
+                                        </h3>
+                                        <span class="speciality"> ${doctor.doctor_specialization} </span>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                       
+                    });
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();
+                }
+            });
+        },
+        getSpecialReport:function(){
+            $.ajax({
+                url: "{{ route('web_get_home_special_report')}}",
+                type: 'GET',
+                dataType: 'json',
+                // data: {
+                //     condition: 'brand_is_new_product',
+                //     limit: 7
+                // },
+                success: function(response) {
+                    console.log("get_home_special_report-> ", response);
+                    $('#home-special-report-slider').html('');
+                    $.each(response.data, function(index, specialReport) {
+                        special_report_title = specialReport.special_report_title.length > 65 ? specialReport.special_report_title.substr(0, 65) + ' ...' : specialReport.special_report_title;
+
+                        $('#home-special-report-slider').append(`
+                            <div class="home-special-report-slide">
+                                <img src="{{ url('/') }}/storage/images/SpecialReportImages/${specialReport.special_report_image}"  alt="" onerror="this.src=\'https://image.ibb.co/cBMMNq/default-placeholder.png\'">
+                                <p class="home-special-report-slide-title"><a href="${specialReport.special_report_id}">${specialReport.special_report_title}</a></p>
+                            </div>
+                        `);
+                       
+                    });
+
+                    $('#home-special-report-slider').slick({
+                        slidesToScroll: 1,
+                        slidesToShow: 4,
+                        autoplay: false,
+                        autoplaySpeed: 1000,
+                        infinite: false,
+                        arrows: false,
+                        responsive: [
+                            {
+                                breakpoint: 480,
+                                settings: {
+                                    slidesToShow: 4,
+                                    arrows: false,
+                                }
+                            }
+                        ]
+                    });
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();
+                }
+            });
+        },
+        getMedicalJob:function(){
+            $.ajax({
+                url: "{{ route('web_get_home_job')}}",
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    category: 'Medical'
+                },
+                success: function(response) {
+                    console.log("get_home_job-> ", response);
+                    $('#medical_job').html('');
+                    $.each(response.data, function(index, job) {
+
+                        $('#medical_job').append(`
+                            <a href="#">
+                                <div class="media-list-left-image">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <img src="{{ url('/') }}/storage/images/JobImages/${job.job_organization_logo}" class="media-object">
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="bahuthard">New</span>
+                                            <h4 class="media-heading">
+                                                ${job.job_title}
+                                            </h4>
+                                            <p>
+                                                ${job.job_organization}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        `);
+                       
+                    });
+
+                   
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();
+                }
+            });
+        },
+        getPharmaJob:function(){
+            $.ajax({
+                url: "{{ route('web_get_home_job')}}",
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    category: 'Pharma'
+                },
+                success: function(response) {
+                    console.log("get_home_job-> ", response);
+                    $('#pharma_job').html('');
+                    $.each(response.data, function(index, job) {
+
+                        $('#pharma_job').append(`
+                            <a href="#">
+                                <div class="media-list-left-image">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <img src="{{ url('/') }}/storage/images/JobImages/${job.job_organization_logo}" class="media-object">
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="bahuthard">New</span>
+                                            <h4 class="media-heading">
+                                                ${job.job_title}
+                                            </h4>
+                                            <p>
+                                                ${job.job_organization}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        `);
+                       
+                    });
+
+                   
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();
+                }
+            });
+        },
+        getNews:function(){
+            $.ajax({
+                url: "{{ route('web_get_home_news')}}",
+                type: 'GET',
+                dataType: 'json',
+                // data: {
+                //     category: 'Pharma'
+                // },
+                success: function(response) {
+                    console.log("web_get_home_news-> ", response);
+                    $('.pharma_news').html('');
+                    $.each(response.data, function(index, news) {
+                        news_description = news.news_description.length > 50 ? news.news_description.substr(0, 50) + ' ...' : news.news_description;
+
+                        $('.pharma_news').append(`
+                            <a href="#">
+                                <div class="media-list-left-image">
+                                    <div class="media">
+                                        <div class="media-left">
+
+                                            <img src="{{ url('/') }}/storage/images/NewsImages/${news.news_image}" class="media-object">
+
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading">
+                                                ${news.news_title}
+                                            </h4>
+                                            <p>
+                                                ${news_description}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        `);
+                       
+                    });
+
+                   
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();
+                }
+            });
+        },
+        getVideo:function(){
+            $.ajax({
+                url: "{{ route('web_get_home_video')}}",
+                type: 'GET',
+                dataType: 'json',
+                // data: {
+                //     category: 'Pharma'
+                // },
+                success: function(response) {
+                    console.log("web_get_home_video-> ", response);
+                    $('#home-youtube-video-slider').html('');
+                    $.each(response.data, function(index, video) {
+              
+                        $('#home-youtube-video-slider').append(`
+                            <div class="youtube-video">
+                                <a href="#" onclick="frontCommonMethods.youtubeFullScreen('${video.video_link}')" tabindex="0">
+                                    <div class="youtube-video-wrapper" style="background-image: url(http://127.0.0.1:8000/storage/images/NewsImages/d8935b1118e631102d0971fc79d6379a.jpg);">
+                                        <img src="http://127.0.0.1:8000/storage/images/NewsImages/d8935b1118e631102d0971fc79d6379a.jpg" alt="Video thumbnail">
+                                    </div>
+                                </a>
+                                <h4 class="mt-3">
+                                    <a href="#" onclick="frontCommonMethods.youtubeFullScreen('${video.video_link}')" tabindex="0">
+                                        ${video.video_title}
+                                    </a>
+                                </h4>
+                            </div>
+                        `);
+                       
+                    });
+
+                    $('#home-youtube-video-slider').slick({
+                        slidesToScroll: 1,
+                        slidesToShow: 4,
+                        autoplay: false,
+                        autoplaySpeed: 1000,
+                        infinite: false,
+                        arrows: true,
+                        responsive: [
+                            {
+                                breakpoint: 480,
+                                settings: {
+                                    slidesToShow: 4,
+                                    arrows: false,
+                                }
+                            }
+                        ]
+                    });
+
+                   
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();
+                }
+            });
+        }
+
+        
+    }
 
 </script>
 

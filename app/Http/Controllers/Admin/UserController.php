@@ -16,7 +16,7 @@ class UserController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = User::select('*');
+            $data = User::select('*')->orderBy('id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 

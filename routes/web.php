@@ -33,6 +33,14 @@ use App\Http\Controllers\MigrationLiveController;
 use App\Http\Controllers\SiteSettingController;
 
 use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Web\BrandController as WebBrandController;
+use App\Http\Controllers\Web\DoctorController as WebDoctorController;
+use App\Http\Controllers\Web\JobController as WebJobController;
+use App\Http\Controllers\Web\NewsController as WebNewsController;
+use App\Http\Controllers\Web\SpecialReportController as WebSpecialReportController;
+use App\Http\Controllers\Web\VideoController as WebVideoController;
+
+
 
 use Illuminate\Support\Facades\DB;
 
@@ -186,6 +194,9 @@ Route::prefix('/admin')->group(function(){
         Route::post('/update', [JobController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [JobController::class, 'edit'])->name('edit');
         Route::delete('/destroy/{id}', [JobController::class, 'destroy'])->name('destroy');
+        Route::delete('/destroy_all', [JobController::class, 'destroy_all'])->name('destroy_all');
+
+        
     });
 
     // Journal Controller
@@ -325,6 +336,15 @@ Route::prefix('/admin')->group(function(){
 
 
 });
+
+
+Route::get('/get_brand', [WebBrandController::class, 'get_brand'])->name('web_get_brand');
+Route::get('/get_home_doctor', [WebDoctorController::class, 'get_home_doctor'])->name('web_get_home_doctor');
+Route::get('/get_home_special_report', [WebSpecialReportController::class, 'get_home_special_report'])->name('web_get_home_special_report');
+Route::get('/get_home_job', [WebJobController::class, 'get_home_job'])->name('web_get_home_job');
+Route::get('/get_home_news', [WebNewsController::class, 'get_home_news'])->name('web_get_home_news');
+Route::get('/get_home_video', [WebVideoController::class, 'get_home_video'])->name('web_get_home_video');
+
 
 
 
