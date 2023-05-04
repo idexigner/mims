@@ -41,6 +41,7 @@ class City extends Model
 
         static::creating(function ($model) {
             $model->city_created_by = 1; //Auth::id();
+            $model->city_updated_by = 1; //Auth::id();
             $model->city_created_at = $model->freshTimestamp();
             
         });

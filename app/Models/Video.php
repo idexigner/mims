@@ -31,6 +31,7 @@ class Video extends Model
 
         static::creating(function ($model) {
             $model->video_created_by = 1; //Auth::id();
+            $model->video_updated_by = 1; //Auth::id();
             $model->video_created_at = $model->freshTimestamp();
             
         });

@@ -35,6 +35,7 @@ class Strength extends Model
 
         static::creating(function ($model) {
             $model->strength_created_by = 1; //Auth::id();
+            $model->strength_updated_by = 1; //Auth::id();
             $model->strength_created_at = $model->freshTimestamp();
             
         });

@@ -40,6 +40,10 @@ class Doctor extends Model
         'doctor_updated_at'
     ];
 
+    public function specializations()
+    {
+        return $this->belongsToMany(Specialization::class, 'specialization_doctor_mapping', 'specialization_mapping_doctor_id', 'specialization_mapping_specialization_id');
+    }
    
     public function country()
     {
@@ -61,6 +65,7 @@ class Doctor extends Model
 
         static::creating(function ($model) {
             $model->doctor_created_by = 1; //Auth::id();
+            $model->doctor_updated_by = 1; //Auth::id();
             $model->doctor_created_at = $model->freshTimestamp();
             
         });

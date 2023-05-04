@@ -116,14 +116,14 @@
     <script src="#"></script>
     
     <script>
-        frontendCommonMethods.incrementVisitorCount();
-        frontendCommonMethods.getNumberOfVisitor();
+        // frontendCommonMethods.incrementVisitorCount();
+        // frontendCommonMethods.getNumberOfVisitor();
     
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            frontendCommonMethods.changeForMobileUI();
-        } else {
-            frontendCommonMethods.changeForDesktopUI();
-        }
+        // if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        //     frontendCommonMethods.changeForMobileUI();
+        // } else {
+        //     frontendCommonMethods.changeForDesktopUI();
+        // }
     </script>
 
     @stack('js-link')

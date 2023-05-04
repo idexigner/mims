@@ -11,6 +11,11 @@ use App\Models\Generic;
 use App\Models\Indication;
 use App\Models\IndicationMapping;
 
+use App\Models\Doctor;
+use App\Models\Specialization;
+use App\Models\SpecializationMapping;
+
+
 
 
 
@@ -38,44 +43,102 @@ class MigrationLiveController extends Controller
         // $this->migrate_advertisement();
         // $this->migrate_advertisement_position();
 
-        $this->convert_indication_tags();
+        // $this->convert_indication_tags();
 
+        $this->convert_specialization_tags();
+
+    }
+
+    function convert_specialization_tags(){
+        try{
+            $offset = 0;
+            $limit = 50;
+
+            do {
+                // Get all the doctor records
+                $doctors = Doctor::offset($offset)->limit($limit)->get();
+
+                // Loop through the doctors and process their specialization tags
+                foreach ($doctors as $doctor) {
+                    // Get the specialization tags for this doctor
+                    $tags = explode(',', $doctor->doctor_specialization);
+                
+
+                    // Loop through the tags and create or update the Indication records
+                    foreach ($tags as $tag) {
+                        $specialization = Specialization::where('specialization_name', $tag)->first();
+
+                        // If the specialization doesn't exist, create it
+                        if (!$specialization) {
+                            $specialization = Specialization::create([
+                                'specialization_name' => $tag,
+                            ]);
+                        }
+
+                    
+
+                        // Create or update the IndicationMapping record
+                        $mapping = SpecializationMapping::updateOrCreate([
+                            'specialization_mapping_doctor_id' => $doctor->doctor_id,
+                            'specialization_mapping_specialization_id' => $specialization->specialization_id,
+                        ]);
+                    }
+                }
+                    $offset += $limit;
+                    
+            } while ($doctors->count() > 0);
+        }catch(Exception $ex){
+                    dd($ex->getMessage());
+                }
+
+        
+        
     }
 
     function convert_indication_tags(){
         try{
-            // Get all the generic records
-            $generics = Generic::all();
+            $offset = 773;
+            $limit = 50;
 
-            // Loop through the generics and process their indication tags
-            foreach ($generics as $generic) {
-                // Get the indication tags for this generic
-                $tags = explode(',', $generic->generic_indication_tags);
-            
+            do {
+                // Get all the generic records
+                $generics = Generic::offset($offset)->limit($limit)->get();
 
-                // Loop through the tags and create or update the Indication records
-                foreach ($tags as $tag) {
-                    $indication = Indication::where('indication_name', $tag)->first();
-
-                    // If the indication doesn't exist, create it
-                    if (!$indication) {
-                        $indication = Indication::create([
-                            'indication_name' => $tag,
-                        ]);
-                    }
-
+                // Loop through the generics and process their indication tags
+                foreach ($generics as $generic) {
+                    // Get the indication tags for this generic
+                    $tags = explode(',', $generic->generic_indication_tags);
                 
 
-                    // Create or update the IndicationMapping record
-                    $mapping = IndicationMapping::updateOrCreate([
-                        'indication_mapping_generic_id' => $generic->generic_id,
-                        'indication_mapping_indication_id' => $indication->indication_id,
-                    ]);
+                    // Loop through the tags and create or update the Indication records
+                    foreach ($tags as $tag) {
+                        $indication = Indication::where('indication_name', $tag)->first();
+
+                        // If the indication doesn't exist, create it
+                        if (!$indication) {
+                            $indication = Indication::create([
+                                'indication_name' => $tag,
+                            ]);
+                        }
+
+                    
+
+                        // Create or update the IndicationMapping record
+                        $mapping = IndicationMapping::updateOrCreate([
+                            'indication_mapping_generic_id' => $generic->generic_id,
+                            'indication_mapping_indication_id' => $indication->indication_id,
+                        ]);
+                    }
                 }
-            }
+                    $offset += $limit;
+                    
+            } while ($generics->count() > 0);
         }catch(Exception $ex){
                     dd($ex->getMessage());
                 }
+
+        
+        
     }
 
 

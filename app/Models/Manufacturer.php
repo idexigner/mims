@@ -44,6 +44,7 @@ class Manufacturer extends Model
 
         static::creating(function ($model) {
             $model->manufacturer_created_by = 1; //Auth::id();
+            $model->manufacturer_updated_by = 1; //Auth::id();
             $model->manufacturer_created_at = $model->freshTimestamp();
             
         });

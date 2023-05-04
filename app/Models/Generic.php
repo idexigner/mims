@@ -61,7 +61,7 @@ class Generic extends Model
         static::creating(function ($model) {
             $model->generic_created_by = 1; //Auth::id();
             $model->generic_created_at = $model->freshTimestamp();
-            
+            $model->generic_updated_by = 1; 
         });
 
         static::updating(function ($model) {

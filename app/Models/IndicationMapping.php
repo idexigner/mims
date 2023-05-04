@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class IndicationMapping extends Model
 {
     use HasFactory;
-    protected $table = 'indication_generic_mapping';
-    protected $primaryKey = 'indication_mapping_id';
+  
     public $timestamps = true;
     const CREATED_AT = 'indication_mapping_created_at';
     const UPDATED_AT = 'indication_mapping_updated_at';
     
+    protected $table = 'indication_generic_mapping';
+    protected $primaryKey = 'indication_mapping_id';
     protected $fillable = [
         'indication_mapping_indication_id',
         'indication_mapping_generic_id',
@@ -35,13 +36,24 @@ class IndicationMapping extends Model
     // public function generic()
     // {
     //     return $this->belongsTo(Generic::class, 'indication_mapping_generic_id');
-    // }
+    // }.
+
+    public function generic()
+    {
+        return $this->belongsTo(Generic::class, 'indication_mapping_generic_id');
+    }
+
+    public function indication()
+    {
+        return $this->belongsTo(Indication::class, 'indication_mapping_indication_id');
+    }
 
     protected static function booted()
     {
 
         static::creating(function ($model) {
             $model->indication_mapping_created_by = 1; //Auth::id();
+            $model->indication_mapping_updated_by = 1; //Auth::id();
             $model->indication_mapping_created_at = $model->freshTimestamp();
             
         });

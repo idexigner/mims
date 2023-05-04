@@ -77,6 +77,7 @@ class Brand extends Model
 
         static::creating(function ($model) {
             $model->brand_created_by = 1; //Auth::id();
+            $model->brand_updated_by = 1; //Auth::id();
             $model->brand_created_at = $model->freshTimestamp();
             
         });

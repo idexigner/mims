@@ -54,6 +54,7 @@ class Location extends Model
 
         static::creating(function ($model) {
             $model->location_created_by = 1; //Auth::id();
+            $model->location_updated_by = 1; //Auth::id();
             $model->location_created_at = $model->freshTimestamp();
             
         });

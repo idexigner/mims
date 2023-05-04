@@ -9,11 +9,11 @@ class Indication extends Model
 {
     use HasFactory;
     protected $table = 'indication';
-    protected $primaryKey = 'indication_id';
+    
     public $timestamps = true;
     const CREATED_AT = 'indication_created_at';
     const UPDATED_AT = 'indication_updated_at';
-
+    protected $primaryKey = 'indication_id';
     protected $fillable = [
         'indication_name',
         'indication_is_active',
@@ -39,6 +39,7 @@ class Indication extends Model
 
         static::creating(function ($model) {
             $model->indication_created_by = 1; //Auth::id();
+            $model->indication_updated_by = 1; //Auth::id();
             $model->indication_created_at = $model->freshTimestamp();
             
         });

@@ -61,6 +61,7 @@ class Advertisement extends Model
 
         static::creating(function ($model) {
             $model->advertisement_created_by = 1; //Auth::id();
+            $model->advertisement_updated_by = 1; //Auth::id();
             $model->advertisement_created_at = $model->freshTimestamp();
             
         });

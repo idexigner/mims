@@ -2,6 +2,22 @@
 
 
 @push('title') Generic @endpush
+@push('css-link')
+    <style>
+        .modal-dialog {
+            max-height: 90vh !important; /* Set the maximum height of the modal dialog */
+        }
+        
+        .modal-body {
+            overflow-y: auto !important; /* Add a vertical scroll bar to the modal body */
+        }
+        .modal-content {
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+    </style>
+
+@endpush
 
 @section('main-section')
 
@@ -102,11 +118,16 @@
 
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Indication Tags2</label>
-                                <div class="col-sm-9">
-                                    <div class="indication_tag2">
-
+                                <div class="col-sm-8">
+                                    <div class="indication_tag2">                                       
+                                        <select class="form-control select2" multiple="multiple" data-placeholder="Indication Tags" name="generic_indication_tags2[]"  style="width: 100%;">
+                                          
+                                        </select>
                                     </div>
                                 {{-- <input type="text" class="form-control" name="generic_indication_tags" placeholder="Indication Tags" data-parsley-maxlength="300"> --}}
+                                </div>
+                                <div class="col-sm-1">
+                                    <button type="button" class="btn btn-primary add_indication btn-block" >+</button>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -189,6 +210,41 @@
     </div>
     <!-- /.modal -->
 
+    <!-- /.modal-dialog -->
+    <div class="modal fade" id="modal_indication_form">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content ">
+            <form class="form-horizontal" id="indication-form">
+                @csrf
+                
+
+                <div class="modal-body">
+                    <div class="card-body py-0">
+
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Add New Indication <span class="text-red">*</span></label>
+                            <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Add New Indication" name="indication_name" required data-parsley-maxlength="200">
+                            </div>
+                        </div>
+
+                    
+                    </div>
+                  </div>
+                  
+                
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" data-url="{{ route('generic.indication.store') }}" class="btn btn-primary" id="create_indication_btn">Add</button>
+                </div>
+            </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    
+    </div>
+    <!-- /.modal -->
+
 @endsection
 
 @push('js-link')
@@ -223,6 +279,60 @@
                     }
                 ];
             initializeDataTable(tableName, ajaxUrl, columnsArray);
+
+            $('.select2').select2()
+            // Initializing dropdown
+            fetchIndication();
+
+            function fetchIndication(){
+                $.ajax({
+                    url: "{{ route('generic.indication.fetch') }}", 
+                    type: 'GET',             
+                    // data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    success: function(response) {
+                        console.log("fetchIndication=>", response);
+                        var data = response.data;
+                        console.log(data);
+                        
+                        var select2El = $('select[name="generic_indication_tags2[]"]');
+                        
+                        select2El.select2('destroy');
+                        select2El.empty();
+                        
+                        // select2El.append($('<option value="" selected="selected"></option>').text('Select Item'));
+                        
+                        $.each(data, function(index, value) {
+                            select2El.append($('<option></option>').attr('value', value.indication_id).text(value.indication_name));
+                        });
+
+                        select2El.select2();
+                    },
+                    error: function(xhr, status, error) {
+                        console.group("Error Block");
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        console.groupEnd();   
+
+                        if(xhr.responseJSON.messages){
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: xhr.responseJSON.message, //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+
+                        }else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Something went wrong', //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+                        }
+                                        
+                    }
+                });
+            }
 
             
             // handle click event for "Add" button
@@ -281,7 +391,7 @@
                             console.log(error);
                         console.groupEnd();   
 
-                        if(xhr.responseJSON.messags){
+                        if(xhr.responseJSON.messages){
 
                             Toast.fire({
                                 icon: 'error',
@@ -328,6 +438,12 @@
 
                         $("input[name=generic_indication_tags]").val(data.generic_indication_tags);
 
+                        var generic_indication_tags2 = [];
+                        $.each(data.indications, function(index, value) {
+                            generic_indication_tags2.push(value.indication_id);
+                        });
+
+                        $('select[name="generic_indication_tags2[]"]').val(generic_indication_tags2).trigger('change');
 
                         // indication_tag2
                         $('textarea[name=generic_dosage_administration]').summernote().summernote('code', data.generic_dosage_administration);
@@ -363,7 +479,7 @@
                             console.log(error);
                         console.groupEnd();   
 
-                        if(xhr.responseJSON.messags){
+                        if(xhr.responseJSON.messages){
 
                             Toast.fire({
                                 icon: 'error',
@@ -429,6 +545,70 @@
                         });
                     } 
                 })
+            });
+
+
+            $('.add_indication').on('click', function(){
+                var selectedValue = $(this).val();
+
+                $("input[name=address_new_category]").val('');
+                $("#modal_indication_form").modal('show')
+                // alert(selectedValue)
+                // Do something with the selected value
+            });
+            
+
+
+            //For Creating and updating the record
+            $('#indication-form').submit(function(e) {
+                e.preventDefault();
+                var url = $("#create_indication_btn").data('url');
+                var type = "POST";
+
+                
+                $.ajax({
+                    url: url, 
+                    type: type,             
+                    data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    success: function(response) {
+                        // $('#create-post-form')[0].reset();
+                        table.DataTable().ajax.reload();
+                        $("#modal_indication_form").modal('hide');
+                        fetchIndication();
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message, //"Generic record deleted successfully",
+                            timer: 3000,
+                        });
+
+
+                        // alert(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        console.group("Error Block");
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        console.groupEnd();   
+
+                        if(xhr.responseJSON.messags){
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: xhr.responseJSON.message, //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+
+                        }else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Something went wrong', //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+                        }
+                                        
+                    }
+                });
             });
 
         });

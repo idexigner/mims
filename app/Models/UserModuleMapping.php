@@ -54,6 +54,7 @@ class UserModuleMapping extends Model
 
         static::creating(function ($model) {
             $model->module_created_by = 1; //Auth::id();
+            $model->module_updated_by = 1; //Auth::id();
             $model->module_created_at = $model->freshTimestamp();
             
         });

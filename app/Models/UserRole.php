@@ -28,6 +28,7 @@ class UserRole extends Model
 
         static::creating(function ($model) {
             $model->role_created_by = Auth::id();
+            $model->role_updated_by = Auth::id();
             $model->role_created_at = $model->freshTimestamp();
             
         });

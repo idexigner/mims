@@ -33,6 +33,7 @@ class News extends Model
 
         static::creating(function ($model) {
             $model->news_created_by = 1; //Auth::id();
+            $model->news_updated_by = 1; //Auth::id();
             $model->news_created_at = $model->freshTimestamp();
             
         });

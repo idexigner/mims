@@ -32,6 +32,7 @@ class Journal extends Model
 
         static::creating(function ($model) {
             $model->journal_created_by = 1; //Auth::id();
+            $model->journal_updated_by = 1; //Auth::id();
             $model->journal_created_at = $model->freshTimestamp();
             
         });

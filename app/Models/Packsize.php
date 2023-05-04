@@ -35,6 +35,7 @@ class Packsize extends Model
 
         static::creating(function ($model) {
             $model->packsize_created_by = 1; //Auth::id();
+            $model->packsize_updated_by = 1; //Auth::id();
             $model->packsize_created_at = $model->freshTimestamp();
             
         });

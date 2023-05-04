@@ -35,6 +35,7 @@ class DosageForm extends Model
 
         static::creating(function ($model) {
             $model->dosageform_created_by = 1; //Auth::id();
+            $model->dosageform_updated_by = 1; //Auth::id();
             $model->dosageform_created_at = $model->freshTimestamp();
             
         });

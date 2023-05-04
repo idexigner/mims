@@ -34,11 +34,17 @@ use App\Http\Controllers\SiteSettingController;
 
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\BrandController as WebBrandController;
+use App\Http\Controllers\Web\CityController as WebCityController;
+use App\Http\Controllers\Web\CountryController as WebCountryController;
 use App\Http\Controllers\Web\DoctorController as WebDoctorController;
 use App\Http\Controllers\Web\JobController as WebJobController;
 use App\Http\Controllers\Web\NewsController as WebNewsController;
+use App\Http\Controllers\Web\SpecializationController as WebSpecializationController;
 use App\Http\Controllers\Web\SpecialReportController as WebSpecialReportController;
 use App\Http\Controllers\Web\VideoController as WebVideoController;
+
+
+
 
 
 
@@ -105,6 +111,10 @@ Route::prefix('/admin')->group(function(){
         Route::put('/update', [GenericController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [GenericController::class, 'edit'])->name('edit');
         Route::delete('/destroy/{id}', [GenericController::class, 'destroy'])->name('destroy');
+        
+        Route::post('/indication/store', [GenericController::class, 'store_indication'])->name('indication.store');
+        Route::get('/indication/fetch', [GenericController::class, 'fetch_indication'])->name('indication.fetch');
+
     });
 
 
@@ -331,6 +341,17 @@ Route::prefix('/admin')->group(function(){
 
         });
 
+          // Specialization Controller
+        Route::prefix('/specialization')->name('specialization.')->group(function(){
+            Route::get('/', [SpecializationController::class, 'index'])->name('index');
+            Route::get('/list', [SpecializationController::class, 'list'])->name('list');
+
+            Route::post('/store', [SpecializationController::class, 'store'])->name('store');
+            Route::put('/update', [SpecializationController::class, 'update'])->name('update');
+            Route::get('/edit/{id}', [SpecializationController::class, 'edit'])->name('edit');
+            Route::delete('/destroy/{id}', [SpecializationController::class, 'destroy'])->name('destroy');
+        });
+
     });
     
 
@@ -346,7 +367,14 @@ Route::get('/get_home_news', [WebNewsController::class, 'get_home_news'])->name(
 Route::get('/get_home_video', [WebVideoController::class, 'get_home_video'])->name('web_get_home_video');
 
 
+Route::get('/doctor', [WebDoctorController::class, 'index'])->name('web_page_doctor');
 
+
+Route::get('/get_city', [WebCityController::class, 'index'])->name('web_city');
+Route::get('/get_country', [WebCountryController::class, 'index'])->name('web_country');
+Route::get('/get_specialization', [WebSpecializationController::class, 'index'])->name('web_specialization');
+
+Route::get('/get_doctor', [WebDoctorController::class, 'get_doctor'])->name('web_get_doctor');
 
 // Artisan Routes
 

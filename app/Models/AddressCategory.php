@@ -34,6 +34,7 @@ class AddressCategory extends Model
 
         static::creating(function ($model) {
             $model->address_category_created_by = 1; //Auth::id();
+            $model->address_category_updated_by = 1; //Auth::id();
             $model->address_category_created_at = $model->freshTimestamp();
             
         });

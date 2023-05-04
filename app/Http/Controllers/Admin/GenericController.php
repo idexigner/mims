@@ -4,11 +4,12 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Generic;
+use App\Models\Indication;
+use App\Models\IndicationMapping;
 use App\Traits\LogExceptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
-
 
 class GenericController extends Controller
 {    
@@ -16,8 +17,9 @@ class GenericController extends Controller
     public function index(Request $request)
     {        
         if ($request->ajax()) {
-            // dd("ajax");
-            $data = Generic::with('indications')->select('*')->orderBy('generic_id', 'DESC');
+            // dd("ajax");->select('*')
+            $data = Generic::select("*")->orderBy('generic_id', 'DESC');
+        
             return DataTables::of($data)->make(true);
         }
 
@@ -63,6 +65,20 @@ class GenericController extends Controller
             $obj->generic_is_active = $request->generic_is_active ?? '1';
             $obj->save();
 
+            $generic_id = $obj->getKey(); 
+          
+            if(isset($request->generic_indication_tags2)){
+
+                // $generic_indication_tags2 = implode(',', $request->generic_indication_tags2);
+                foreach($request->generic_indication_tags2 as $indication_id){
+                   
+                    $obj = new IndicationMapping;
+                    $obj->indication_mapping_indication_id = $indication_id;
+                    $obj->indication_mapping_generic_id = $generic_id;
+                    $obj->save();
+                }
+            }
+
             return response()->json([
                     'message' => 'Generic record created successfully'
                 ], 200);
@@ -82,7 +98,7 @@ class GenericController extends Controller
     {
        try{
 
-            $generic = Generic::findOrFail($id);            
+            $generic = Generic::with('indications')->findOrFail($id);            
             return response()->json([
                 'message' => 'Edit', 
                 'data' => $generic
@@ -133,7 +149,20 @@ class GenericController extends Controller
             $obj->generic_storage_condition = $request->generic_storage_condition ?? '';
             $obj->generic_pregnancy_lactation   = $request->generic_pregnancy_lactation ?? '';
             $obj->generic_is_active = $request->generic_is_active ?? '1';
-            $obj->save();
+            $result = $obj->save();
+
+            $generic_id = $obj->getKey(); 
+          
+            if(isset($request->generic_indication_tags2)){
+                IndicationMapping::where('indication_mapping_generic_id', $generic_id)->delete();
+                
+                foreach($request->generic_indication_tags2 as $indication_id){                   
+                    $obj = new IndicationMapping;
+                    $obj->indication_mapping_indication_id = $indication_id;
+                    $obj->indication_mapping_generic_id = $generic_id;
+                    $obj->save();
+                }
+            }
 
             return response()->json([
                 'message' => 'Generic record updated successfully'
@@ -166,5 +195,46 @@ class GenericController extends Controller
                     'message' => $ex->getMessage()
                 ], 400);
         }
+    }
+
+    public function store_indication(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'indication_name' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            
+            $obj = new Indication();
+            $obj->indication_name = $request->indication_name ?? '';
+            $result = $obj->save();
+
+            
+
+            return response()->json([
+                    'message' => 'Indication record created successfully'
+                ], 200);
+
+        } catch (\Exception $ex) {
+
+            $this->logException($ex, $request->route()->getName(), __METHOD__);
+            return response()->json([
+                    'message' => 'Something went wrong!',
+                    'error' => $ex
+                ], 400);
+        }
+    }
+
+    public function fetch_indication(){
+        $data = Indication::select('*')->where('indication_is_active',1)->get();
+        return response()->json([
+            'message' => 'Fetch', 
+            'data' => $data
+        ], 200);
+        
     }
 }

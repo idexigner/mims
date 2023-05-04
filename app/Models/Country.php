@@ -39,6 +39,7 @@ class Country extends Model
 
         static::creating(function ($model) {
             $model->country_created_by = 1; //Auth::id();
+            $model->country_updated_by = 1; //Auth::id();
             $model->country_created_at = $model->freshTimestamp();
             
         });

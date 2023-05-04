@@ -45,6 +45,7 @@ class State extends Model
 
         static::creating(function ($model) {
             $model->state_created_by = 1; //Auth::id();
+            $model->state_updated_by = 1; //Auth::id();
             $model->state_created_at = $model->freshTimestamp();
             
         });

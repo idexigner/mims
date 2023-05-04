@@ -43,6 +43,7 @@ class AdvertisementPosition extends Model
 
         static::creating(function ($model) {
             $model->advertisement_position_created_by = 1; //Auth::id();
+            $model->advertisement_position_updated_by = 1; //Auth::id();
             $model->advertisement_position_created_at = $model->freshTimestamp();
             
         });

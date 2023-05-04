@@ -18,7 +18,7 @@
                         <a class="nav-link mims-nav-link home-link mims-main-menu" href="#">Home</a>
                     </li>
                     <li id="mainMenuDoctor" class="nav-item">
-                        <a class="nav-link mims-nav-link doctor-link mims-main-menu" href="#">Doctor</a>
+                        <a class="nav-link mims-nav-link doctor-link mims-main-menu" href="{{ route('web_page_doctor') }}">Doctor</a>
                     </li>
                     <li id="mainMenuHerbal" class="nav-item">
                         <a class="nav-link mims-nav-link herbal-link mims-main-menu" href="#">Herbal</a>

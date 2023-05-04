@@ -71,7 +71,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Organization <span class="text-red">*</span></label>
                                 <div class="col-sm-9">
-                                <input type="text" class="form-control" placeholder="Name" name="advertisement_name" required data-parsley-maxlength="200">
+                                <input type="text" class="form-control" placeholder="Name" name="advertisement_organization" required data-parsley-maxlength="200">
                                 </div>
                             </div>
 
@@ -401,7 +401,7 @@
             var tableName = '#table-standard';
             var ajaxUrl = "{{ route('advertisement.index') }}";
             var columnsArray = [                  
-                    { data: 'advertisement_name', name: 'advertisement_name', title: 'Name'},
+                    { data: 'advertisement_organization', name: 'advertisement_organization', title: 'Name'},
                     { data: 'advertisement_category', name: 'advertisement_category', title: 'Advertisement For'},
                     { data: 'advertisement_unpublish', name: 'advertisement_unpublish', title: 'Unpublish Date'},
                     { data: 'advertisement_position.advertisement_position_name', name: 'advertisement_position.advertisement_position_name', title: 'Position'},
@@ -463,8 +463,12 @@
                 $.ajax({
                     url: url, 
                     type: type,             
-                    data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    data:  new FormData(this), // new FormData($("#create-post-form")[0]), //
+                    processData: false,
+                    contentType: false,
                     success: function(response) {
+
+                        console.log("reson");
                         // $('#create-post-form')[0].reset();
                         table.DataTable().ajax.reload();
                         $("#modal_create_form").modal('hide');
@@ -522,7 +526,7 @@
                         console.log("data==>", data)
 
                         $("input[name=id]").val(data.advertisement_id);
-                        $("input[name=advertisement_name]").val(data.advertisement_name);
+                        $("input[name=advertisement_organization]").val(data.advertisement_organization);
                         $("select[name=advertisement_category]").val(data.advertisement_category);
                         
 

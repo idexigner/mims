@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('indication', function (Blueprint $table) {
             $table->id('indication_id');
-            $table->string('indication_name', 200);
+            $table->string('indication_name', 2000);
             $table->tinyInteger('indication_is_active')->nullable()->default(1);
             $table->tinyInteger('indication_is_deleted')->nullable()->default(0);
             $table->integer('indication_created_by');

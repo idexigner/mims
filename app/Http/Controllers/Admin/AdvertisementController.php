@@ -32,7 +32,9 @@ class AdvertisementController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         try{
+           
             $validator = Validator::make($request->all(), [
                 'advertisement_organization' => 'required',
                 'advertisement_position' => 'required',
@@ -54,7 +56,7 @@ class AdvertisementController extends Controller
             $obj->advertisement_link = $request->advertisement_link ?? '';
             $obj->advertisement_publish = ($request->advertisement_publish)? date('Y-m-d', strtotime($request->advertisement_publish)): '';
             $obj->advertisement_unpublish = ($request->advertisement_unpublish)? date('Y-m-d', strtotime($request->advertisement_unpublish)): '';
-
+            
             if ($request->hasFile('advertisement_image')) {
                 $file = $request->file('advertisement_image');
                 $advertisement_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
