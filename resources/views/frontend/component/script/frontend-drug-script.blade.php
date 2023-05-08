@@ -23,7 +23,7 @@
                     var individual_job = '';
                     for (var job_no = 0; job_no < jobData1.length; job_no++) {
                         new_tag_html = jobData1[job_no].NumberOfDatePublished < 4 ? '<img src="#" style="max-width: 37px" alt="">' : '';
-                        var logo_path = jobData1[job_no].OrganizationLogo == '' || jobData1[job_no].OrganizationLogo == null ? '' : '#'+'JobImages/'+jobData1[job_no].OrganizationLogo;
+                        var logo_path = jobData1[job_no].OrganizationLogo == '' || jobData1[job_no].OrganizationLogo == null ? '' : '#'+'job/'+jobData1[job_no].OrganizationLogo;
                         individual_job = '<div class="row job">' +
                             '<div class="col-2">' +
                             '<img class="job-img" src="'+logo_path+'" alt="" onerror="this.src=\'https://image.ibb.co/cBMMNq/default-placeholder.png\'">'+
@@ -42,7 +42,7 @@
                     var individual_job = '';
                     for (var job_no = 0; job_no < jobData2.length; job_no++) {
                         new_tag_html = jobData2[job_no].NumberOfDatePublished < 4 ? '<img src="#" style="max-width: 37px" alt="">' : '';
-                        var logo_path = jobData2[job_no].OrganizationLogo == '' || jobData2[job_no].OrganizationLogo == null ? '' : '#'+'JobImages/'+jobData2[job_no].OrganizationLogo;
+                        var logo_path = jobData2[job_no].OrganizationLogo == '' || jobData2[job_no].OrganizationLogo == null ? '' : '#'+'job/'+jobData2[job_no].OrganizationLogo;
                         individual_job = '<div class="row job">' +
                             '<div class="col-2">' +
                             '<img class="job-img" src="'+logo_path+'" alt="" onerror="this.src=\'https://image.ibb.co/cBMMNq/default-placeholder.png\'">'+
@@ -70,7 +70,7 @@
                         news_description = news_description.length > 65 ? news_description.substr(0, 60) + '...' : news_description;
                         individual_news = '<div class="row news home-news">' +
                             '<div class="col-4 pr-0">' +
-                            '<img class="news-img" src="NewsImages/'+newsData[news_no].ImagePath+'" alt="" onerror="this.src=\'https://image.ibb.co/cBMMNq/default-placeholder.png\'">'+
+                            '<img class="news-img" src="news/'+newsData[news_no].ImagePath+'" alt="" onerror="this.src=\'https://image.ibb.co/cBMMNq/default-placeholder.png\'">'+
                             '</div>'+
                             '<div class="col-8">'+
                             '<p class="news-title"><a href="'+newsData[news_no].ID+'">'+newsData[news_no].Title+'</a></p>'+
@@ -94,7 +94,7 @@
                         special_report_title = specialReportData[special_report_no].Title;
                         special_report_title = special_report_title.length > 65 ? special_report_title.substr(0, 60) + ' ...' : special_report_title;
                         individual_special_report = '<div class="home-special-report-slide">' +
-                            '<img src="SpecialReportImages/'+specialReportData[special_report_no].ImagePath+'"  alt="" onerror="this.src=\'https://image.ibb.co/cBMMNq/default-placeholder.png\'">'+
+                            '<img src="special_report/'+specialReportData[special_report_no].ImagePath+'"  alt="" onerror="this.src=\'https://image.ibb.co/cBMMNq/default-placeholder.png\'">'+
                             '<p class="home-special-report-slide-title"><a href="'+specialReportData[special_report_no].ID+'">'+special_report_title+'</p>'+
                             '</div>';
 
@@ -476,7 +476,7 @@
                         indication = drugData.Indication;
                         indication = indication.length > 70 ? indication.substr(0, 67) + '...' : indication;
                         $('#highlighted-product').append('<div><div class="star-product-img">' +
-                            '<img src="BrandImages/' + drugData.ImagePath + '" alt="">' +
+                            '<img src="brand/' + drugData.ImagePath + '" alt="">' +
                             '</div>' +
                             '<div class="star-product-info">' +
                             '<div class="star"><i class="fas fa-star"></i></div>' +

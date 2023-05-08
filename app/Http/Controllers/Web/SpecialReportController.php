@@ -10,13 +10,14 @@ use App\Traits\LogExceptions;
 class SpecialReportController extends Controller
 {
     use LogExceptions;
-    public function get_home_special_report(){
+    public function get_home_special_report(Request $request){
         try{
 
             $data = SpecialReport::select('*')
                 ->where('special_report_is_active', 1)
                 ->where('special_report_is_featured',1)
-                ->limit(10)
+                ->limit($request->limit)
+                ->orderBy('special_report_id', 'DESC')
                 ->get();      
 
             return response()->json([

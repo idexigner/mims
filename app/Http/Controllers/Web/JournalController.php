@@ -3,27 +3,28 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\News;
+use App\Models\Journal;
 use Illuminate\Http\Request;
 use App\Traits\LogExceptions;
-use Carbon\Carbon;
 
-class NewsController extends Controller
+
+class JournalController extends Controller
 {
-    use LogExceptions;
-    public function get_home_news(Request $request){
+    public function index($category){
+        return view('frontend.journal')->with(['category'=> $category]);
+    }
+
+    public function get_list($category)
+    {
         try{
-            $today = Carbon::today()->toDateString();
-            $data = News::select('*')                
-                ->where('news_is_active', 1)
-                ->whereDate('news_publish_date', '<=', $today)
-                ->whereDate('news_unpublish_date', '>=', $today)
-                ->orderBy('news_id', 'DESC')
-                ->limit($request->limit)
+            // $today = Carbon::today()->toDateString();
+            $data = Journal::select('*')
+                ->where('journal_category', $category)
+                ->where('journal_is_active', 1)               
                 ->get();      
 
             return response()->json([
-                'message' => 'Get News', 
+                'message' => 'Get Journal', 
                 'data' => $data
             ], 200);
 

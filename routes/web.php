@@ -38,6 +38,7 @@ use App\Http\Controllers\Web\CityController as WebCityController;
 use App\Http\Controllers\Web\CountryController as WebCountryController;
 use App\Http\Controllers\Web\DoctorController as WebDoctorController;
 use App\Http\Controllers\Web\JobController as WebJobController;
+use App\Http\Controllers\Web\JournalController as WebJournalController;
 use App\Http\Controllers\Web\NewsController as WebNewsController;
 use App\Http\Controllers\Web\SpecializationController as WebSpecializationController;
 use App\Http\Controllers\Web\SpecialReportController as WebSpecialReportController;
@@ -123,7 +124,7 @@ Route::prefix('/admin')->group(function(){
         Route::get('/', [BrandController::class, 'index'])->name('index');
         Route::get('/list', [BrandController::class, 'list'])->name('list');
         Route::post('/store', [BrandController::class, 'store'])->name('store');
-        Route::put('/update', [BrandController::class, 'update'])->name('update');
+        Route::post('/update', [BrandController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('edit');
         Route::delete('/destroy/{id}', [BrandController::class, 'destroy'])->name('destroy');
     });
@@ -186,6 +187,11 @@ Route::prefix('/admin')->group(function(){
         Route::post('/update', [DoctorController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [DoctorController::class, 'edit'])->name('edit');
         Route::delete('/destroy/{id}', [DoctorController::class, 'destroy'])->name('destroy');
+   
+        Route::post('/specialization/store', [DoctorController::class, 'store_specialization'])->name('specialization.store');
+        Route::get('/specialization/fetch', [DoctorController::class, 'fetch_specialization'])->name('specialization.fetch');
+
+   
     });
 
     // Advertisement Controller
@@ -252,7 +258,7 @@ Route::prefix('/admin')->group(function(){
     Route::prefix('/video')->name('video.')->group(function(){
         Route::get('/', [VideoController::class, 'index'])->name('index');
         Route::post('/store', [VideoController::class, 'store'])->name('store');
-        Route::put('/update', [VideoController::class, 'update'])->name('update');
+        Route::post('/update', [VideoController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [VideoController::class, 'edit'])->name('edit');
         Route::delete('/destroy/{id}', [VideoController::class, 'destroy'])->name('destroy');
     });
@@ -375,6 +381,17 @@ Route::get('/get_country', [WebCountryController::class, 'index'])->name('web_co
 Route::get('/get_specialization', [WebSpecializationController::class, 'index'])->name('web_specialization');
 
 Route::get('/get_doctor', [WebDoctorController::class, 'get_doctor'])->name('web_get_doctor');
+
+
+Route::get('/herbal', [WebBrandController::class, 'herbal_list'])->name('web_get_herbal_list');
+
+Route::get('/journal/{category}', [WebJournalController::class, 'index'])->name('web_get_journal');
+Route::get('/journal_list/{category}', [WebJournalController::class, 'get_list'])->name('web_get_journal_list');
+
+
+Route::get('/about',[HomeController::class,'about'])->name('web_page_about');
+Route::get('/disclaimer',[HomeController::class,'disclaimer'])->name('web_page_disclaimer');
+Route::get('/privacy_policy',[HomeController::class,'privacy_policy'])->name('web_page_privacy_policy');
 
 // Artisan Routes
 

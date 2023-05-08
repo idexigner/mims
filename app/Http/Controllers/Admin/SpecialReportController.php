@@ -48,6 +48,8 @@ class SpecialReportController extends Controller
                 $file->storeAs('public/images/special_report', $special_report_image);
             }
             $obj->special_report_image = $special_report_image ?? '';
+            
+            $obj->special_report_is_featured = $request->special_report_is_featured ?? '0';
             $obj->special_report_is_active = $request->special_report_is_active ?? '1';
             $obj->save();
 
@@ -116,7 +118,8 @@ class SpecialReportController extends Controller
                 $file->storeAs('public/images/special_report', $special_report_image);
                 $obj->special_report_image = $special_report_image ?? '';
             }
-           
+            
+            $obj->special_report_is_featured = $request->special_report_is_featured ?? '0';
             $obj->special_report_is_active = $request->special_report_is_active ?? '1';
             $obj->save();
 

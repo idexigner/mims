@@ -20,75 +20,75 @@
         },
     }
     
-    var frontenndCommonMethods2 = {
+    // var frontenndCommonMethods2 = {
 
-        getAdvertisement: function(classNames, slidesToShow) {
-            console.log('Method Name: frontendCommonMethods.getAdvertisement Param: classNames Value: ' + [classNames].toString());
-            for (var class_no = 0; class_no < classNames.length; class_no++) {
-                var class_name = classNames[class_no];
-                $('#' + class_name).hide();
-                var formURL = "#" + class_name;
-                mimsServerAPI.getServerData('GET', formURL, 'jsonp', 'frontendCommonMethods.getAdvertisement', function(advertisementData) {
-                    console.log("advertisementData==>", advertisementData);
-                    if (advertisementData.length) {
-                        var image_class = '';
-                        var position_class_name = advertisementData[0].ClassName;
-                        var interval = advertisementData[0].Interval;
-                        switch (position_class_name) {
-                            case 'home-product-slider':
-                                image_class = 'home-product-slide';
-                                break;
-                            case 'ebook-top-slider':
-                                image_class = 'ebook-top-slide';
-                                break;
-                            case 'ebook-bottom-slider':
-                                image_class = 'ebook-bottom-slide';
-                                break;
-                            case 'mims-learning-top-slider':
-                                image_class = 'mims-learning-top-slide';
-                                break;
-                            case 'mims-learning-bottom-slider':
-                                image_class = 'mims-learning-bottom-slide';
-                                break;
-                            default:
-                                break;
-                        }
-                        $('#' + position_class_name).html('');
-                        for (var advertisement_no = 0; advertisement_no < advertisementData.length; advertisement_no++) {
-                            $('#' + position_class_name).append('<div class="' + image_class + '">' +
-                                '<img src="#' + advertisementData[advertisement_no].ImagePath + '" alt="">' +
-                                '</div>');
-                        }
-                        $('#' + class_name).show();
-                        switch (position_class_name) {
-                            case 'home-product-slider':
-                            case 'ebook-top-slider':
-                            case 'ebook-bottom-slider':
-                            case 'mims-learning-top-slider':
-                            case 'mims-learning-bottom-slider':
-                                $('#' + class_name).slick({
-                                    slidesToScroll: 1,
-                                    slidesToShow: slidesToShow,
-                                    autoplay: true,
-                                    autoplaySpeed: 3000,
-                                    infinite: true,
-                                    arrows: false,
-                                    responsive: [{
-                                        breakpoint: 480,
-                                        settings: {
-                                            slidesToShow: 2,
-                                        }
-                                    }]
-                                });
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                });
-            }
-        },
-    }
+    //     getAdvertisement: function(classNames, slidesToShow) {
+    //         console.log('Method Name: frontendCommonMethods.getAdvertisement Param: classNames Value: ' + [classNames].toString());
+    //         for (var class_no = 0; class_no < classNames.length; class_no++) {
+    //             var class_name = classNames[class_no];
+    //             $('#' + class_name).hide();
+    //             var formURL = "#" + class_name;
+    //             mimsServerAPI.getServerData('GET', formURL, 'jsonp', 'frontendCommonMethods.getAdvertisement', function(advertisementData) {
+    //                 console.log("advertisementData==>", advertisementData);
+    //                 if (advertisementData.length) {
+    //                     var image_class = '';
+    //                     var position_class_name = advertisementData[0].ClassName;
+    //                     var interval = advertisementData[0].Interval;
+    //                     switch (position_class_name) {
+    //                         case 'home-product-slider':
+    //                             image_class = 'home-product-slide';
+    //                             break;
+    //                         case 'ebook-top-slider':
+    //                             image_class = 'ebook-top-slide';
+    //                             break;
+    //                         case 'ebook-bottom-slider':
+    //                             image_class = 'ebook-bottom-slide';
+    //                             break;
+    //                         case 'mims-learning-top-slider':
+    //                             image_class = 'mims-learning-top-slide';
+    //                             break;
+    //                         case 'mims-learning-bottom-slider':
+    //                             image_class = 'mims-learning-bottom-slide';
+    //                             break;
+    //                         default:
+    //                             break;
+    //                     }
+    //                     $('#' + position_class_name).html('');
+    //                     for (var advertisement_no = 0; advertisement_no < advertisementData.length; advertisement_no++) {
+    //                         $('#' + position_class_name).append('<div class="' + image_class + '">' +
+    //                             '<img src="#' + advertisementData[advertisement_no].ImagePath + '" alt="">' +
+    //                             '</div>');
+    //                     }
+    //                     $('#' + class_name).show();
+    //                     switch (position_class_name) {
+    //                         case 'home-product-slider':
+    //                         case 'ebook-top-slider':
+    //                         case 'ebook-bottom-slider':
+    //                         case 'mims-learning-top-slider':
+    //                         case 'mims-learning-bottom-slider':
+    //                             $('#' + class_name).slick({
+    //                                 slidesToScroll: 1,
+    //                                 slidesToShow: slidesToShow,
+    //                                 autoplay: true,
+    //                                 autoplaySpeed: 3000,
+    //                                 infinite: true,
+    //                                 arrows: false,
+    //                                 responsive: [{
+    //                                     breakpoint: 480,
+    //                                     settings: {
+    //                                         slidesToShow: 2,
+    //                                     }
+    //                                 }]
+    //                             });
+    //                             break;
+    //                         default:
+    //                             break;
+    //                     }
+    //                 }
+    //             });
+    //         }
+    //     },
+    // }
 
 
     var frontendCommonMethods = {
@@ -208,7 +208,7 @@
                         for (var i = 0; i < all_jobs.length; i++) {
                             new_tag_html = all_jobs[i].NumberOfDatePublished < 4 ? '<img src="#" style="max-width: 25px" alt="">' : '';
                             var organization_logo = all_jobs[i].OrganizationLogo;
-                            organization_logo = organization_logo != null && organization_logo.length > 0 ? '#' + 'JobImages/' + organization_logo : '';
+                            organization_logo = organization_logo != null && organization_logo.length > 0 ? '#' + 'job/' + organization_logo : '';
                             var job_title = all_jobs[i].Title;
                             job_title = job_title.length > 30 ? job_title.substr(0, 27) + '...' : job_title;
                             $('div#pharmaTab div.sidebar-jobs').append('<div class="row job side-col">' +
@@ -228,7 +228,7 @@
                         for (var i = 0; i < all_jobs.length; i++) {
                             new_tag_html = all_jobs[i].NumberOfDatePublished < 4 ? '<img src="#" style="max-width: 25px" alt="">' : '';
                             var organization_logo = all_jobs[i].OrganizationLogo;
-                            organization_logo = organization_logo != null && organization_logo.length > 0 ? '#' + 'JobImages/' + organization_logo : '';
+                            organization_logo = organization_logo != null && organization_logo.length > 0 ? '#' + 'job/' + organization_logo : '';
                             var job_title = all_jobs[i].Title;
                             job_title = job_title.length > 30 ? job_title.substr(0, 27) + '...' : job_title;
                             $('div#medicalTab div.sidebar-jobs').append('<div class="row job side-col">' +
@@ -258,7 +258,7 @@
                         $('.side-bar-news-title').show();
                         for (var i = 0; i < all_news.length; i++) {
                             var news_image_path = all_news[i].ImagePath;
-                            news_image_path = news_image_path != null && news_image_path.length > 0 ? '#' + 'NewsImages/' + news_image_path : '';
+                            news_image_path = news_image_path != null && news_image_path.length > 0 ? '#' + 'news/' + news_image_path : '';
                             var news_title = all_news[i].Title;
                             news_title = news_title.length > 30 ? news_title.substr(0, 27) + '...' : news_title;
                             $('div.sidebar-news').append('<div class="row news">' +
@@ -278,7 +278,7 @@
                         $('.side-bar-special-report-title').show();
                         for (var i = 0; i < all_special_reports.length; i++) {
                             var report_image = all_special_reports[i].ImagePath;
-                            report_image = report_image.length > 0 ? '#' + 'SpecialReportImages/' + report_image : '';
+                            report_image = report_image.length > 0 ? '#' + 'special_report/' + report_image : '';
                             var report_title = all_special_reports[i].Title;
                             report_title = report_title.length > 30 ? report_title.substr(0, 27) + '...' : report_title;
                             $('div.sidebar-special-reports').append('<div class="row news">' +

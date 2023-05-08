@@ -290,6 +290,11 @@
                         
                         $("input[name=id]").val(data.journal_id);
                         $("input[name=journal_title]").val(data.journal_title);
+                        if (data.job_image) {
+                            $("input[name=job_image]").next('.custom-file-label').addClass("selected").html(data.job_image.substring(data.job_image.lastIndexOf("__") + 2));
+                        }else{
+                            $("input[name=job_image]").next('.custom-file-label').addClass("selected").html('Choose file');
+                        }
                         $("input[name=journal_image]").next('.custom-file-label').addClass("selected").html(data.journal_image.substring(data.journal_image.lastIndexOf("__") + 2));
                         $("select[name=journal_category]").val(data.journal_category);
                         $("select[name=journal_type]").val(data.journal_type);

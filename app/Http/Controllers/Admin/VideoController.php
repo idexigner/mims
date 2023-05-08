@@ -39,6 +39,14 @@ class VideoController extends Controller
             $obj = new Video();
             $obj->video_title = $request->video_title ?? '';
             $obj->video_link = $request->video_link ?? '';
+            if ($request->hasFile('video_image')) {
+                $file = $request->file('video_image');
+                $video_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+                $file->storeAs('public/images/video', $video_image);
+            }
+
+            $obj->video_image = $video_image ?? '';
+
             $obj->video_is_featured = $request->video_is_featured ?? 1;
             $obj->video_is_active = $request->video_is_active ?? '1';
             $obj->save();
@@ -102,6 +110,14 @@ class VideoController extends Controller
             $obj = Video::findOrFail($request->id);
             $obj->video_title = $request->video_title ?? '';
             $obj->video_link = $request->video_link ?? '';
+            if ($request->hasFile('video_image')) {
+                $file = $request->file('video_image');
+                $video_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+                $file->storeAs('public/images/video', $video_image);
+                $obj->video_image = $video_image ?? '';
+            }
+
+            
             $obj->video_is_featured = $request->video_is_featured ?? 1;
             $obj->video_is_active = $request->video_is_active ?? '1';
             $obj->save();

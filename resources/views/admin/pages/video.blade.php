@@ -50,7 +50,7 @@
     <div class="modal fade" id="modal_create_form">
         <div class="modal-dialog modal-lg">
             <div class="modal-content ">
-            <form class="form-horizontal" id="create-form">
+            <form class="form-horizontal" id="create-form"  enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h4 class="modal-title">Add New Video Record</h4>
@@ -73,6 +73,16 @@
                                 <label class="col-sm-3 col-form-label">Link <span class="text-red">*</span></label>
                                 <div class="col-sm-9">
                                 <input type="text" class="form-control" placeholder="Link" name="video_link" required data-parsley-maxlength="1200">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Image<span class="text-red">*</span></label>
+                                <div class="col-sm-9">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="video_image" name="video_image" required accept="image/*">
+                                        <label class="custom-file-label" for="video_image">Choose file</label>
+                                      </div>
                                 </div>
                             </div>
 
@@ -131,6 +141,7 @@
             $('#create-form').parsley({
                 trigger: 'focusout'
             });
+            bsCustomFileInput.init();
 
             
 
@@ -159,6 +170,7 @@
 
                 $("#create_form_btn").show();
                 $("#update_form_btn").hide();
+                $('input[name=video_image]').attr('required');
                 $("#modal_create_form .modal-title").text("Add New Video Record");
 
 
@@ -176,13 +188,15 @@
                 
                 if($('#create_form_btn').is(':hidden')){
                     url = $("#update_form_btn").data('url');
-                    type = "PUT";
+                    // type = "PUT";
                 }
                 
                 $.ajax({
                     url: url, 
                     type: type,             
-                    data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    data: new FormData(this),//$(this).serialize(), // // new FormData($("#create-post-form")[0]), //
+                    processData: false,
+                    contentType: false,
                     success: function(response) {
                         // $('#create-post-form')[0].reset();
                         table.DataTable().ajax.reload();
@@ -238,13 +252,21 @@
                     success: function(response) {
                         console.log(response);
                         var data = response.data;  
-                        console.log("data==>", data.generic_indication)
+                        console.log("data==>", data)
+
+                        $('input[name=video_image]').removeAttr('required');
 
                         $("input[name=id]").val(data.video_id);
                         $("input[name=video_title]").val(data.video_title);
                         $("input[name=video_link]").val(data.video_link);
                         $("select[name=video_is_featured]").val(data.video_is_featured);
                         $("select[name=video_is_active]").val(data.video_is_active);
+
+                        if (data.video_image) {
+                            $("input[name=video_image]").next('.custom-file-label').addClass("selected").html(data.video_image.substring(data.video_image.lastIndexOf("__") + 2));
+                        }else{
+                            $("input[name=video_image]").next('.custom-file-label').addClass("selected").html('Choose file');
+                        }
 
                         $("#modal_create_form").modal('show');
                         $("#create_form_btn").hide();

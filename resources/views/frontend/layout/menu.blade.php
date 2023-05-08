@@ -21,7 +21,7 @@
                         <a class="nav-link mims-nav-link doctor-link mims-main-menu" href="{{ route('web_page_doctor') }}">Doctor</a>
                     </li>
                     <li id="mainMenuHerbal" class="nav-item">
-                        <a class="nav-link mims-nav-link herbal-link mims-main-menu" href="#">Herbal</a>
+                        <a class="nav-link mims-nav-link herbal-link mims-main-menu" href="{{ route('web_get_herbal_list') }}">Herbal</a>
                     </li>
                     <li class="nav-item umesh" id="mainMenuResource">
                         <a class="nav-link mims-nav-link resource-link mims-main-menu" href="#" id="navbarDropdownResource" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -29,11 +29,11 @@
                             <i class="icon-dropdown"></i>
                         </a>
                         <div class="dropdown-menu mims-dropdown-menu" aria-labelledby="navbarDropdownResource" style="min-width: 15rem">
-                            <a class="dropdown-item nav-link mims-nav-link" href="#">Cardiovascular</a>
-                            <a class="dropdown-item nav-link mims-nav-link" href="#">Dental</a>
-                            <a class="dropdown-item nav-link mims-nav-link" href="#">Library</a>
-                            <a class="dropdown-item nav-link mims-nav-link" href="#">Research Method</a>
-                            <a class="dropdown-item nav-link mims-nav-link" href="#">Resource</a>
+                            <a class="dropdown-item nav-link mims-nav-link" href="{{ route('web_get_journal', ['category'=> 'Cardiovascular']) }}">Cardiovascular</a>
+                            <a class="dropdown-item nav-link mims-nav-link" href="{{ route('web_get_journal', ['category'=> 'Dental']) }}">Dental</a>
+                            <a class="dropdown-item nav-link mims-nav-link" href="{{ route('web_get_journal', ['category'=> 'Library']) }}">Library</a>
+                            <a class="dropdown-item nav-link mims-nav-link" href="{{ route('web_get_journal', ['category'=> 'Research Method']) }}">Research Method</a>
+                            <a class="dropdown-item nav-link mims-nav-link" href="{{ route('web_get_journal', ['category'=> 'Resource']) }}">Resource</a>
                             <div class="dropdown-divider"></div>
 
 
@@ -47,11 +47,11 @@
                             <i class="icon-dropdown"></i>
                         </a>
                         <div class="dropdown-menu mims-dropdown-menu" aria-labelledby="navbarDropdownAbout">
-                            <a class="dropdown-item nav-link mims-nav-link about-link" href="#">About Us</a>
-                            <a class="dropdown-item nav-link mims-nav-link about-link" href="#">Disclaimer</a>
+                            <a class="dropdown-item nav-link mims-nav-link about-link" href="{{ route('web_page_about') }}">About Us</a>
+                            <a class="dropdown-item nav-link mims-nav-link about-link" href="{{ route('web_page_disclaimer') }}">Disclaimer</a>
+                            
 
-
-                            <a class="dropdown-item nav-link mims-nav-link about-link" href="#">Privacy Policy</a>
+                            <a class="dropdown-item nav-link mims-nav-link about-link" href="{{ route('web_page_privacy_policy') }}">Privacy Policy</a>
 
                         </div>
                     </li>

@@ -51,40 +51,53 @@ class MigrationLiveController extends Controller
 
     function convert_specialization_tags(){
         try{
-            $offset = 0;
+            ini_set('max_execution_time', 3000); 
+            $offset = 24188;
             $limit = 50;
 
             do {
                 // Get all the doctor records
                 $doctors = Doctor::offset($offset)->limit($limit)->get();
-
-                // Loop through the doctors and process their specialization tags
+                $id = [];
                 foreach ($doctors as $doctor) {
-                    // Get the specialization tags for this doctor
-                    $tags = explode(',', $doctor->doctor_specialization);
+                    $temp = [
+                        'specialization_mapping_doctor_id' => $doctor->doctor_id,
+                        'specialization_mapping_specialization_id' => 1,
+                        'specialization_mapping_created_by' => 1,
+                        'specialization_mapping_updated_by' => 1,
+                    ];
+                    array_push($id, $temp);
+                }
+// dd($id);
+                SpecializationMapping::insert($id);
+                // Loop through the doctors and process their specialization tags
+                // foreach ($doctors as $doctor) {
+                //     // Get the specialization tags for this doctor
+                //     $tags = explode(',', $doctor->doctor_specialization);
                 
 
-                    // Loop through the tags and create or update the Indication records
-                    foreach ($tags as $tag) {
-                        $specialization = Specialization::where('specialization_name', $tag)->first();
+                //     // Loop through the tags and create or update the Indication records
+                //     foreach ($tags as $tag) {
+                //         $specialization = Specialization::where('specialization_name', $tag)->first();
 
-                        // If the specialization doesn't exist, create it
-                        if (!$specialization) {
-                            $specialization = Specialization::create([
-                                'specialization_name' => $tag,
-                            ]);
-                        }
+                //         // If the specialization doesn't exist, create it
+                //         if (!$specialization) {
+                //             $specialization = Specialization::create([
+                //                 'specialization_name' => $tag,
+                //             ]);
+                //         }
 
                     
 
-                        // Create or update the IndicationMapping record
-                        $mapping = SpecializationMapping::updateOrCreate([
-                            'specialization_mapping_doctor_id' => $doctor->doctor_id,
-                            'specialization_mapping_specialization_id' => $specialization->specialization_id,
-                        ]);
-                    }
-                }
+                //         // Create or update the IndicationMapping record
+                //         $mapping = SpecializationMapping::updateOrCreate([
+                //             'specialization_mapping_doctor_id' => $doctor->doctor_id,
+                //             'specialization_mapping_specialization_id' => $specialization->specialization_id,
+                //         ]);
+                //     }
+                // }
                     $offset += $limit;
+                    // break;
                     
             } while ($doctors->count() > 0);
         }catch(Exception $ex){
@@ -446,7 +459,7 @@ class MigrationLiveController extends Controller
             
             DB::connection('mysql')->table('doctor')->truncate();
                    
-            
+            doctorinformation_temp
             // Get the total count of records
             $totalCount = DB::connection('db_live')->table('mims_doctorinformation')->count();
 

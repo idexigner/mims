@@ -446,15 +446,24 @@
                         
                         $("input[name=job_title]").val(data.job_title);
                         $("input[name=job_organization]").val(data.job_organization);
-                        $("input[name=job_organization_logo]").next('.custom-file-label').addClass("selected").html(data.job_organization_logo.substring(data.job_organization_logo.lastIndexOf("__") + 2));
+                        if (data.job_organization_logo) {
+                            $("input[name=job_organization_logo]").next('.custom-file-label').addClass("selected").html(data.job_organization_logo.substring(data.job_organization_logo.lastIndexOf("__") + 2));
+                        }else{
+                            $("input[name=job_organization_logo]").next('.custom-file-label').addClass("selected").html('Choose file');
+                        }
                         $('textarea[name=job_description]').summernote().summernote('code', data.job_description);
                         $("input[name=job_position]").val(data.job_position);
                         
                         $("input[name=job_application_deadline]").val(formatDate(data.job_application_deadline));
                         $("input[name=job_publish_date]").val(formatDate(data.job_publish_date));
                         
-                        $("input[name=job_image]").next('.custom-file-label').addClass("selected").html(data.job_image.substring(data.job_image.lastIndexOf("__") + 2));
                         
+                        if (data.job_image) {
+                            $("input[name=job_image]").next('.custom-file-label').addClass("selected").html(data.job_image.substring(data.job_image.lastIndexOf("__") + 2));
+                        }else{
+                            $("input[name=job_image]").next('.custom-file-label').addClass("selected").html('Choose file');
+                        }
+
                         $("input[name=job_salary]").val(data.job_salary);
                         $('textarea[name=job_educational_requirement]').summernote().summernote('code', data.job_educational_requirement);
                         $('textarea[name=job_experience_requirement]').summernote().summernote('code', data.job_experience_requirement);

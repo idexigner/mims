@@ -1126,10 +1126,10 @@
                 url: "{{ route('web_get_home_special_report')}}",
                 type: 'GET',
                 dataType: 'json',
-                // data: {
-                //     condition: 'brand_is_new_product',
-                //     limit: 7
-                // },
+                data: {
+                    // condition: 'brand_is_new_product',
+                    limit: 10
+                },
                 success: function(response) {
                     console.log("get_home_special_report-> ", response);
                     $('#home-special-report-slider').html('');
@@ -1138,7 +1138,7 @@
 
                         $('#home-special-report-slider').append(`
                             <div class="home-special-report-slide">
-                                <img src="{{ url('/') }}/storage/images/SpecialReportImages/${specialReport.special_report_image}"  alt="" onerror="this.src=\'https://image.ibb.co/cBMMNq/default-placeholder.png\'">
+                                <img src="{{ url('/') }}/storage/images/special_report/${specialReport.special_report_image}"  alt="" onerror="this.src=\'https://image.ibb.co/cBMMNq/default-placeholder.png\'">
                                 <p class="home-special-report-slide-title"><a href="${specialReport.special_report_id}">${specialReport.special_report_title}</a></p>
                             </div>
                         `);
@@ -1191,7 +1191,7 @@
                                 <div class="media-list-left-image">
                                     <div class="media">
                                         <div class="media-left">
-                                            <img src="{{ url('/') }}/storage/images/JobImages/${job.job_organization_logo}" class="media-object">
+                                            <img src="{{ url('/') }}/storage/images/job/${job.job_organization_logo}" class="media-object">
                                         </div>
                                         <div class="media-body">
                                             <span class="bahuthard">New</span>
@@ -1239,7 +1239,7 @@
                                 <div class="media-list-left-image">
                                     <div class="media">
                                         <div class="media-left">
-                                            <img src="{{ url('/') }}/storage/images/JobImages/${job.job_organization_logo}" class="media-object">
+                                            <img src="{{ url('/') }}/storage/images/job/${job.job_organization_logo}" class="media-object">
                                         </div>
                                         <div class="media-body">
                                             <span class="bahuthard">New</span>
@@ -1274,9 +1274,9 @@
                 url: "{{ route('web_get_home_news')}}",
                 type: 'GET',
                 dataType: 'json',
-                // data: {
-                //     category: 'Pharma'
-                // },
+                data: {
+                    limit: 5
+                },
                 success: function(response) {
                     console.log("web_get_home_news-> ", response);
                     $('.pharma_news').html('');
@@ -1289,7 +1289,7 @@
                                     <div class="media">
                                         <div class="media-left">
 
-                                            <img src="{{ url('/') }}/storage/images/NewsImages/${news.news_image}" class="media-object">
+                                            <img src="{{ url('/') }}/storage/images/news/${news.news_image}" class="media-object">
 
                                         </div>
                                         <div class="media-body">
@@ -1335,8 +1335,8 @@
                         $('#home-youtube-video-slider').append(`
                             <div class="youtube-video">
                                 <a href="#" onclick="frontCommonMethods.youtubeFullScreen('${video.video_link}')" tabindex="0">
-                                    <div class="youtube-video-wrapper" style="background-image: url(http://127.0.0.1:8000/storage/images/NewsImages/d8935b1118e631102d0971fc79d6379a.jpg);">
-                                        <img src="http://127.0.0.1:8000/storage/images/NewsImages/d8935b1118e631102d0971fc79d6379a.jpg" alt="Video thumbnail">
+                                    <div class="youtube-video-wrapper" style="background-image: url({{ url('/') }}/storage/images/video/${video.video_image});">
+                                        <img src="{{ url('/') }}/storage/images/video/${video.video_image}" alt="Video thumbnail">
                                     </div>
                                 </a>
                                 <h4 class="mt-3">

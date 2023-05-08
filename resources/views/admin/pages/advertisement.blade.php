@@ -567,8 +567,12 @@
                         
                         $("select[name=advertisement_position]").val(data.advertisement_position).trigger('change');
 
+                        if (data.advertisement_image) {
+                            $("input[name=advertisement_image]").next('.custom-file-label').addClass("selected").html(data.advertisement_image.substring(data.advertisement_image.lastIndexOf("__") + 2));
+                        }else{
+                            $("input[name=advertisement_image]").next('.custom-file-label').addClass("selected").html('Choose file');
 
-                        $("input[name=advertisement_image]").next('.custom-file-label').addClass("selected").html(data.advertisement_image.substring(data.advertisement_image.lastIndexOf("__") + 2));
+                        }
                         $("input[name=advertisement_title]").val(data.advertisement_title);
                         $("input[name=advertisement_publish]").val(formatDate(data.advertisement_publish));
                         $("input[name=advertisement_unpublish]").val(formatDate(data.advertisement_unpublish));

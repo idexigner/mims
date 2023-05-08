@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Traits\LogExceptions;
-
+use Yajra\DataTables\DataTables;
 
 class BrandController extends Controller
 {
@@ -35,5 +35,17 @@ class BrandController extends Controller
                     'message' => $ex->getMessage()
                 ], 400);
         }
+    }
+
+    public function herbal_list(Request $request){
+        if ($request->ajax()) {
+            // dd("ajax");
+            $data = Brand::with('dosage_form', 'generic', 'manufacturer', 'strength')
+            ->where('brand_type', 'Herbal')
+            ->where('brand_is_active', 1);
+            return DataTables::of($data)->make(true);
+        }
+
+        return view('frontend.herbal');
     }
 }

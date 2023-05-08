@@ -18,8 +18,8 @@ class ManufacturerController extends Controller
     {        
 
         if ($request->ajax()) {
-            // dd("ajax");Manufacturer::with('location')
-            $data = Manufacturer::with('location')->select('*')->orderBy('manufacturer_id', 'DESC');
+            // dd("ajax");Manufacturer::with('location') with('location')->
+            $data = Manufacturer::select('*')->orderBy('manufacturer_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 
@@ -38,7 +38,7 @@ class ManufacturerController extends Controller
         try{
             $validator = Validator::make($request->all(), [
                 'manufacturer_name' => 'required',
-                'manufacturer_location_id' => 'required'
+                // 'manufacturer_location_id' => 'required'
                
                 // 'content' => 'required',
             ]);
@@ -54,8 +54,15 @@ class ManufacturerController extends Controller
             $obj->manufacturer_mobile = $request->manufacturer_mobile ?? '';
             $obj->manufacturer_fax = $request->manufacturer_fax ?? '';
 
-            $obj->manufacturer_location_id = $request->manufacturer_location_id ?? '';
+            // $obj->manufacturer_location_id = $request->manufacturer_location_id ?? '';
             
+            $obj->manufacturer_address = $request->manufacturer_address ?? '';
+            $obj->manufacturer_country_id = $request->manufacturer_country_id == 'Select Item' ? null : $request->manufacturer_country_id;
+            $obj->manufacturer_state_id = $request->manufacturer_state_id == 'Select Item' ? null : $request->manufacturer_state_id;
+            $obj->manufacturer_city_id = $request->manufacturer_city_id == 'Select Item' ? null : $request->manufacturer_city_id;
+            $obj->manufacturer_longitude = $request->manufacturer_longitude ?? '';
+            $obj->manufacturer_latitude = $request->manufacturer_latitude ?? '';
+
             $obj->manufacturer_is_active = $request->manufacturer_is_active ?? '1';
             $obj->save();
 
@@ -104,20 +111,28 @@ class ManufacturerController extends Controller
         try{
             $validator = Validator::make($request->all(), [
                 'manufacturer_name' => 'required',
-                'manufacturer_location_id' => 'required'
+                // 'manufacturer_location_id' => 'required'
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
-
+     
             $obj = Manufacturer::findOrFail($request->id);
+         
             $obj->manufacturer_name = $request->manufacturer_name ?? '';
             $obj->manufacturer_email = $request->manufacturer_email ?? '';
             $obj->manufacturer_phone = $request->manufacturer_phone ?? '';
             $obj->manufacturer_mobile = $request->manufacturer_mobile ?? '';
             $obj->manufacturer_fax = $request->manufacturer_fax ?? '';
-            $obj->manufacturer_location_id = $request->manufacturer_location_id ?? '';
+            // $obj->manufacturer_location_id = $request->manufacturer_location_id ?? '';
+            $obj->manufacturer_address = $request->manufacturer_address ?? '';
+            $obj->manufacturer_country_id = $request->manufacturer_country_id == 'Select Item' ? null : $request->manufacturer_country_id;
+            $obj->manufacturer_state_id = $request->manufacturer_state_id == 'Select Item' ? null : $request->manufacturer_state_id;
+            $obj->manufacturer_city_id = $request->manufacturer_city_id == 'Select Item' ? null : $request->manufacturer_city_id;
+            
+            $obj->manufacturer_longitude = $request->manufacturer_longitude ?? '';
+            $obj->manufacturer_latitude = $request->manufacturer_latitude ?? '';
             $obj->manufacturer_is_active = $request->manufacturer_is_active ?? '1';
             $obj->save();
 

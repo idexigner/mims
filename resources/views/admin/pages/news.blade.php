@@ -342,7 +342,12 @@
                         $("input[name=id]").val(data.news_id);
                         $("input[name=news_title]").val(data.news_title);
                         $('textarea[name=news_description]').summernote().summernote('code', data.news_description);
-                        $("input[name=news_image]").next('.custom-file-label').addClass("selected").html(data.news_image.substring(data.news_image.lastIndexOf("__") + 2));
+                        if (data.news_image) {
+                            $("input[name=news_image]").next('.custom-file-label').addClass("selected").html(data.news_image.substring(data.news_image.lastIndexOf("__") + 2));
+                        }else{
+                            $("input[name=news_image]").next('.custom-file-label').addClass("selected").html('Choose file');
+                        }
+
                         $("input[name=news_publish_date]").val(formatDate(data.news_publish_date));
                         $("input[name=news_unpublish_date]").val(formatDate(data.news_unpublish_date));
                         

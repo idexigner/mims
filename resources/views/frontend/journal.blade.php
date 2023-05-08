@@ -1,6 +1,6 @@
 @extends('frontend.layout.main')
 
-@push('title') Doctor @endpush
+@push('title') Journal @endpush
 
 
 @push('css-link')
@@ -87,7 +87,7 @@
 
 
 <div class="banner title-banner d-md-flex d-none">
-    <h2>Doctors</h2>
+    <h2>Journals </h2>
 </div>
 
 <!-- advert -->
@@ -112,137 +112,42 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-12">
-            <div class="content-section main">
-                <div class="section-header d-flex justify-content-between" style="margin-bottom: 0px; padding: 24px 30px 16px 30px;">
-                    <span>Find Doctors</span> <i class="fas fa-filter d-md-none d-blocK"></i>
-                </div>
-                <!-- doctor search -->
-                <div class="container" style="padding-bottom: 20px">
-                    <div class="address-search row">
-                        <div class="col-md-5 col-12 address-search-col">
-                            <div class="theme-select">
-                                <select class="form-control select2" id="doctorCountry" name="doctorCountry">
-                                    <option value="">Search by Country</option>
-
-                                </select>
-                                <div class="theme-down-arrow">
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5 col-12 address-search-col">
-                            <div class="theme-select">
-                                <select class=" select2 form-control" id="doctorCity" name="doctorCity">
-                                    <option value="">Search by City</option>
-
-                                </select>
-                                <div class="theme-down-arrow">
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-12 address-search-col"></div>
+			<div class="journal-list container">
+				{{-- <?php
+				foreach ($AllJournals as $journal) {
+					if ($journal['JournalType'] == 'pdf') { ?>
+						<a class="journal row d-flex align-items-center" target="_blank" href="<?= site_url('Journal/getJournalDetail') . '?JournalID=' . $journal['ID'] ?>">
+                    <div class="journal-icon d-md-flex d-none">
+					<img src="<?= 'https://'.$_SERVER['HTTP_HOST'].'/'.('application/views/images/icons/')?>pdf-icon-4.png">
                     </div>
-                    <div class="address-search row">
-                        <div class="col-md-5 col-12 address-search-col">
-                            <div class="theme-select">
-                                <select class="form-control select2" id="doctorSpecialty" name="doctorSpecialty">
-                                    <option value="">Search by Specialty</option>
-
-                                </select>
-                                <div class="theme-down-arrow">
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5 col-12 address-search-col">
-                            <div class="theme-select">
-                                <select class="form-control" id="doctorGender" name="doctorGender">
-                                    <option value="">Search by Gender</option>
-                                    <option value="1">Male</option>
-                                    <option value="2">Female</option>
-                                </select>
-                                <div class="theme-down-arrow">
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-12 address-search-col">
-                            <button class="btn theme-btn" style="width: 100%;" onclick="doctorMethods.getDoctor(1)">Search</button>
-                        </div>
+                    <div class="journal-info">
+                        <p class="journal-name"><?= $journal['Title'] ?></p>
+                        <p class="journal-type">
+                            PDF
+                        </p>
                     </div>
-                </div>
-            </div>
-            <div class="doctor-list container" id="doctor-info-list">
-                {{-- <?php
-                        foreach ($AllDoctors as $doctor) {
-                            $image_path = empty($doctor['ImagePath']) ? base_url() . 'application/views/images/doctor.png' : base_url() . 'application/views/img/' . $doctor['ImagePath'];
-                            $hotline_info = empty($doctor['Hotline']) ? '' : '<br>Hotline: ' . $doctor['Hotline'];
-                            $PhoneNo = empty($doctor['PhoneNo']) ? '' : '<p class="number">' . $doctor['PhoneNo'] . '</p>';
-                            $MobileNo1 = empty($doctor['MobileNo1']) ? '' : '<p class="number">' . $doctor['MobileNo1'] . '</p>';
-                            $MobileNo2 = empty($doctor['MobileNo2']) ? '' : '<p class="number">' . $doctor['MobileNo2'] . '</p>';
-                            $MobileNo3 = empty($doctor['MobileNo3']) ? '' : '<p class="number">' . $doctor['MobileNo3'] . '</p>';
-                            $mobile_info = $PhoneNo . $MobileNo1 . $MobileNo2 . $MobileNo3;
-                            $mobile_info = empty($mobile_info) ? '' : '<p class="doctor-info-title">
-                                        <i class="fas fa-phone" style="transform: scaleX(-1);"></i>  Phone No.
-                                    </p>
-                                    <p class="doctor-info-description">' . $mobile_info . '</p>';
-                            echo '<div class="doctor row">
-                    <div class="col-md-2 col-3 doctor-img">
-                        <img src="' . $image_path . '" alt="">
+                </a> <?php 
+					} else if ($journal['JournalType'] == 'link') { ?>
+						<a class="journal row d-flex align-items-center" target="_blank" href="<?= $journal['JournalType'] ?>">
+                    <div class="journal-icon d-md-flex d-none">
+                        <!-- <i class="material-icons">language</i> -->
+						<img src="<?= 'https://'.$_SERVER['HTTP_HOST'].'/'.('application/views/images/icons/')?>website-icon-11.png">
                     </div>
-                    <div class="col-md-10 col-9">
-                        <h3 class="doctor-name">' . $doctor['Name'] . '</h3>
-                        <div class="doctor-info d-md-block d-none">
-                            <div class="row">
-                                <div class="col-6">
-                                    <p class="doctor-info-title">' . $doctor['Specialization'] . '</p>
-                                    <p class="doctor-info-description">' . $doctor['ProfessionDegree'] . '</p>
-                                </div>
-                                <div class="col-6">
-                                    <p class="doctor-info-title">
-                                        <i class="fas fa-map-marker-alt"></i> Chamber
-                                    </p>
-                                    <p class="doctor-info-description">' . $doctor['ChamberAddress'] . $hotline_info . '</p>' . $mobile_info . '
-                                </div>
-                            </div>
-                        </div>
+                    <div class="journal-info">
+                        <p class="journal-name"><?=$journal['Title'] ?></p>
+                        <p class="journal-type">
+                            Web Link
+                        </p>
                     </div>
-                    <div class="col-12 d-md-none d-block">
-                          <div class="doctor-info">
-                              <div class="row">
-                                  <div class="col-12">
-                                    <p class="doctor-info-title">' . $doctor['Specialization'] . '</p>
-                                    <p class="doctor-info-description">' . $doctor['ProfessionDegree'] . '</p>
-                                  </div>
-                                  <div class="col-12">
-                                    <p class="doctor-info-title">
-                                      <i class="fas fa-map-marker-alt"></i> Chamber
-                                    </p>
-                                    <p class="doctor-info-description">' . $doctor['ChamberAddress'] . $hotline_info . '</p>
-                                  </div>
-                                  <div class="col-12">' . $mobile_info . '</div>
-                                </div>
-                          </div>
-                      </div>
-                </div>';
-                        }
-                        ?>--}}
-            </div>
-            <!-- pagination -->
-            {{-- <nav class="mims-pagination" style="margin-top: 36px;">
-                <ul class="pagination" id="doctor-pagination"></ul>
-            </nav> --}}
-            <nav class="mims-pagination" style="margin-top: 36px;">
-                <ul class="pagination" id="doctor-pagination">
-                    <li class="page-item active"><a class="page-link" href="#" data-page="1">1</a></li>
-                    <!-- Add more page links here -->
-                </ul>
-            </nav>
-            <div class="in-page-advert doctor-advert-bottom">
-                {{-- <img src="" alt=""> --}}
-            </div>
-        </div>
+                </a><?php 
+					}
+				}
+				?> --}}
+			</div>
+			<div class="in-page-advert journal-advert-bottom">
+				<img src="{{ url('/') }}/application/views/images/add-12.png" alt="">
+			</div>
+		</div>
         <div class="col-md-4 col-12">
             <div class="container" id="sidebar">
                 <div class="row side-bar-mimslearning-title">
@@ -279,54 +184,13 @@
     $('.slick-next.slick-arrow:before').css('background-image', '../frontend/images/icons/right-arrow-white.png');
     $('.slick-prev.slick-arrow.slick-disabled:before').css('background-image', '../frontend/images/icons/left-arrow-white.png');
     $('.slick-next.slick-arrow.slick-dbefore').css('background-image', '../frontend/images/icons/right-arrow-white.png');
-    // frontendCommonMethods2.getAdvertisement(['home-product-slider'], 3);
-    // frontendCommonMethods.getCommonAdvertisement(['home-advert-container-top', 'home-advert-container-mid']);
-    // drugObject.productType = "REGULAR_PRODUCT";
-    // drugObject.getSpecialReports();
-    // // drugObject.getMimsLearning();
-    // drugObject.getJobCirculars();
-    // drugObject.getLocalNews();
-    // drugObject.getInternationalHealth();
-    // drugObject.getImportantAddress();
-    // drugObject.getNewBrands(0);
-    // drugObject.getNewPresentations(0);
-    // drugObject.getNewProducts(0);
-    // drugObject.getHighlightedBrands();
-    // frontendCommonMethods.getNumberOfVisitor();
-    // drugObject.getAllDrugInfoForAutoComplete('brand');
-    // frontendCommonMethods.mainMenuActivation('home');
+    
     $(document).ready(function() {
         // $.getScript("http://connect.facebook.net/en_US/all.js# xfbml=1", function () {
         // 	FB.init({ appId: 'xxxxxxxx', status: true, cookie: true, xfbml: true });
         // });
     });
-    // youTubeVideos = "";
-    // var individual_youtube = '';
-    // var youtube_title = '';
-    // for (var youtube_no = 0; youtube_no < 4; youtube_no++) {
-    //     youtube_title = youTubeVideos[youtube_no].Title;
-    //     youtube_title = youtube_title.length > 65 ? youtube_title.substr(0, 60) + ' ...' : youtube_title;
-    //     individual_youtube = '<div class="home-special-report-slide">' +
-    //         '<a onclick="frontendCo mmonMethods.youtubeFullScreen(' + youtube_no + ')"><img src="' + youTubeVideos[youtube_no].thumbnail + '"  alt="">' +
-    //         '<p class="home-special-report-slide-title">' + youtube_title + '</p>' +
-    //         '</di v>';
-    //     $('.home-youtube-list').append(individual_youtube);
-    // }
-    // $('#home-youtube-slider').slick({
-    //     slidesToScroll: 1,
-    //     slidesToShow: 4,
-    //     autoplay: true,
-    //     autoplaySpeed: 1000,
-    //     infinite: false,
-    //     arrows: true,
-    //     responsive: [{
-    //         breakpoint: 480,
-    //         settings: {
-    //             slidesToShow: 2,
-    //             arrows: false,
-    //         }
-    //     }]
-    // });
+    
 </script>
 
 <script>
@@ -406,10 +270,10 @@
         $('.select2').select2()
 
 
-        doctorMethods.getCountry();
-        doctorMethods.getCity();
-        doctorMethods.getSpecialization();
-        doctorMethods.getDoctor(1);
+        journalMethods.getJournalList();
+        // doctorMethods.getCity();
+        // doctorMethods.getSpecialization();
+        // doctorMethods.getDoctor(1);
 
         sidebar.getSidebar();
       
@@ -420,10 +284,10 @@
 
    
 
-    var doctorMethods = {
-        getCountry: function() {
+    var journalMethods = {
+        getJournalList: function() {
             $.ajax({
-                url: "{{ route('web_country')}}",
+                url: "{{ route('web_get_journal_list', ['category' => $category])}}",
                 type: 'GET',
                 dataType: 'json',
                 // data: {
@@ -431,23 +295,41 @@
                 //     limit: 7
                 // },
                 success: function(response) {
-                    console.log("response get country", response);
+                    console.log("web_get_journal_list", response);
 
                     var data = response.data;
 
+                    $('.journal-list').html('');
+                    $.each(data, function(index, journal) {
+                        // ?= 'https://'.$_SERVER['HTTP_HOST'].'/'.('application/views/images/icons/')?pdf-icon-4.png
+                        // ?= 'https://'.$_SERVER['HTTP_HOST'].'/'.('application/views/images/icons/')?>website-icon-11.png
+                        var html = '';
+                        if (journal.journal_type == 'pdf') { 
+                            html += '<a class="journal row d-flex align-items-center" target="_blank" href="#">';
+                            html += '<div class="journal-icon d-md-flex d-none">';
+                            html += '<img src="#">';
+                            html += '</div>';
+                            html += '<div class="journal-info">';
+                            html += '<p class="journal-name">'+journal.journal_title+'</p>';
+                            html += '<p class="journal-type">PDF</p>';
+                            html += '</div></a>'; 
+                            
+                        } else if ($journal['JournalType'] == 'link') { 
+                            html += '<a class="journal row d-flex align-items-center" target="_blank" href="'+journal.journal_type+'">';
+                            html += '<div class="journal-icon d-md-flex d-none">';
+                            html += '<img src="#">';
+                            html += '</div>';
+                            html += '<div class="journal-info">';
+                            html += '<p class="journal-name">'+journal.journal_title+'</p>';
+                            html += '<p class="journal-type">Web Link</p>';
+                            html += '</div></a>';      
+                                
+                            }
+                        
+                        $('.journal-list').append(html);
 
-                    var select2El = $('#doctorCountry');
-
-                    select2El.select2('destroy');
-                    select2El.empty();
-
-                    select2El.append($('<option value="" selected="selected"></option>').text('Search By Country'));
-
-                    $.each(data, function(index, value) {
-                        select2El.append($('<option></option>').attr('value', value.country_id).text(value.country_name));
                     });
-
-                    select2El.select2();
+                    
 
                 },
                 error: function(xhr, status, error) {
@@ -459,82 +341,7 @@
                 }
             });
         },
-        getCity: function() {
-            $.ajax({
-                url: "{{ route('web_city')}}",
-                type: 'GET',
-                dataType: 'json',
-                // data: {
-                //     condition: 'brand_is_new_product',
-                //     limit: 7
-                // },
-                success: function(response) {
-                    // console.log(response);
-
-                    var data = response.data;
-
-
-                    var select2El = $('#doctorCity');
-
-                    select2El.select2('destroy');
-                    select2El.empty();
-
-                    select2El.append($('<option value="" selected="selected"></option>').text('Search By City'));
-
-                    $.each(data, function(index, value) {
-                        select2El.append($('<option></option>').attr('value', value.city_id).text(value.city_name));
-                    });
-
-                    select2El.select2();
-
-                },
-                error: function(xhr, status, error) {
-                    console.group("Error Block");
-                    console.log(xhr);
-                    console.log(status);
-                    console.log(error);
-                    console.groupEnd();
-                }
-            });
-        },
-        getSpecialization: function() {
-            $.ajax({
-                url: "{{ route('web_specialization')}}",
-                type: 'GET',
-                dataType: 'json',
-                // data: {
-                //     condition: 'brand_is_new_product',
-                //     limit: 7
-                // },
-                success: function(response) {
-                    // console.log(response);
-
-                    var data = response.data;
-
-
-                    var select2El = $('#doctorSpecialty');
-
-                    select2El.select2('destroy');
-                    select2El.empty();
-
-                    select2El.append($('<option value="" selected="selected"></option>').text('Search By Speciality'));
-
-                    $.each(data, function(index, value) {
-                        select2El.append($('<option></option>').attr('value', value.specialization_id).text(value.specialization_name));
-                    });
-
-                    select2El.select2();
-
-                },
-                error: function(xhr, status, error) {
-                    console.group("Error Block");
-                    console.log(xhr);
-                    console.log(status);
-                    console.log(error);
-                    console.groupEnd();
-                }
-            });
-        },
+       
         getDoctor: function(page) {
 
             var data = {};

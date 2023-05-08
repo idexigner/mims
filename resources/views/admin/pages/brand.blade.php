@@ -51,7 +51,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content ">
             <form class="form-horizontal" id="create-form"  enctype="multipart/form-data">
-                @csrf
+                
                 <div class="modal-header">
                     <h4 class="modal-title">Add New Brand Record</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -372,7 +372,7 @@
                     { data: 'dosage_form.dosageform_name', name: 'brand_name', title: 'Dosage Form'},
                     { data: 'brand_type', name: 'brand_name', title: 'Product Type'},
                     { data: 'generic.generic_name', name: 'generic.generic_name', title: 'Generic'},
-                    { data: 'brand_price', name: 'brand_name', title: 'Price'},
+                    { data: 'brand_price', name: 'brand_price', title: 'Price'},
                     { data: 'manufacturer.manufacturer_name', name: 'manufacturer.manufacturer_name', title: 'Manufacturer'},
                     {
                         data: null,
@@ -414,13 +414,18 @@
                 
                 if($('#create_form_btn').is(':hidden')){
                     url = $("#update_form_btn").data('url');
-                    type = "PUT";
+                    // type = "PUT";
                 }
                 
                 $.ajax({
                     url: url, 
                     type: type,             
-                    data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    data: new FormData(this),//$(this).serialize(), // // new FormData($("#create-post-form")[0]), //
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function(response) {
                         // $('#create-post-form')[0].reset();
                         table.DataTable().ajax.reload();
@@ -487,7 +492,7 @@
                         var url = "{{ route('generic.edit', ':id') }}";
                         url = url.replace(':id', data.brand_generic_id);
                         $.ajax({
-                            url: ,
+                            url: url,
                             dataType: 'json',
                             success: function(d) {                                
                                 var option = new Option(d.data.generic_name, d.data.generic_id, true, true);
@@ -541,8 +546,13 @@
                         });
 
                         $("input[name=brand_price]").val(data.brand_price);
+                        
+
                         if (data.brand_image) {
                             $("input[name=brand_image]").next('.custom-file-label').addClass("selected").html(data.brand_image.substring(data.brand_image.lastIndexOf("__") + 2));
+                        }else{
+                            $("input[name=brand_image]").next('.custom-file-label').addClass("selected").html('Choose file');
+
                         }
 
                         $("select[name=brand_is_hightlight]").val(data.brand_is_hightlight);

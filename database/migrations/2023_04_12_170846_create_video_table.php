@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('video_id');
             $table->string('video_title', 300);
             $table->string('video_link', 1200);
+            $table->string('video_image', 1200);
             $table->tinyInteger('video_is_featured')->nullable()->default(0);
             $table->tinyInteger('video_is_active')->nullable()->default(1);
             $table->tinyInteger('video_is_deleted')->nullable()->default(0);

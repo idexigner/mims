@@ -11,4 +11,15 @@ class HomeController extends Controller
     {
         return view('frontend.home');
     }
+    public function about(){
+        return view('frontend.about');
+    }
+
+    public function disclaimer(){
+        return view('frontend.disclaimer');
+    }
+
+    public function privacy_policy(){
+        return view('frontend.privacy_policy');
+    }
 }

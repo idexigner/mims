@@ -101,6 +101,15 @@
                             
                             
                             <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Is Featured </label>
+                                <div class="col-sm-9">
+                                <select class="form-control" name="special_report_is_featured">
+                                    <option value="1">Yes</option>
+                                    <option value="0" selected>No</option>
+                                </select>                        
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Is Active </label>
                                 <div class="col-sm-9">
                                 <select class="form-control" name="special_report_is_active">
@@ -167,7 +176,13 @@
             var ajaxUrl = "{{ route('special_report.index') }}";
             var columnsArray = [                  
                     { data: 'special_report_title', name: 'special_report_title', title: 'Title', width: '25%'},
-                    { data: 'special_report_link_address', name: 'special_report_link_address', title: 'Link Address', width: '55%'},
+                    // { data: 'special_report_link_address', name: 'special_report_link_address', title: 'Link Address', width: '55%'},
+                    { data: 'special_report_link_address', name: 'special_report_link_address', title: 'Link Address', 
+                        render: function(data, type, row) {
+                            return '<a href="#" style="font-size: 14px; padding: 0; margin: 0; text-decoration: none; color: #007bff;">'+data+'</a>';
+                        },
+                        width: '55%'
+                    },
                     {
                         data: null,
                         title: 'Action',
@@ -286,9 +301,13 @@
                         $("input[name=special_report_title]").val(data.special_report_title);
                         $('textarea[name=special_report_description]').summernote().summernote('code', data.special_report_description);
                         $("input[name=special_report_link_address]").val(data.special_report_link_address);
-
-                        $("input[name=special_report_image]").next('.custom-file-label').addClass("selected").html(data.special_report_image.substring(data.special_report_image.lastIndexOf("__") + 2));
+                        if (data.special_report_image) {
+                            $("input[name=special_report_image]").next('.custom-file-label').addClass("selected").html(data.special_report_image.substring(data.special_report_image.lastIndexOf("__") + 2));
+                        }else{
+                            $("input[name=special_report_image]").next('.custom-file-label').addClass("selected").html('Choose file');
+                        }
                         
+                        $("select[name=special_report_is_featured]").val(data.special_report_is_featured);
                         $("select[name=special_report_is_active]").val(data.special_report_is_active);
 
                         $("#modal_create_form").modal('show');

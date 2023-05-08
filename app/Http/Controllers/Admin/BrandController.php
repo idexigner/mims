@@ -64,7 +64,7 @@ class BrandController extends Controller
                 $brand_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
                 $file->storeAs('public/images/brand', $brand_image);
             }
-            $obj->brand_image = $request->brand_image ?? '';
+            $obj->brand_image = $brand_image ?? '';
 
             $obj->brand_price = $request->brand_price ?? '';
             $obj->brand_is_hightlight = $request->brand_is_hightlight ?? '0';
@@ -142,10 +142,11 @@ class BrandController extends Controller
             $obj->brand_pack_size_id = $request->brand_pack_size_id ?? '1';
            
             if ($request->hasFile('brand_image')) {
+                // dd("new");
                 $file = $request->file('brand_image');
                 $brand_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
                 $file->storeAs('public/images/brand', $brand_image);
-                $obj->brand_image = $request->brand_image ?? '';
+                $obj->brand_image = $brand_image ?? '';
             }
            
 

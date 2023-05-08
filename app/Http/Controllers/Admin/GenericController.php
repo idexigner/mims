@@ -18,7 +18,7 @@ class GenericController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");->select('*')
-            $data = Generic::select("*")->orderBy('generic_id', 'DESC');
+            $data = Generic::with('indications')->select("*")->orderBy('generic_id', 'DESC');
         
             return DataTables::of($data)->make(true);
         }
@@ -52,7 +52,7 @@ class GenericController extends Controller
             $obj->generic_classification = $request->generic_classification ?? '';
             $obj->generic_safety_remark = $request->generic_safety_remark ?? '';
             $obj->generic_indication = $request->generic_indication ?? '';
-            $obj->generic_indication_tags = $request->generic_indication_tags ?? '';
+            // $obj->generic_indication_tags = $request->generic_indication_tags ?? '';
             $obj->generic_dosage_administration = $request->generic_dosage_administration ?? '';
             $obj->generic_contraindication_precaution = $request->generic_contraindication_precaution ?? '';
             $obj->generic_composition = $request->generic_composition ?? '';
@@ -137,8 +137,8 @@ class GenericController extends Controller
             $obj->generic_name = $request->generic_name ?? '';
             $obj->generic_classification = $request->generic_classification ?? '';
             $obj->generic_safety_remark = $request->generic_safety_remark ?? '';
-            $obj->generic_indication = "asas";//$request->generic_indication ?? '';
-            $obj->generic_indication_tags = $request->generic_indication_tags ?? '';
+            $obj->generic_indication = $request->generic_indication ?? '';//$request->generic_indication ?? '';
+            // $obj->generic_indication_tags = $request->generic_indication_tags ?? '';
             $obj->generic_dosage_administration = $request->generic_dosage_administration ?? '';
             $obj->generic_contraindication_precaution = $request->generic_contraindication_precaution ?? '';
             $obj->generic_composition = $request->generic_composition ?? '';

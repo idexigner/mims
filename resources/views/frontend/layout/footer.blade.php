@@ -46,9 +46,9 @@
             <div class="footer-links">
                 <h4> Quick links </h4>
                 <ul>
-                    <li> <a href="#"> Home </a> </li>
-                    <li> <a href="#"> About Us </a> </li>
-                    <li> <a href="#">Privacy Policy </a> </li>
+                    <li> <a href="{{ url('/') }}"> Home </a> </li>
+                    <li> <a href="{{ route('web_page_about') }}"> About Us </a> </li>
+                    <li> <a href="{{ route('web_page_privacy_policy') }}">Privacy Policy </a> </li>
     
                     <!-- <li> <a href="#"> Ebook </a> </li> -->
                 </ul>
@@ -61,10 +61,10 @@
     
                 <ul>
     
-                    <li> <a href="#"> Doctor </a> </li>
-                    <li> <a href="#"> Herbal </a> </li>
-                    <li> <a href="#"> Journal </a> </li>
-                    <li> <a href="#"> Disclaimer </a> </li>
+                    <li> <a href="{{ route('web_page_doctor') }}"> Doctor </a> </li>
+                    <li> <a href="{{ route('web_get_herbal_list') }}"> Herbal </a> </li>
+                    <li> <a href="{{ route('web_get_journal', ['category'=> 'Cardiovascular']) }}"> Journal </a> </li>
+                    <li> <a href="{{ route('web_page_disclaimer') }}"> Disclaimer </a> </li>
                     <!-- <li> <a href="#"> Ebook </a> </li> -->
                 </ul>
     

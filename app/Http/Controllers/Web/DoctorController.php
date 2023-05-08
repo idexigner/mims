@@ -24,6 +24,7 @@ class DoctorController extends Controller
                 ->where('doctor_is_active', 1)
                 ->where('doctor_is_featured',1)
                 ->limit(3)
+                ->orderBy('doctor_id', 'DESC')
                 ->get();      
 
             return response()->json([
@@ -45,14 +46,54 @@ class DoctorController extends Controller
     public function get_doctor(Request $request){
         try{
 
-            $data = Doctor::select('*')
-                ->where('doctor_is_active', 1)
-                ->limit(50)
-                ->get();      
+            // $data = Doctor::with('specializations')
+            // ->where('doctor_is_active', 1);
+        
+            // if ($request->has('specialization_id')) {
+            //     $data = $data->where('specialization_mapping_specialization_id', $request->specialization_id);
+            // }
+            
+            // if ($request->has('country_id')) {
+            //     $data = $data->where('doctor_country_id', $request->country_id);
+            // }
+            
+            // if ($request->has('city_id')) {
+            //     $data = $data->where('doctor_city_id', $request->city_id);
+            // }
+            
+            // $data = $data->paginate(10)
+            //     ->appends(request()->query());
 
+            
+            $data = Doctor::with('specializations','country', 'state', 'city')
+            ->join('specialization_doctor_mapping', 'specialization_doctor_mapping.specialization_mapping_doctor_id', '=', 'doctor.doctor_id')
+            ->where('doctor_is_active', 1);
+        
+            if ($request->has('specialization_id')) {
+           
+                $data = $data->where('specialization_doctor_mapping.specialization_mapping_specialization_id', $request->specialization_id);
+            }
+                        
+            if ($request->has('country_id')) {
+                $data = $data->where('doctor_country_id', $request->country_id);
+            }
+                        
+            if ($request->has('city_id')) {
+                $data = $data->where('doctor_city_id', $request->city_id);
+            }
+
+            if($request->has('gender_id')){
+                $data = $data->where('doctor_gender', $request->gender_id);
+            }
+
+            $data = $data->paginate(10)->appends(request()->query());
+
+            
             return response()->json([
-                'message' => 'Get All Doctos', 
-                'data' => $data
+                'message' => 'Get All Doctors', 
+                'data' => $data,
+                'current_page' => $data->currentPage(),
+                'last_page' => $data->lastPage()
             ], 200);
 
         } catch (\Exception $ex) {

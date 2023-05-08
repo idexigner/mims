@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use App\Traits\LogExceptions;
 use App\Models\Doctor;
+use App\Models\Specialization;
+use App\Models\SpecializationMapping;
 
 class DoctorController extends Controller
 {
@@ -16,7 +18,7 @@ class DoctorController extends Controller
     {        
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Doctor::select('*')->orderBy('doctor_id', 'DESC');
+            $data = Doctor::with('specializations')->select('*')->orderBy('doctor_id', 'DESC');
             return DataTables::of($data)->make(true);
         }
 
@@ -43,13 +45,14 @@ class DoctorController extends Controller
             $obj->doctor_email = $request->doctor_email ?? '';
             $obj->doctor_phone_personal = $request->doctor_phone_personal ?? null;
             $obj->doctor_phone_clinic = $request->doctor_phone_clinic ?? null;
-            $obj->doctor_specialization = $request->doctor_specialization ?? '';
+            // $obj->doctor_specialization = $request->doctor_specialization ?? '';
             $obj->doctor_achievement = $request->doctor_achievement ?? '';
             $obj->doctor_experience = $request->doctor_experience ?? '';
             $obj->doctor_profession_degree = $request->doctor_profession_degree ?? '';
 
             $obj->doctor_gender = $request->doctor_gender ?? '';
 
+            
             if ($request->hasFile('doctor_certificate')) {
                 $file = $request->file('doctor_certificate');
                 $doctor_certificate = rand(1, 1000000) . '__' . $file->getClientOriginalName();
@@ -73,9 +76,24 @@ class DoctorController extends Controller
             
             // $obj->doctor_city_id = $request->doctor_city_id ?? null;
             $obj->doctor_zip_code = $request->doctor_zip_code ?? '';
-
+            $obj->doctor_is_featured = $request->doctor_is_featured ?? '0';
             $obj->doctor_is_active = $request->doctor_is_active ?? '1';
             $obj->save();
+
+
+            $doctor_id = $obj->getKey(); 
+
+            if(isset($request->doctor_specialization2)){
+
+                // $doctor_specialization2 = implode(',', $request->doctor_specialization2);
+                foreach($request->doctor_specialization2 as $specialization_id){
+                   
+                    $obj = new SpecializationMapping();
+                    $obj->specialization_mapping_specialization_id = $specialization_id;
+                    $obj->specialization_mapping_doctor_id = $doctor_id;
+                    $obj->save();
+                }
+            }
 
             return response()->json([
                     'message' => 'Doctor record created successfully'
@@ -96,7 +114,7 @@ class DoctorController extends Controller
     {
        try{
 
-            $data = Doctor::findOrFail($id);            
+            $data = Doctor::with('specializations')->findOrFail($id);            
             return response()->json([
                 'message' => 'Edit', 
                 'data' => $data
@@ -162,9 +180,25 @@ class DoctorController extends Controller
             $obj->doctor_state_id = $request->doctor_state_id == 'Select Item' ? null : $request->doctor_state_id;
             $obj->doctor_city_id = $request->doctor_city_id == 'Select Item' ? null : $request->doctor_city_id;
             $obj->doctor_zip_code = $request->doctor_zip_code ?? '';
-
+            $obj->doctor_is_featured = $request->doctor_is_featured ?? '0';
             $obj->doctor_is_active = $request->doctor_is_active ?? '1';
             $obj->save();
+
+
+            $doctor_id = $obj->getKey(); 
+
+            if(isset($request->doctor_specialization2)){
+                SpecializationMapping::where('specialization_mapping_doctor_id', $doctor_id)->delete();
+
+                // $doctor_specialization2 = implode(',', $request->doctor_specialization2);
+                foreach($request->doctor_specialization2 as $specialization_id){
+                   
+                    $obj = new SpecializationMapping();
+                    $obj->specialization_mapping_specialization_id = $specialization_id;
+                    $obj->specialization_mapping_doctor_id = $doctor_id;
+                    $obj->save();
+                }
+            }
 
             return response()->json([
                 'message' => 'Doctor record updated successfully'
@@ -197,5 +231,46 @@ class DoctorController extends Controller
                     'message' => $ex->getMessage()
                 ], 400);
         }
+    }
+
+    public function store_specialization(Request $request)
+    {
+        try{
+            $validator = Validator::make($request->all(), [
+                'specialization_name' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            
+            $obj = new Specialization();
+            $obj->specialization_name = $request->specialization_name ?? '';
+            $result = $obj->save();
+
+            
+
+            return response()->json([
+                    'message' => 'Specialization record created successfully'
+                ], 200);
+
+        } catch (\Exception $ex) {
+
+            $this->logException($ex, $request->route()->getName(), __METHOD__);
+            return response()->json([
+                    'message' => 'Something went wrong!',
+                    'error' => $ex
+                ], 400);
+        }
+    }
+
+    public function fetch_specialization(){
+        $data = Specialization::select('*')->where('specialization_is_active',1)->get();
+        return response()->json([
+            'message' => 'Fetch', 
+            'data' => $data
+        ], 200);
+        
     }
 }

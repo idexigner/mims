@@ -104,7 +104,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Country <span class="text-red">*</span></label>
                                 <div class="col-sm-9">
-                                    <select class="form-control select2" style="width: 100%;" name="location_country_id" required>
+                                    <select class="form-control select2" style="width: 100%;" name="manufacturer_country_id" required>
                                         <option selected>Select Item</option>
                                     </select>
               
@@ -113,7 +113,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">State<span class="text-red">*</span></label>
                                 <div class="col-sm-9">
-                                    <select class="form-control select2" style="width: 100%;" name="location_country_id" required>
+                                    <select class="form-control select2" style="width: 100%;" name="manufacturer_state_id" required>
                                         <option selected>Select Item</option>
                                     </select>
 
@@ -122,7 +122,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">City<span class="text-red">*</span></label>
                                 <div class="col-sm-9">
-                                    <select class="form-control select2" style="width: 100%;" name="location_country_id" required>
+                                    <select class="form-control select2" style="width: 100%;" name="manufacturer_city_id" required>
                                         <option selected>Select Item</option>
                                     </select>
 
@@ -131,19 +131,19 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Address<span class="text-red">*</span></label>
                                 <div class="col-sm-9">
-                                    <textarea id="location_address" class="summernote form-control" name="location_address" required></textarea>
+                                    <textarea id="manufacturer_address" class="summernote form-control" name="manufacturer_address" required></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Longitude</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" placeholder="Longitude" name="location_longitude" data-parsley-pattern="^[0-9]+(\.[0-9]+)?$">
+                                    <input type="text" class="form-control" placeholder="Longitude" name="manufacturer_longitude" data-parsley-pattern="^[0-9]+(\.[0-9]+)?$">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Latitude</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" placeholder="Latitude" name="location_latitude" data-parsley-pattern="^[0-9]+(\.[0-9]+)?$">
+                                    <input type="text" class="form-control" placeholder="Latitude" name="manufacturer_latitude" data-parsley-pattern="^[0-9]+(\.[0-9]+)?$">
                                 </div>
                             </div>
                             {{-- <div class="form-group row">
@@ -177,6 +177,7 @@
                        
                 </div>
                 <div class="modal-footer justify-content-between">
+                    <input type="hidden" name="id">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" data-url="{{ route('manufacturer.store') }}" class="btn btn-primary" id="create_form_btn">Create</button>
                     <button type="submit" data-url="{{ route('manufacturer.update') }}" class="btn btn-primary" id="update_form_btn">Update</button>
@@ -267,11 +268,11 @@
 
 
              //Initializing summernote
-             var str_summernote = '#location_address';
+             var str_summernote = '#manufacturer_address';
             declareSummernote(str_summernote);
 
 
-            fetchAddress();
+            // fetchAddress();
             function fetchAddress(){
              
                 $.ajax({
@@ -343,7 +344,7 @@
                         var data = response.data;
                         console.log(data);
                         
-                        var select2El = $('select[name="location_country_id"]');
+                        var select2El = $('select[name="manufacturer_country_id"]');
                         
                         select2El.select2('destroy');
                         select2El.empty();
@@ -386,7 +387,7 @@
     
             function fetchState(){
                 console.log("fetchState Trigger")
-                var id = $("select[name=location_country_id]").val();
+                var id = $("select[name=manufacturer_country_id]").val();
                 var url = "{{ route('setting.state.fetch_country', ':id') }}";
                 url = url.replace(':id', id);
                 $.ajax({
@@ -398,7 +399,7 @@
                         var data = response.data;
                         console.log(data);
                         
-                        var select2El = $('select[name="location_state_id"]');
+                        var select2El = $('select[name="manufacturer_state_id"]');
                         
                         select2El.select2('destroy');
                         select2El.empty();
@@ -439,7 +440,7 @@
                 });
             }
 
-            $('select[name=location_country_id]').on('change', function(){
+            $('select[name=manufacturer_country_id]').on('change', function(){
                 console.log('onchange trigger')
                 console.log(shouldFetchState)
                 if (shouldFetchState) {
@@ -453,7 +454,7 @@
 
             function fetchCity(){
                 console.log("fetchCity Trigger")
-                var id = $("select[name=location_state_id]").val();
+                var id = $("select[name=manufacturer_state_id]").val();
                 var url = "{{ route('setting.city.fetch_city', ':id') }}";
                 url = url.replace(':id', id);
                 $.ajax({
@@ -465,7 +466,7 @@
                         var data = response.data;
                         console.log(data);
                         
-                        var select2El = $('select[name="location_city_id"]');
+                        var select2El = $('select[name="manufacturer_city_id"]');
                         
                         select2El.select2('destroy');
                         select2El.empty();
@@ -505,7 +506,7 @@
                 });
             }
 
-            $('select[name=location_state_id]').on('change', function(){
+            $('select[name=manufacturer_state_id]').on('change', function(){
                 console.log('onchange trigger')
                 console.log(shouldFetchCity)
                 if (shouldFetchCity) {
@@ -525,7 +526,7 @@
                     { data: 'manufacturer_name', name: 'manufacturer_name', title: 'Manufacturer Name'},
                     { data: 'manufacturer_email', name: 'manufacturer_email', title: 'Email'},
                     { data: 'manufacturer_phone', name: 'manufacturer_phone', title: 'Phone'},
-                    { data: 'location.location_address', name: 'location.location_address', title: 'Phone'},
+                    // { data: 'location.location_address', name: 'location.location_address', title: 'Phone'},
                     {
                         data: null,
                         title: 'Action',
@@ -550,6 +551,9 @@
                 $("#update_form_btn").hide();
                 $("#modal_create_form .modal-title").text("Add New Manufacturer Record");
 
+                $("select[name=manufacturer_country_id]").val('').trigger('change')
+                $("select[name=manufacturer_state_id]").val('').trigger('change')
+                $("select[name=manufacturer_city_id]").val('').trigger('change')
                 $("#create-form")[0].reset();               
 
                 $("#modal_create_form").modal('show');
@@ -620,6 +624,17 @@
                 var url = "{{ route('manufacturer.edit', ':id') }}";
                 url = url.replace(':id', id);
                 
+
+                var select2El = $('select[name="manufacturer_state_id"]');
+                select2El.empty();
+                select2El.append($('<option value="" selected="selected"></option>').text('Select Item'));
+
+                var select2El = $('select[name="manufacturer_city_id"]');
+                select2El.empty();
+                select2El.append($('<option value="" selected="selected"></option>').text('Select Item'));
+
+
+
                 $.ajax({
                     url: url,
                     type: 'GET',
@@ -633,9 +648,49 @@
                         $("input[name=manufacturer_email]").val(data.manufacturer_email);
                         $("input[name=manufacturer_phone]").val(data.manufacturer_phone);
                         $("input[name=manufacturer_mobile]").val(data.manufacturer_mobile);
-                        $("select[name=manufacturer_location_id]").val(data.manufacturer_location_id).trigger('change');
+                        // $("select[name=manufacturer_location_id]").val(data.manufacturer_location_id).trigger('change');
 
-                        $("select[name=strength_is_active]").val(data.strength_is_active);                        
+                        $("select[name=manufacturer_country_id]").val(data.manufacturer_country_id).trigger('change')
+                        // $("select[name=manufacturer_state_id]").val(data.manufacturer_state_id).trigger('change')
+                        // $("select[name=manufacturer_city_id]").val(data.manufacturer_city_id).trigger('change')
+
+                        changeStateValue()
+                        function changeStateValue(){
+                            if($("select[name=manufacturer_state_id] option").length > 1){
+                                console.log("if");
+                                console.log($("select[name=manufacturer_state_id] option").length)
+                                $("select[name=manufacturer_state_id]").val(data.manufacturer_state_id).trigger('change')
+                            }else{
+                                console.log("else");
+                                setTimeout(() => {
+                                    changeStateValue()
+                                }, 500);
+                            }                       
+                        }
+
+                        changeCityValue()
+                        function changeCityValue(){
+                            if($("select[name=manufacturer_city_id] option").length > 1){
+                                console.log("if");
+                                console.log($("select[name=manufacturer_city_id] option").length)
+                                $("select[name=manufacturer_city_id]").val(data.manufacturer_city_id).trigger('change')
+                            }else{
+                                console.log("else");
+                                setTimeout(() => {
+                                    changeCityValue()
+                                }, 500);
+                            }                       
+                        }
+
+                        $('textarea[name=manufacturer_address]').summernote({
+                            focus: true
+                        }).summernote('code', data.manufacturer_address);
+
+                        $("input[name=manufacturer_longitude]").val(data.manufacturer_longitude);
+                        $("input[name=manufacturer_latitude]").val(data.manufacturer_latitude);
+
+
+                        $("select[name=manufacturer_is_active]").val(data.manufacturer_is_active);                        
 
                         
                         $("#modal_create_form").modal('show');

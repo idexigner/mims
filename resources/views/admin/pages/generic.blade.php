@@ -109,15 +109,15 @@
                                     <textarea id="generic_indication" name="generic_indication" class="summernote"></textarea>                          
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            {{-- <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Indication Tags</label>
                                 <div class="col-sm-9">
                                 <input type="text" class="form-control" name="generic_indication_tags" placeholder="Indication Tags" data-parsley-maxlength="300">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Indication Tags2</label>
+                                <label class="col-sm-3 col-form-label">Indication Tags</label>
                                 <div class="col-sm-8">
                                     <div class="indication_tag2">                                       
                                         <select class="form-control select2" multiple="multiple" data-placeholder="Indication Tags" name="generic_indication_tags2[]"  style="width: 100%;">
@@ -265,7 +265,25 @@
             var ajaxUrl = "{{ route('generic.index') }}";
             var columnsArray = [                  
                     { data: 'generic_name', name: 'generic_name', title: 'Generic Name'},
-                    { data: 'generic_indication_tags', name: 'generic_indication_tags', title: 'Indication Tags', width: '40%' },
+                    // { data: 'generic_indication_tags', name: 'generic_indication_tags', title: 'Indication Tags', width: '40%' },
+
+                   
+                    {
+                        data: null,
+                        title: 'Indication Tags',
+                        width: '40%',
+                        render: function(data, type, row) {
+                            var temp =[];
+
+                            $.each(row.indications, function(index, value) {
+                                temp.push(value.indication_name);
+                            });
+                            console.log(row,"row");
+                            return temp.join(',');
+                        },
+                        orderable: false,
+                        searchable: false
+                    },
                     { data: 'generic_classification', name: 'generic_classification', title: 'Classification'},
                     { data: 'generic_safety_remark', name: 'generic_safety_remark', title: 'Safety Remark'},
                     {
@@ -347,6 +365,7 @@
                 $("textarea.summernote").each(function(){
                     $(this).summernote('code', '');
                 });
+                $("select[name='generic_indication_tags2[]']").val('').trigger('change')
 
                 $("#modal_create_form").modal('show');
             });
@@ -436,7 +455,7 @@
                             focus: true
                         }).summernote('code', data.generic_indication);
 
-                        $("input[name=generic_indication_tags]").val(data.generic_indication_tags);
+                    // $("input[name=generic_indication_tags]").val(data.generic_indication_tags);
 
                         var generic_indication_tags2 = [];
                         $.each(data.indications, function(index, value) {

@@ -87,10 +87,17 @@
                                 <input type="text" class="form-control" placeholder="Phone No (Clinic)" name="doctor_phone_clinic" data-parsley-pattern="/^[0-9+]+$/">
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            {{-- <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Specialization</label>
                                 <div class="col-sm-9">
                                 <input type="text" class="form-control" placeholder="Specialization" name="doctor_specialization" data-parsley-maxlength="200">
+                                </div>
+                            </div> --}}
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Specialization</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control select2" multiple="multiple" data-placeholder="Specialization" name="doctor_specialization2[]"  style="width: 100%;">
+                                    </select>                                
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -184,6 +191,16 @@
                                 <label class="col-sm-3 col-form-label">Address </label>
                                 <div class="col-sm-9">
                                   <textarea id="doctor_address" name="doctor_address" class="summernote"></textarea>                          
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Is Featured </label>
+                                <div class="col-sm-9">
+                                <select class="form-control" name="doctor_is_featured">
+                                    <option value="1">Yes</option>
+                                    <option value="0" selected>No</option>
+                                </select>                        
                                 </div>
                             </div>
                             
@@ -303,7 +320,11 @@
     
             function fetchState(){
                 console.log("fetchState Trigger")
+                
                 var id = $("select[name=doctor_country_id]").val();
+                if(id == ''){
+                    return false;
+                }
                 var url = "{{ route('setting.state.fetch_country', ':id') }}";
                 url = url.replace(':id', id);
                 $.ajax({
@@ -450,7 +471,23 @@
             var columnsArray = [                  
                     { data: 'doctor_name', name: 'doctor_name', title: 'Name'},
                     { data: 'doctor_email', name: 'doctor_email', title: 'Email'},
-                    { data: 'doctor_specialization', name: 'doctor_specialization', title: 'Specialization'},
+                    // { data: 'doctor_specialization', name: 'doctor_specialization', title: 'Specialization'},
+                    {
+                        data: null,
+                        title: 'Specialization',
+                        render: function(data, type, row) {
+                            var temp =[];
+
+                            $.each(row.specializations, function(index, value) {
+                                temp.push(value.specialization_name);
+                            });
+                            // console.log(row,"row");.
+                            console.log("temp=?",temp)
+                            return temp.join(',');
+                        },
+                        orderable: false,
+                        searchable: false
+                    },
                     { data: 'doctor_experience', name: 'doctor_experience', title: 'Experience'},
                     { data: 'doctor_profession_degree', name: 'doctor_profession_degree', title: 'Professional Degre'},
                     {
@@ -465,6 +502,61 @@
                 ];           
             initializeDataTable(tableName, ajaxUrl, columnsArray);
 
+   
+            // Initializing dropdown
+            fetchSpecialization();
+
+            function fetchSpecialization(){
+                $.ajax({
+                    url: "{{ route('doctor.specialization.fetch') }}", 
+                    type: 'GET',             
+                    // data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
+                    success: function(response) {
+                        console.log("fetchSpecialization=>", response);
+                        var data = response.data;
+                        console.log(data);
+                        
+                        var select2El = $('select[name="doctor_specialization2[]"]');
+                        
+                        select2El.select2('destroy');
+                        select2El.empty();
+                        
+                        // select2El.append($('<option value="" selected="selected"></option>').text('Select Item'));
+                        
+                        $.each(data, function(index, value) {
+                            select2El.append($('<option></option>').attr('value', value.specialization_id).text(value.specialization_name));
+                        });
+
+                        select2El.select2();
+                    },
+                    error: function(xhr, status, error) {
+                        console.group("Error Block");
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        console.groupEnd();   
+
+                        if(xhr.responseJSON.messages){
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: xhr.responseJSON.message, //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+
+                        }else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Something went wrong', //"Generic record deleted successfully",
+                                timer: 3000,
+                            });
+                        }
+                                        
+                    }
+                });
+            }
+
+
             
             // handle click event for "Add" button
             $('.add_new').on('click', function(){
@@ -475,8 +567,10 @@
                 selectedCityId = null;
                 selectedStateId = null;
 
-                $("#create-form")[0].reset();               
-
+                $("#create-form")[0].reset();   
+                $("select[name='doctor_specialization2[]']").val('').trigger('change')
+            
+                
                 $("#modal_create_form").modal('show');
             });
               
@@ -565,14 +659,35 @@
                         $("input[name=doctor_email]").val(data.doctor_email);
                         $("input[name=doctor_phone_personal]").val(data.doctor_phone_personal);
                         $("input[name=doctor_phone_clinic]").val(data.doctor_phone_clinic);
-                        $("input[name=doctor_specialization]").val(data.doctor_specialization);
+                        // $("input[name=doctor_specialization]").val(data.doctor_specialization);
                         $("input[name=doctor_achievement]").val(data.doctor_achievement);
                         $("input[name=doctor_experience]").val(data.doctor_experience);
                         $("input[name=doctor_profession_degree]").val(data.doctor_profession_degree);
                         $("select[name=doctor_gender]").val(data.doctor_gender);
 
-                        $("input[name=doctor_certificate]").next('.custom-file-label').addClass("selected").html(data.doctor_certificate.substring(data.doctor_certificate.lastIndexOf("__") + 2));
-                        $("input[name=doctor_image]").next('.custom-file-label').addClass("selected").html(data.doctor_image.substring(data.doctor_image.lastIndexOf("__") + 2));
+                        
+
+                        var doctor_specialization2 = [];
+                        $.each(data.specializations, function(index, value) {
+                            doctor_specialization2.push(value.specialization_id);
+                        });
+
+                        console.log("=-doctor_specialization2", doctor_specialization2)
+                        $('select[name="doctor_specialization2[]"]').val(doctor_specialization2).trigger('change');
+
+
+                        if (data.doctor_certificate) {
+                            $("input[name=doctor_certificate]").next('.custom-file-label').addClass("selected").html(data.doctor_certificate.substring(data.doctor_certificate.lastIndexOf("__") + 2));
+                        }else{
+                            $("input[name=doctor_certificate]").next('.custom-file-label').addClass("selected").html('Choose file');
+                        }
+
+                        if (data.doctor_image) {
+                            $("input[name=doctor_image]").next('.custom-file-label').addClass("selected").html(data.doctor_image.substring(data.doctor_image.lastIndexOf("__") + 2));
+                        }else{
+                            $("input[name=doctor_image]").next('.custom-file-label').addClass("selected").html('Choose file');
+                        }
+
 
                         if(data.doctor_country_id != ''){
                             $("select[name=doctor_country_id]").val(data.doctor_country_id).trigger('change');                        
@@ -595,6 +710,7 @@
                         }).summernote('code', data.doctor_address);
 
                         $("select[name=doctor_is_active]").val(data.doctor_is_active);
+                        $("select[name=doctor_is_featured]").val(data.doctor_is_featured);
                         
                         $("#modal_create_form").modal('show');
                         $("#create_form_btn").hide();
