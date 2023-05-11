@@ -393,6 +393,10 @@ Route::get('/about',[HomeController::class,'about'])->name('web_page_about');
 Route::get('/disclaimer',[HomeController::class,'disclaimer'])->name('web_page_disclaimer');
 Route::get('/privacy_policy',[HomeController::class,'privacy_policy'])->name('web_page_privacy_policy');
 
+Route::get('/brand_detail/{id}',[WebBrandController::class,'brand_detail'])->name('web_page_brand_detail');
+Route::get('/get_brand_detail/{id}',[WebBrandController::class,'get_brand_detail'])->name('web_page_get_brand_detail');
+
+
 // Artisan Routes
 
 Route::get('route-cache', function () {

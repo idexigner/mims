@@ -431,7 +431,7 @@
                         data: null,
                         title: 'Brand Name',
                         render: function(data, type, row) {
-                            return '<a href="'+row.brand_id+'" class="edit" >'+row.brand_name+'</a> ';
+                            return '<a href="{{ url('/')}}/brand_detail/'+row.brand_id+'"  >'+row.brand_name+'</a> ';
                         },
                         orderable: false,
                         searchable: false
@@ -441,7 +441,7 @@
                         data: null,
                         title: 'Generic',
                         render: function(data, type, row) {
-                            return '<a href="'+row.generic.generic_id+'" class="edit" >'+row.generic.generic_name+'</a> ';
+                            return '<a href="{{ url('/')}}/generic_detail/'+row.generic.generic_id+'" class="edit" >'+row.generic.generic_name+'</a> ';
                         },
                         orderable: false,
                         searchable: false

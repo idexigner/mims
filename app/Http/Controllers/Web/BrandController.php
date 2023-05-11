@@ -48,4 +48,45 @@ class BrandController extends Controller
 
         return view('frontend.herbal');
     }
+
+    public function brand_detail($id){
+        return view('frontend.brand-detail')->with(compact('id'));
+
+       
+            
+                 
+            // $brands = Brand::with('dosage_form', 'generic', 'manufacturer', 'strength')
+            //         ->where('brand_name', $brand->brand_name)
+            //         ->where('brand_is_active', 1)
+            //         ->get();
+                   
+            // $data = compact('brand', 'brands');
+           
+            
+            
+       
+    }
+
+    public function get_brand_detail($id){
+        try{  
+            
+            $data = Brand::with('dosage_form', 'generic', 'manufacturer', 'strength', 'pack_size')
+                ->where('brand_id',$id)->first();
+
+            // dd($data);
+            return response()->json([
+                'message' => 'Get Brand Detail', 
+                'data' => $data
+            ], 200);
+
+        } catch (\Exception $ex) {
+                
+            $this->logException($ex, \Route::currentRouteName(), __METHOD__);
+            return response()->json([
+                'message' => 'Something went wrong! Get Brand Detail',
+                'error' => $ex,
+                'message' => $ex->getMessage()
+            ], 400);
+        }
+    }
 }
