@@ -4,17 +4,19 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Manufacturer;
 use Illuminate\Http\Request;
 use App\Traits\LogExceptions;
 use Yajra\DataTables\DataTables;
 
-class BrandController extends Controller
+
+class ManufacturerController extends Controller
 {
     use LogExceptions;
     public function get_brand(Request $request){
         try{
 
-            $data = Brand::select('brand_id', 'brand_name', 'brand_type')
+            $data = Manufacturer::select('brand_id', 'brand_name', 'brand_type')
                 ->where($request->condition, 1)
                 ->where('brand_is_active',1)
                 ->orderBy('brand_id', 'DESC')
@@ -22,7 +24,7 @@ class BrandController extends Controller
                 ->get();      
 
             return response()->json([
-                'message' => 'Get Brand', 
+                'message' => 'Get Manufacturer', 
                 'data' => $data
             ], 200);
 
@@ -37,16 +39,27 @@ class BrandController extends Controller
         }
     }
 
-    public function herbal_list(Request $request){
+    public function manufacturer_detail(Request $request,$id=''){
+        
+        // dd('asd');
+        if($id == ''){
+            $id = $request->id;
+        }
+        $manufacturer = Manufacturer::where('manufacturer_id', $id)->first();
         if ($request->ajax()) {
             // dd("ajax");
-            $data = Brand::with('dosage_form', 'generic', 'manufacturer', 'strength')
-            ->where('brand_type', 'Herbal')
-            ->where('brand_is_active', 1);
+            // dd($id);
+            $data = Brand::with('generic')
+                ->where('brand_manufacturer_id', $id)
+                ->where('brand_is_active', 1);
+                // ->get();
+            // $data = Manufacturer::with('brands.generic')
+            // ->where('manufacturer_id', $id)
+            // ->where('manufacturer_is_active', 1);
             return DataTables::of($data)->make(true);
         }
 
-        return view('frontend.herbal');
+        return view('frontend.manufacturer')->with(compact('id', 'manufacturer'));
     }
 
     public function brand_detail($id){
@@ -55,7 +68,7 @@ class BrandController extends Controller
        
             
                  
-            // $brands = Brand::with('dosage_form', 'generic', 'manufacturer', 'strength')
+            // $brands = Manufacturer::with('dosage_form', 'generic', 'manufacturer', 'strength')
             //         ->where('brand_name', $brand->brand_name)
             //         ->where('brand_is_active', 1)
             //         ->get();
@@ -70,12 +83,12 @@ class BrandController extends Controller
     public function get_brand_detail($id){
         try{  
             
-            $data = Brand::with('dosage_form', 'generic', 'manufacturer', 'strength', 'pack_size')
+            $data = Manufacturer::with('dosage_form', 'generic', 'manufacturer', 'strength', 'pack_size')
                 ->where('brand_id',$id)->first();
 
             // dd($data);
             return response()->json([
-                'message' => 'Get Brand Detail', 
+                'message' => 'Get Manufacturer Detail', 
                 'data' => $data
             ], 200);
 
@@ -83,7 +96,7 @@ class BrandController extends Controller
                 
             $this->logException($ex, \Route::currentRouteName(), __METHOD__);
             return response()->json([
-                'message' => 'Something went wrong! Get Brand Detail',
+                'message' => 'Something went wrong! Get Manufacturer Detail',
                 'error' => $ex,
                 'message' => $ex->getMessage()
             ], 400);
@@ -96,7 +109,7 @@ class BrandController extends Controller
        
             
                  
-            // $brands = Brand::with('dosage_form', 'generic', 'manufacturer', 'strength')
+            // $brands = Manufacturer::with('dosage_form', 'generic', 'manufacturer', 'strength')
             //         ->where('brand_name', $brand->brand_name)
             //         ->where('brand_is_active', 1)
             //         ->get();
@@ -111,17 +124,17 @@ class BrandController extends Controller
     public function get_brand_information($id){
         try{  
             
-            $data = Brand::with('dosage_form', 'generic', 'manufacturer', 'strength', 'pack_size')
+            $data = Manufacturer::with('dosage_form', 'generic', 'manufacturer', 'strength', 'pack_size')
                 ->where('brand_id',$id)->first();
 
-            $data['brands'] = Brand::with('dosage_form', 'generic', 'manufacturer', 'strength', 'pack_size')
+            $data['brands'] = Manufacturer::with('dosage_form', 'generic', 'manufacturer', 'strength', 'pack_size')
                     ->where('brand_name', $data->brand_name)
                     ->where('brand_is_active', 1)
                     ->get();
 
             // dd($data);
             return response()->json([
-                'message' => 'Get Brand Detail', 
+                'message' => 'Get Manufacturer Detail', 
                 'data' => $data
             ], 200);
 
@@ -129,41 +142,10 @@ class BrandController extends Controller
                 
             $this->logException($ex, \Route::currentRouteName(), __METHOD__);
             return response()->json([
-                'message' => 'Something went wrong! Get Brand Detail',
+                'message' => 'Something went wrong! Get Manufacturer Detail',
                 'error' => $ex,
                 'message' => $ex->getMessage()
             ], 400);
         }
-    }
-
-    
-    public function brand_all(Request $request,$id=''){
-        
-        // dd('asd');
-        if($id == ''){
-            // $id = $request->id;
-            $condition = 'brand_is_new_product';
-        } else if($id == 1){
-            $condition = 'brand_is_new_product';
-        } else if($id == 2){
-            $condition = 'brand_is_new_brand';
-        } else if($id == 3){
-            $condition = 'brand_is_new_presentation';
-        }
-       
-        $brand = Brand::where('brand_id', $id)->first();
-        if ($request->ajax()) {
-            
-            $data = Brand::with('dosage_form', 'strength', 'pack_size')
-                ->where($condition, 1)
-                ->where('brand_is_active',1)
-                ->orderBy('brand_id', 'DESC');
-            
-
-            
-            return DataTables::of($data)->make(true);
-        }
-
-        return view('frontend.brand-all')->with(compact('id', 'brand'));
     }
 }

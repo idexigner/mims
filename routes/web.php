@@ -43,6 +43,9 @@ use App\Http\Controllers\Web\NewsController as WebNewsController;
 use App\Http\Controllers\Web\SpecializationController as WebSpecializationController;
 use App\Http\Controllers\Web\SpecialReportController as WebSpecialReportController;
 use App\Http\Controllers\Web\VideoController as WebVideoController;
+use App\Http\Controllers\Web\GenericController as WebGenericController;
+use App\Http\Controllers\Web\ManufacturerController as WebManufacturerController;
+
 
 
 
@@ -395,6 +398,20 @@ Route::get('/privacy_policy',[HomeController::class,'privacy_policy'])->name('we
 
 Route::get('/brand_detail/{id}',[WebBrandController::class,'brand_detail'])->name('web_page_brand_detail');
 Route::get('/get_brand_detail/{id}',[WebBrandController::class,'get_brand_detail'])->name('web_page_get_brand_detail');
+
+Route::get('/generic_detail/{id}',[WebGenericController::class,'generic_detail'])->name('web_page_generic_detail');
+Route::get('/get_generic_detail/{id}',[WebGenericController::class,'get_generic_detail'])->name('web_page_get_generic_detail');
+
+
+Route::get('/brand_information/{id}',[WebBrandController::class,'brand_information'])->name('web_page_brand_information');
+Route::get('/get_brand_information/{id}',[WebBrandController::class,'get_brand_information'])->name('web_page_get_brand_information');
+
+
+Route::get('/manufacturer_detail/{id?}',[WebManufacturerController::class,'manufacturer_detail'])->name('web_page_manufacturer_detail');
+// Route::get('/get_manufacturer_detail/{id}',[WebGenericController::class,'get_manufacturer_detail'])->name('web_page_get_manufacturer_detail');
+
+Route::get('/brand_all/{id?}',[WebBrandController::class,'brand_all'])->name('web_page_brand_all');
+
 
 
 // Artisan Routes

@@ -996,10 +996,10 @@
                     $.each(response.data, function(index, brand) {
 
                         $('.new-product-information').append(
-                            `<a href='${brand.brand_id}'>${brand.brand_name.toUpperCase()}</a>`
+                            `<a href='{{ url('/') }}/brand_information/${brand.brand_id}'>${brand.brand_name.toUpperCase()}</a>`
                         );
                     });
-                    $('.new-product-information').append(`<a href='showall'>See More</a>`);
+                    $('.new-product-information').append(`<a href='{{url('/')}}/brand_all/1'>See More</a>`);
                     
                 },
                 error: function(xhr, status, error) {
@@ -1028,10 +1028,10 @@
                     $.each(response.data, function(index, brand) {
 
                         $('.new-brand-information').append(
-                            `<a href='${brand.brand_id}'>${brand.brand_name.toUpperCase()}</a>`
+                            `<a href='{{ url('/') }}/brand_information/${brand.brand_id}'>${brand.brand_name.toUpperCase()}</a>`
                         );
                     });
-                    $('.new-brand-information').append(`<a href='showall'>See More</a>`);
+                    $('.new-brand-information').append(`<a href='{{url('/')}}/brand_all/2'>See More</a>`);
                     
                 },
                 error: function(xhr, status, error) {
@@ -1060,10 +1060,10 @@
                     $.each(response.data, function(index, brand) {
 
                         $('.new-presentation-information').append(
-                            `<a href='${brand.brand_id}'>${brand.brand_name.toUpperCase()}</a>`
+                            `<a href='{{ url('/') }}/brand_information/${brand.brand_id}'>${brand.brand_name.toUpperCase()}</a>`
                         );
                     });
-                    $('.new-presentation-information').append(`<a href='showall'>See More</a>`);
+                    $('.new-presentation-information').append(`<a href='{{url('/')}}/brand_all/3'>See More</a>`);
                     
                 },
                 error: function(xhr, status, error) {

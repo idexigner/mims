@@ -134,22 +134,7 @@
                                             <td class="brand-info-title">Safety Remarks</td>
                                             <td>: <span id="safety_remark"></span></td>
                                         </tr>
-                                        <tr>
-                                            <td class="brand-info-title">Dosage Form</td>
-                                            <td>: <span id="dosage_form"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="brand-info-title">Strength Name</td>
-                                            <td>: <span id="strength_name"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="brand-info-title">Pack Size</td>
-                                            <td>: <span id="pack_size"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="brand-info-title">Price in BDT</td>
-                                            <td>: <span id="price"></td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -169,6 +154,10 @@
                                 <p class="brand-description-title">Contraindication &amp; Precaution</p>
                                 <p class="brand-description-text" id="contraindication_precaution"></p>
                             </div>
+                            <div class="brand-description-point">
+                                <p class="brand-description-title">Pharmacology</p>
+                                <p class="brand-description-text" id="pharmacology"></p>
+                            </div>
                                                                             <div class="brand-description-point">
                                 <p class="brand-description-title">Side Effect</p>
                                 <p class="brand-description-text" id="side_effect"></p>
@@ -180,6 +169,30 @@
                     </div>
                 </div>
             </div>
+
+            <div class="content-section main" style="margin-top: 15px">
+                <!-- more jobs -->
+                <div class="section-header own-pad" style="margin-bottom: 10px; padding: 24px 30px 16px 30px;">
+                    Brand of <span class="generic_name"></span>                </div>
+                <div class="brand-generic-table brand-of-generic">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Brand Name</th>
+                            <th scope="col">Dosage Form</th>
+                            <th scope="col">Strength</th>
+                            <th scope="col">Pack Size</th>
+                            <th scope="col">Price</th>                         
+                        </tr>
+                        </thead>
+                        <tbody class="brand-list">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
         </div>
         <div class="col-md-4 col-12">
             <div class="container" id="sidebar">
@@ -210,7 +223,7 @@
             countTo = $this.attr('data-count');
 
         $({
-            countNum: $this.text()
+            countNum: $thishtml()
         }).animate({
                 countNum: countTo
             },
@@ -220,10 +233,10 @@
                 duration: 3000,
                 easing: 'linear',
                 step: function() {
-                    $this.text(Math.floor(this.countNum));
+                    $thishtml(Math.floor(this.countNum));
                 },
                 complete: function() {
-                    $this.text(this.countNum);
+                    $thishtml(this.countNum);
                     //alert('finished');
                 }
 
@@ -262,7 +275,7 @@
     var brandMethod = {
         getDetail: function(id) {
             $.ajax({
-                url: "{{ url('/')}}/get_brand_detail/"+id,
+                url: "{{ url('/')}}/get_brand_information/"+id,
                 type: 'GET',
                 dataType: 'json',
                 // data: {
@@ -270,27 +283,42 @@
                 //     limit: 7
                 // },
                 success: function(response) {
-                    console.log("get_brand_detail", response);
+                    console.log("get_brand_information", response);
 
                     var data = response.data;
-                    
                     $("#brand_name").html(data.brand_name);
+
+                    // $("#generic_name").html(data.generic.generic_name);
+                    // $("#manufacturer_name").html(data.manufacturer.manufacturer_name);
                     $("#generic_name").html(`<a href="{{url('/')}}/generic_detail/${data.generic.generic_id}">${data.generic.generic_name}</a>`);
                     $("#manufacturer_name").html(`<a href="{{url('/')}}/manufacturer_detail/${data.manufacturer.manufacturer_id}">${data.manufacturer.manufacturer_name}</a>`);
 
-                    // $("#manufacturer_name").html(data.manufacturer.manufacturer_name);
                     $("#drug_class").html(data.generic.generic_classification);
                     $("#safety_remark").html(data.generic.generic_safety_remark);
-                    $("#dosage_form").html(data.dosage_form.dosageform_name);
-                    $("#strength_name").html(data.strength.strength_name);
-                    $("#pack_size").html(data.pack_size.packsize_name);
-                    $("#price").html(data.brand_price + " Tk");
+                    // $("#dosage_form").html(data.dosage_form.dosageform_name);
+                    // $("#strength_name").html(data.strength.strength_name);
+                    // $("#pack_size").html(data.pack_size.packsize_name);
+                    // $("#price").html(data.brand_price + " Tk");
                     $("#indication_para").html(data.generic.generic_indication);
                     $("#dosage_administration").html(data.generic.generic_dosage_administration);
+                    $("#pharmacology").html(data.generic_pharmacology);
                     $("#contraindication_precaution").html(data.generic.generic_contraindication_precaution);
                     $("#side_effect").html(data.generic.generic_side_effect);
                     $("#pregnancy_lactation").html(data.generic.generic_pregnancy_lactation);
                   
+
+                    $.each(data.brands, function(index, brand){
+                        $(".brand-list").append(`
+                            <tr>
+                                <td><a href="{{ url('/') }}/brand_detail/${brand.brand_id}">${brand.brand_name}</a></td>
+                                <td>${brand.dosage_form.dosageform_name}</td>
+                                <td>${brand.strength.strength_name}</td>
+                                <td>${brand.pack_size.packsize_name}</td>
+                                <td>${brand.price} Tk</td>
+                            </tr>
+                        `);
+                    })
+
                 },
                 error: function(xhr, status, error) {
                     console.group("Error Block");

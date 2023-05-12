@@ -112,74 +112,78 @@
         <div class="col-md-8 col-12">
             <div class="content-section main">
                 <div class="brand-details">
-                    <div class="row">
-                        <div class="col-7">
-                            <h2 class="brand-title" id="brand_name"></h2>
-                            <div class="brand-info-table">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td class="brand-info-title">Generic Name</td>
-                                            <td style="color: blue">: <span id="generic_name"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="brand-info-title">Manufacturer Name</td>
-                                            <td style="color: blue" >: <span id="manufacturer_name"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="brand-info-title">Drug Class</td>
-                                            <td>: <span id="drug_class"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="brand-info-title">Safety Remarks</td>
-                                            <td>: <span id="safety_remark"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="brand-info-title">Dosage Form</td>
-                                            <td>: <span id="dosage_form"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="brand-info-title">Strength Name</td>
-                                            <td>: <span id="strength_name"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="brand-info-title">Pack Size</td>
-                                            <td>: <span id="pack_size"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="brand-info-title">Price in BDT</td>
-                                            <td>: <span id="price"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-5 drug-image brand-advert-image" style="padding: 0px"></div>
+                    <h2 class="brand-title generic_name">Vasarishta</h2>
+                    <div class="brand-info-table">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td class="brand-info-title">Generic Name</td>
+                                <td>: <span class="generic_name"></span></td>
+                            </tr>
+                                                            <tr>
+                                    <td class="brand-info-title">Drug Class</td>
+                                    <td>: <span id="drug_class"></span></td>
+                                </tr>
+                                                                                            <tr>
+                                    <td class="brand-info-title">Safety Remarks</td>
+                                    <td>: <span id="safety_remark"></span></td>
+                                </tr>
+                                                            </tbody>
+                        </table>
                     </div>
                     <div class="brand-description">
                                                     <div class="brand-description-point">
                                 <p class="brand-description-title">Indication</p>
                                 <p class="brand-description-text" id="indication_para"></p>
                             </div>
-                                                                            <div class="brand-description-point">
+                                                                                <div class="brand-description-point">
                                 <p class="brand-description-title">Dosage &amp; Administration</p>
-                                <p class="brand-description-text" id="dosage_administration"> </p>
+                                <p class="brand-description-text" id="dosage_administration"></p>
                             </div>
-                                                                            <div class="brand-description-point">
-                                <p class="brand-description-title">Contraindication &amp; Precaution</p>
-                                <p class="brand-description-text" id="contraindication_precaution"></p>
-                            </div>
-                                                                            <div class="brand-description-point">
+                            													<div class="brand-description-point">
+								<p class="brand-description-title">Contraindication &amp; Precaution</p>
+								<p class="brand-description-text" id="contraindication_precaution"></p>
+
+							</div>
+																										<div class="brand-description-point">
+								<p class="brand-description-title">Pharmacology</p>
+								<p class="brand-description-text" id="pharmacology"></p>
+
+							</div>
+																			                            <div class="brand-description-point">
                                 <p class="brand-description-title">Side Effect</p>
                                 <p class="brand-description-text" id="side_effect"></p>
                             </div>
-                                                                            <div class="brand-description-point">
+                            																		                            <div class="brand-description-point">
                                 <p class="brand-description-title">Use in Pregnancy &amp; Lactation</p>
-                                <p class="brand-description-text" id="pregnancy_lactation"> </p>
+                                <p class="brand-description-text" id="pregnancy_lactation"></p>
                             </div>
-                    </div>
+                                                </div>
                 </div>
             </div>
+            <div class="content-section main" style="margin-top: 15px">
+                <!-- more jobs -->
+                <div class="section-header own-pad" style="margin-bottom: 10px; padding: 24px 30px 16px 30px;">
+                    Brand of <span class="generic_name"></span>                </div>
+                <div class="brand-generic-table brand-of-generic">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Brand Name</th>
+                            <th scope="col">Manufacturer Name</th>
+                        </tr>
+                        </thead>
+                        <tbody class="generic-list">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- pagination -->
+            <nav class="mims-pagination" style="margin-top: 36px;">
+                <ul class="pagination" id="search-generic-pagination" style="display: none;"><li class="page-item active"><a class="page-link" href="#">1</a></li></ul>
+            </nav>
+            <div class="in-page-advert herbal-advert-bottom"></div>
         </div>
         <div class="col-md-4 col-12">
             <div class="container" id="sidebar">
@@ -249,7 +253,7 @@
         $('.select2').select2()
 
 
-        brandMethod.getDetail({{$id}});
+        genericMethod.getDetail({{$id}});
         sidebar.getSidebar();
       
     });
@@ -259,10 +263,10 @@
 
    
 
-    var brandMethod = {
+    var genericMethod = {
         getDetail: function(id) {
             $.ajax({
-                url: "{{ url('/')}}/get_brand_detail/"+id,
+                url: "{{ url('/')}}/get_generic_detail/"+id,
                 type: 'GET',
                 dataType: 'json',
                 // data: {
@@ -270,26 +274,38 @@
                 //     limit: 7
                 // },
                 success: function(response) {
-                    console.log("get_brand_detail", response);
+                    console.log("get_generic_detail", response);
 
                     var data = response.data;
-                    
-                    $("#brand_name").html(data.brand_name);
-                    $("#generic_name").html(`<a href="{{url('/')}}/generic_detail/${data.generic.generic_id}">${data.generic.generic_name}</a>`);
-                    $("#manufacturer_name").html(`<a href="{{url('/')}}/manufacturer_detail/${data.manufacturer.manufacturer_id}">${data.manufacturer.manufacturer_name}</a>`);
+                   
+                    // $(".generic_name").html(data.generic_name);
+                    $("#generic_name").html(`<a href="{{url('/')}}/generic_detail/${data.generic_id}">${data.generic_name}</a>`);
+
+                    $("#drug_class").html(data.generic_classification);
+                    $("#safety_remark").html(data.generic_safety_remark);
+                    $("#indication_para").html(data.generic_indication);
+                    $("#dosage_administration").html(data.generic_dosage_administration);
+                    $("#contraindication_precaution").html(data.generic_contraindication_precaution);
+                    $("#pharmacology ").html(data.generic_pharmacology);
+                    $("#side_effect").html(data.generic_side_effect);
+                    $("#pregnancy_lactation").html(data.generic_pregnancy_lactation);
+
+                    $.each(data.brands, function(index, brand){
+                        $(".generic-list").append(`
+                            <tr>
+                                <td><a href="{{ url('/') }}/brand_information/${brand.brand_id}">${brand.brand_name}</a></td>
+                                <td><a href="{{ url('/') }}/manufacturer_detail/${brand.manufacturer.manufacturer_id}">${brand.manufacturer.manufacturer_name}</a></td>
+                            </tr>
+                        `);
+                    })
+
 
                     // $("#manufacturer_name").html(data.manufacturer.manufacturer_name);
-                    $("#drug_class").html(data.generic.generic_classification);
-                    $("#safety_remark").html(data.generic.generic_safety_remark);
-                    $("#dosage_form").html(data.dosage_form.dosageform_name);
-                    $("#strength_name").html(data.strength.strength_name);
-                    $("#pack_size").html(data.pack_size.packsize_name);
-                    $("#price").html(data.brand_price + " Tk");
-                    $("#indication_para").html(data.generic.generic_indication);
-                    $("#dosage_administration").html(data.generic.generic_dosage_administration);
-                    $("#contraindication_precaution").html(data.generic.generic_contraindication_precaution);
-                    $("#side_effect").html(data.generic.generic_side_effect);
-                    $("#pregnancy_lactation").html(data.generic.generic_pregnancy_lactation);
+                    
+                    // $("#dosage_form").html(data.dosage_form.dosageform_name);
+                    // $("#strength_name").html(data.strength.strength_name);
+                    // $("#pack_size").html(data.pack_size.packsize_name);
+                    // $("#price").html(data.brand_price + " Tk");
                   
                 },
                 error: function(xhr, status, error) {
