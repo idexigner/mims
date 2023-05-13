@@ -642,4 +642,4 @@
     }
 
     frontendCommonMethods.totalDrug = 0;
-</script>
+</script>   

@@ -412,6 +412,9 @@ Route::get('/manufacturer_detail/{id?}',[WebManufacturerController::class,'manuf
 
 Route::get('/brand_all/{id?}',[WebBrandController::class,'brand_all'])->name('web_page_brand_all');
 
+Route::get('/search',[HomeController::class,'search'])->name('search');
+
+
 
 
 // Artisan Routes

@@ -9,6 +9,7 @@
         <div class="search">
             <input class="search-bar no-outline" type="text" id="searchDrugOption">
             <button class="search-btn no-outline" onclick="drugObject.searchBrandInformation()" id="searchInformation"><img src="../frontend/images/icons/magnifying-glass.svg" class="search-icon" alt=""></button>
+            <div id="searchDrugOptionautocomplete-list" class="autocomplete-items"></div>
         </div>
         <div class="alphabets">
             <a onclick="drugObject.searchAlphabetically('a')" class="alphabet-link">A</a>
@@ -81,3 +82,41 @@
     </section>
 
 </div>
+
+
+<script>
+
+$(document).ready(function() {
+    $('#searchDrugOption').on('keyup', function() {
+        var searchKeyword = $(this).val();
+        console.log("searchKeyword", searchKeyword.length)
+        if(searchKeyword.length > 1) {
+            $.ajax({
+                url: '{{ url('/')}}/search',
+                type: 'GET',
+                dataType: 'json',
+                data: {keyword: searchKeyword},
+                success: function(response) {
+                    console.log("Search-> ", response);
+                    data = response.data;
+
+                    $('#searchDrugOptionautocomplete-list').html('');
+                    // $.each(data)
+                    $.each(data, function(index, item){
+                        // <strong>ASCA</strong>
+                        $("#searchDrugOptionautocomplete-list").append(`
+                            <div>
+                            ${item.brand_name} ${item.dosage_form.dosageform_name}<input type="hidden" value="${item.brand_name}">
+                            </div>
+                        `);
+                    })
+                    
+                    // $('#searchDrugOptionautocomplete-list').html(response);
+                }
+            });
+        } else {
+            $('#searchDrugOptionautocomplete-list').empty();
+        }
+    });
+});
+</script>

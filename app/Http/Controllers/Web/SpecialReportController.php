@@ -23,7 +23,7 @@ class SpecialReportController extends Controller
             return response()->json([
                 'message' => 'Get Special Report', 
                 'data' => $data
-            ], 200);
+        ], 200);
 
         } catch (\Exception $ex) {
 
