@@ -8,10 +8,26 @@ use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use App\Traits\LogExceptions;
 use App\Models\Brand;
+use Illuminate\Support\Facades\Storage;
+use Image;
+
 
 
 class BrandController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+         
+            $userMapping = auth()->user()->user_mapping;
+            if (!empty($userMapping) && $userMapping->module_brand == 0) {
+                return redirect('admin/dashboard');
+            }
+    
+            return $next($request);
+        });
+    }
+
     use LogExceptions;
     public function index(Request $request)
     {        
@@ -61,9 +77,26 @@ class BrandController extends Controller
            
             if ($request->hasFile('brand_image')) {
                 $file = $request->file('brand_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $brand_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/brand', $brand_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/brand/' . $brand_image, $image);
             }
+
+            // if ($request->hasFile('brand_image')) {
+            //     $file = $request->file('brand_image');
+            //     $brand_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/brand', $brand_image);
+            // }
             $obj->brand_image = $brand_image ?? '';
 
             $obj->brand_price = $request->brand_price ?? '';
@@ -141,13 +174,32 @@ class BrandController extends Controller
             $obj->brand_strength_id = $request->brand_strength_id ?? '1';
             $obj->brand_pack_size_id = $request->brand_pack_size_id ?? '1';
            
+            // if ($request->hasFile('brand_image')) {
+            //     // dd("new");
+            //     $file = $request->file('brand_image');
+            //     $brand_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/brand', $brand_image);
+            //     $obj->brand_image = $brand_image ?? '';
+            // }
+
             if ($request->hasFile('brand_image')) {
-                // dd("new");
                 $file = $request->file('brand_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $brand_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/brand', $brand_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/brand/' . $brand_image, $image);
                 $obj->brand_image = $brand_image ?? '';
             }
+
            
 
             $obj->brand_price = $request->brand_price ?? '';

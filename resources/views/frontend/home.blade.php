@@ -452,7 +452,7 @@
 <!-- Search click event -->
 @include('frontend.component.scroller')
 
-<div class="banner d-md-flex d-none" id="uhjl">
+{{-- <div class="banner d-md-flex d-none" id="uhjl">
     <div class="search-wrapper">
         <ul class="search-tabs group">
             <li class="brand active"><a onclick="drugObject.changeSearchOption('brand')" class="search_option_type search_by_brand">Brand</a></li>
@@ -534,8 +534,9 @@
         </div>
     </section>
 
-</div>
+</div> --}}
 
+@include('frontend.component.search')
 
 
 <!-- home product slider -->
@@ -598,28 +599,28 @@
         <div class="col-md-12 col-12">
             <div class="content-section">
                 <div class="section-header drug-update-header section-header-bottom">
-                    <span><i class="fa fa-info-circle un-mesh_icon" aria-hidden="true"></i></span>Important Information<a class="section-header-view-all-btn no-outline" href="#">See All Address</a>
+                    <span><i class="fa fa-info-circle un-mesh_icon" aria-hidden="true"></i></span>Important Information<a class="section-header-view-all-btn no-outline" href="{{ url('/') }}/address">See All Address</a>
                     <div class="row" id="jclin">
                         <div class="col-md-4">
-                            <a href="#" class="okta" id="okta1"> <img src="https://cdn-icons-png.flaticon.com/512/4625/4625809.png" alt="" width="65px" height="65px"> 24 hours Pharmacy</a>
+                            <a href="{{ url('/') }}/address/2" class="okta" id="okta1"> <img src="https://cdn-icons-png.flaticon.com/512/4625/4625809.png" alt="" width="65px" height="65px"> 24 hours Pharmacy</a>
                         </div>
                         <div class="col-md-4">
-                            <a href="#" class="okta" id="okta2"> <img src="https://cdn-icons-png.flaticon.com/512/6010/6010253.png" alt="" width="65px" height="65px">Ambulance Service</a>
+                            <a href="{{ url('/') }}/address/3" class="okta" id="okta2"> <img src="https://cdn-icons-png.flaticon.com/512/6010/6010253.png" alt="" width="65px" height="65px">Ambulance Service</a>
                         </div>
                         <div class="col-md-4">
-                            <a href="#" class="okta" id="okta3"> <img src="https://cdn-icons-png.flaticon.com/512/7251/7251772.png" alt="" width="65px" height="65px">Blood Bank</a>
+                            <a href="{{ url('/') }}/address/4" class="okta" id="okta3"> <img src="https://cdn-icons-png.flaticon.com/512/7251/7251772.png" alt="" width="65px" height="65px">Blood Bank</a>
                         </div>
                         <div class="col-md-4">
-                            <a href="#" class="okta" id="okta4"> <img src="https://cdn-icons-png.flaticon.com/512/1856/1856063.png" alt="" width="65px" height="65px">Cancer Hospital</a>
+                            <a href="{{ url('/') }}/address/5" class="okta" id="okta4"> <img src="https://cdn-icons-png.flaticon.com/512/1856/1856063.png" alt="" width="65px" height="65px">Cancer Hospital</a>
                         </div>
                         <div class="col-md-4">
-                            <a href="#" class="okta" id="okta5"><img src="https://cdn-icons-png.flaticon.com/512/1589/1589705.png" alt="" width="65px" height="65px">Cardiac Hospitals</a>
+                            <a href="{{ url('/') }}/address/6" class="okta" id="okta5"><img src="https://cdn-icons-png.flaticon.com/512/1589/1589705.png" alt="" width="65px" height="65px">Cardiac Hospitals</a>
                         </div>
 
 
                         <div class="col-md-4" id="bismilaalla">
                             <span>new</span>
-                            <a href="#" class="okta" id="okta6"><img src="https://cdn-icons-png.flaticon.com/512/2818/2818318.png" alt="" width="65px" height="65px">Journal Dental</a>
+                            <a href="{{ url('/') }}/address/31" class="okta" id="okta6"><img src="https://cdn-icons-png.flaticon.com/512/2818/2818318.png" alt="" width="65px" height="65px">Journal Dental</a>
                         </div>
 
                     </div>
@@ -652,7 +653,7 @@
     <div class="home-special-report-slider-wrapper content-section">
         <div class="section-header" style="margin-bottom: 24px;">
             <span><i class="fa fa-bug un-mesh_icon" aria-hidden="true"></i></span>Special Reports
-            <a class="section-header-view-all-btn no-outline" href="#">See All Special Reports</a>
+            <a class="section-header-view-all-btn no-outline" href="{{ url('/')}}/special_report">See All Special Reports</a>
         </div>
         <div id="home-special-report-slider" class="home-special-report-list"></div>
     </div>
@@ -671,7 +672,7 @@
                 <div class="section-header own-pad" style="margin-bottom: 16px;">
                     <span><img src="../frontend/images/icons/briefcase.svg" alt="*"></span>Job
                     Circular
-                    <a class="section-header-view-all-btn no-outline" href="#">See All jobs</a>
+                    <a class="section-header-view-all-btn no-outline" href="{{ url('/') }}/job">See All jobs</a>
                 </div>
                 <div class="uk_tabs">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -698,7 +699,7 @@
             <div class="content-section" style="padding: 0px; max-height: none;">
                 <div class="section-header own-pad" style="margin-bottom: 16px;">
                     <span><img src="../frontend/images/icons/newspaper.svg" alt="*"></span>Pharma News
-                    <a class="section-header-view-all-btn no-outline" href="#">See
+                    <a class="section-header-view-all-btn no-outline" href="{{ url('/') }}/news">See
                         All News</a>
                 </div>
                 <div class="container pharma_news">
@@ -728,7 +729,7 @@
                         <div class="lockal">
                             <div>
                                 <h2 class="count">
-                                    <div class="counting" data-count="0">0</div>
+                                    <div class="counting brand_count" data-count="0">0</div>
                                 </h2>
 
                                 <p>Brand</p>
@@ -742,7 +743,7 @@
 
 
                                 <h2 class="count">
-                                    <div class="counting" data-count="">0</div>
+                                    <div class="counting generic_count" data-count="">0</div>
                                 </h2>
                                 <p>Generic</p>
                             </div>
@@ -753,7 +754,7 @@
                         <div class="lockal">
                             <div>
                                 <h2 class="count">
-                                    <div class="counting" data-count="">0</div>
+                                    <div class="counting herbal_count" data-count="">0</div>
                                 </h2>
 
                                 <p>Herbal</p>
@@ -765,7 +766,7 @@
                         <div class="lockal">
                             <div>
                                 <h2 class="count">
-                                    <div class="counting" data-count="">0</div>
+                                    <div class="counting pharma_count" data-count="">0</div>
                                 </h2>
 
                                 <p>Pharma</p>
@@ -778,7 +779,7 @@
                         <div class="lockal">
                             <div>
                                 <h2 class="count">
-                                    <div class="counting" data-count="0">0</div>
+                                    <div class="counting doctor_count" data-count="0">0</div>
                                 </h2>
 
                                 <p>doctor</p>
@@ -807,7 +808,7 @@
             <div class="section-header" style="margin-bottom: 24px;">
                 <span><img src="../frontend/images/icons/videoclip.svg" alt="*"></span>Video
                 Gallery
-                <a class="section-header-view-all-btn no-outline" href="#">See All
+                <a class="section-header-view-all-btn no-outline" href="{{ url('/') }}/videos">See All
                     Videos</a>
             </div>
             <!--<div id="home-youtube-slider" class="home-youtube-list"></div>-->
@@ -969,11 +970,13 @@
         drugUpdate.getNewProduct();
         drugUpdate.getNewBrand();
         drugUpdate.getNewPresentation();
+        drugUpdate.getHighlightBrand();
         homeMethods.getDoctor();
         homeMethods.getSpecialReport();
         homeMethods.getMedicalJob();
         homeMethods.getPharmaJob();
         homeMethods.getNews();
+        homeMethods.getCount();
         homeMethods.getVideo();
     });
 
@@ -1075,6 +1078,59 @@
                 }
             });
         },
+        getHighlightBrand: function(){
+            $.ajax({
+                url: "{{ route('web_get_highlight_brand')}}",
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    limit: 10
+                },
+                success: function(response) {
+                    console.log("web_get_highlight_brand-->",response);
+                
+
+                    $('#highlighted-product').html('');
+                    $.each(response.data, function(index, brand) {
+
+                    $('#highlighted-product').append('<div><div class="star-product-img">' +
+                            '<img src="{{url('/')}}/storage/images/brand/' + brand.brand_image + '" alt="" onerror="this.src=\'https://image.ibb.co/cBMMNq/default-placeholder.png\'">' +
+                            '</div>' +
+                            '<div class="star-product-info">' +
+                            '<div class="star"><i class="fas fa-star"></i></div>' +
+                            '<a href="{{ url('/') }}/brand_detail/' + brand.brand_id + '" class="star-product-name">' + brand.brand_name + '</a>' +
+                            '<p class="star-product-attributes">(' + brand.strength.strength_name + ')</p>' +
+                            '<p class="star-product-description">' + brand.generic.generic_indication + '</p>' +
+                        '</div></div>');
+                    });
+
+                    $('#highlighted-product').slick({
+                        slidesToScroll: 1,
+                        slidesToShow: 1,
+                        autoplay: true,
+                        autoplaySpeed: 3000,
+                        infinite: true,
+                        arrows: false,
+                        responsive: [
+                            {
+                                breakpoint: 480,
+                                settings: {
+                                    slidesToShow: 1,
+                                }
+                            }
+                        ]
+                    });
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();
+                }
+            });
+        },
     }
 
     var homeMethods = {
@@ -1091,7 +1147,12 @@
                     // console.log(response);
                 
                     $.each(response.data, function(index, doctor) {
-
+                        var specializations = '';
+                        $.each(doctor.specializations, function(i,specialization){
+                            specializations +=  specialization.specialization_name + ", ";
+                        });
+                        specializations = specializations.slice(0, -2);
+                        // console.log("doctor->", doctor);
                         $('.doctor_row').append(`
                             <div class="col-md-4">
                                 <div class="single-person">
@@ -1101,9 +1162,9 @@
                                         </span>
                                     </div>
                                     <div class="person-info">
-                                        <h3 class="full-name"> <a href="index.php/Doctor/getAllDoctorInformation">${doctor.doctor_name} </a>
+                                        <h3 class="full-name"> <a href="{{ route('web_page_doctor') }}">${doctor.doctor_name} </a>
                                         </h3>
-                                        <span class="speciality"> ${doctor.doctor_specialization} </span>
+                                        <span class="speciality"> ${specializations} </span>
                                     </div>
                                 </div>
                             </div>
@@ -1284,7 +1345,7 @@
                         news_description = news.news_description.length > 50 ? news.news_description.substr(0, 50) + ' ...' : news.news_description;
 
                         $('.pharma_news').append(`
-                            <a href="#">
+                            <a href="{{ url('/') }}/news_detail/${news.news_id}">
                                 <div class="media-list-left-image">
                                     <div class="media">
                                         <div class="media-left">
@@ -1306,6 +1367,38 @@
                         `);
                        
                     });
+
+                   
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.group("Error Block");
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    console.groupEnd();
+                }
+            });
+        },
+        getCount:function(){
+            $.ajax({
+                url: "{{ route('web_get_count')}}",
+                type: 'GET',
+                dataType: 'json',
+                // data: {
+                //     limit: 5
+                // },
+                success: function(response) {
+                    console.log("web_get_count-> ", response);
+                    data = response.data;
+
+                    $('.brand_count').html(data.brand);
+                    $('.generic_count').html(data.generic);
+                    $('.herbal_count').html(data.herbal);
+                    $('.pharma_count').html(data.pharma);
+                    $('.doctor_count').html(data.doctor);
+                    // $('.pharma_news').html('');
+                    
 
                    
                     

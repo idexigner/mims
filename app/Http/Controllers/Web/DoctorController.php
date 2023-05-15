@@ -20,7 +20,8 @@ class DoctorController extends Controller
     public function get_home_doctor(Request $request){
         try{
 
-            $data = Doctor::select('doctor_id', 'doctor_name', 'doctor_specialization', 'doctor_image')
+            $data = Doctor::with('specializations')
+            // select('doctor_id', 'doctor_name', 'doctor_specialization', 'doctor_image')
                 ->where('doctor_is_active', 1)
                 ->where('doctor_is_featured',1)
                 ->limit(3)
@@ -85,8 +86,10 @@ class DoctorController extends Controller
             if($request->has('gender_id')){
                 $data = $data->where('doctor_gender', $request->gender_id);
             }
+            $data = $data->orderBy('doctor_id', 'DESC');
+            // $data = $data->paginate(10)->appends(request()->query());
+            $data = $data->select('doctor.*')->distinct()->paginate(10)->appends(request()->query());
 
-            $data = $data->paginate(10)->appends(request()->query());
 
             
             return response()->json([

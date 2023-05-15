@@ -585,6 +585,13 @@
                     console.log(lastPage)
                     $('#doctor-info-list').html('');
                     $.each(data, function(index, doctor) {
+
+                        var specializations = '';
+                        $.each(doctor.specializations, function(i,specialization){
+                            specializations +=  specialization.specialization_name + ", ";
+                        });
+                        specializations = specializations.slice(0, -2);
+                        
                         doctor_image = doctor.doctor_image;
                         console.log("doctor", doctor)
 
@@ -608,8 +615,10 @@
                             doctor_phone_clinic += doctor.doctor_phone_clinic;
                         }
 
-                        if (doctor_image == null) {
+                        if (doctor_image == null || doctor_image ==  '') {
                             doctor_image = 'https://mimsbangladesh.com/application/views/images/doctor.png';
+                        }else{
+                            doctor_image =  "{{url('/')}}/storage/images/doctor/"+doctor.doctor_image;
                         }
                         $('#doctor-info-list').append(`
                         <div class="doctor row">
@@ -621,7 +630,7 @@
                                 <div class="doctor-info d-md-block d-none">
                                     <div class="row">
                                         <div class="col-6">
-                                            <p class="doctor-info-title">${doctor.doctor_specialization}</p>
+                                            <p class="doctor-info-title">${specializations}</p>
                                             <p class="doctor-info-description">${doctor.doctor_profession_degree}</p>
                                         </div>
                                         <div class="col-6">

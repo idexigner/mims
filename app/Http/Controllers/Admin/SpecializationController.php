@@ -11,6 +11,7 @@ use App\Models\Specialization;
 
 class SpecializationController extends Controller
 {
+    
     use LogExceptions;
     public function index(Request $request)
     {        

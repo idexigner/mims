@@ -8,9 +8,26 @@ use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use App\Traits\LogExceptions;
 use App\Models\Advertisement;
+// use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class AdvertisementController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+         
+            $userMapping = auth()->user()->user_mapping;
+            if (!empty($userMapping) && $userMapping->module_advertisement == 0) {
+                return redirect('admin/dashboard');
+            }
+    
+            return $next($request);
+        });
+    }
+
     use LogExceptions;
     public function index(Request $request)
     {        
@@ -57,10 +74,26 @@ class AdvertisementController extends Controller
             $obj->advertisement_publish = ($request->advertisement_publish)? date('Y-m-d', strtotime($request->advertisement_publish)): '';
             $obj->advertisement_unpublish = ($request->advertisement_unpublish)? date('Y-m-d', strtotime($request->advertisement_unpublish)): '';
             
+            // if ($request->hasFile('advertisement_image')) {
+            //     $file = $request->file('advertisement_image');
+            //     $advertisement_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/advertisement', $advertisement_image);
+            // }
             if ($request->hasFile('advertisement_image')) {
                 $file = $request->file('advertisement_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $advertisement_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/advertisement', $advertisement_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/advertisement/' . $advertisement_image, $image);
             }
             $obj->advertisement_image = $advertisement_image ?? '';
 
@@ -137,12 +170,31 @@ class AdvertisementController extends Controller
             $obj->advertisement_publish = ($request->advertisement_publish)? date('Y-m-d', strtotime($request->advertisement_publish)): '';
             $obj->advertisement_unpublish = ($request->advertisement_unpublish)? date('Y-m-d', strtotime($request->advertisement_unpublish)): '';
 
+            // if ($request->hasFile('advertisement_image')) {
+            //     $file = $request->file('advertisement_image');
+            //     $advertisement_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/advertisement', $advertisement_image);
+            //     $obj->advertisement_image = $advertisement_image ?? '';
+
+            // }
+
+
             if ($request->hasFile('advertisement_image')) {
                 $file = $request->file('advertisement_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $advertisement_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/advertisement', $advertisement_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/advertisement/' . $advertisement_image, $image);
                 $obj->advertisement_image = $advertisement_image ?? '';
-
             }
 
             $obj->advertisement_generic_id = $request->advertisement_generic_id == 'Select Item' ? null : $request->advertisement_generic_id;

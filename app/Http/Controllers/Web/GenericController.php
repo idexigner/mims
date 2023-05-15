@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Generic;
 use Illuminate\Http\Request;
 use App\Traits\LogExceptions;
 use Yajra\DataTables\DataTables;
+
 
 class GenericController extends Controller
 {
@@ -77,6 +79,44 @@ class GenericController extends Controller
                 'error' => $ex,
                 'message' => $ex->getMessage()
             ], 400);
+        }
+    }
+
+    public function generic_alphabetically(Request $request, $start_letter){
+        try{  
+            
+            // dd($start_letter);
+            // $brand = Brand::where('brand_id', $start_letter)->first();
+            
+            if ($request->ajax()) {
+
+                // $data = Brand::with('generic', 'manufacturer')
+                // ->where('generic.   generic_name', 'like', $request->start_letter.'%') 
+                // ->where('brand_is_active',1)
+                // ->where('generic.   generic_is_active',1)
+                // ->where('manufacturer.  manufacturer_is_active',1)
+                // ->orderBy('brand_id', 'DESC');
+
+                $data = Brand::join('generic', 'brand.brand_generic_id', '=', 'generic.generic_id')
+                ->join('manufacturer', 'brand.brand_manufacturer_id', '=', 'manufacturer.manufacturer_id')
+                ->where('generic.generic_name', 'like', $request->start_letter.'%') 
+                ->where('brand_is_active',1)
+                ->where('generic.generic_is_active',1)
+                ->where('manufacturer.manufacturer_is_active',1)
+                ->orderBy('brand_id', 'DESC')
+                ->get();
+                  
+                
+                return DataTables::of($data)->make(true);
+            }
+            // dd("asdasdasasas");
+            return view('frontend.generic-alphabetically')->with(compact('start_letter'));
+     
+
+        } catch (\Exception $ex) {
+                
+            $this->logException($ex, \Route::currentRouteName(), __METHOD__);
+            
         }
     }
 }

@@ -11,6 +11,18 @@ use App\Models\Strength;
 
 class StrengthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+         
+            $userMapping = auth()->user()->user_mapping;
+            if (!empty($userMapping) && $userMapping->module_strength == 0) {
+                return redirect('admin/dashboard');
+            }
+    
+            return $next($request);
+        });
+    }
     use LogExceptions;
     public function index(Request $request)
     {        

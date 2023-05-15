@@ -112,7 +112,7 @@
         <div class="col-md-8 col-12">
             <div class="content-section main">
                 <div class="brand-details">
-                    <h2 class="brand-title generic_name">Vasarishta</h2>
+                    <h2 class="brand-title generic_name"></h2>
                     <div class="brand-info-table">
                         <table class="table">
                             <tbody>
@@ -279,7 +279,7 @@
                     var data = response.data;
                    
                     // $(".generic_name").html(data.generic_name);
-                    $("#generic_name").html(`<a href="{{url('/')}}/generic_detail/${data.generic_id}">${data.generic_name}</a>`);
+                    $(".generic_name").html(`<a href="{{url('/')}}/generic_detail/${data.generic_id}">${data.generic_name}</a>`);
 
                     $("#drug_class").html(data.generic_classification);
                     $("#safety_remark").html(data.generic_safety_remark);

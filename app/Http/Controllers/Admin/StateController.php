@@ -25,6 +25,7 @@ class StateController extends Controller
 
     public function fetch_state_by_country($country_id)
     {        
+        // dd($country_id);
         $data = State::select('*')->where('state_country_id',$country_id)->get();
         return response()->json([
             'message' => 'Fetch', 

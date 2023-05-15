@@ -25,7 +25,7 @@
       <p class="login-box-msg">Sign in to start your session</p>
 
         
-      <form action="{{ route('login') }}" method="post">
+      <form action="{{ route('authenticate') }}" method="post">
         @csrf
         <div class="input-group mb-3">
           <input type="email" class="form-control" name="email" placeholder="Email">
@@ -39,7 +39,7 @@
             @endif
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" name="password" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>

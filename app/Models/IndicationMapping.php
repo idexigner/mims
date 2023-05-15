@@ -26,17 +26,7 @@ class IndicationMapping extends Model
         'indication_mapping_updated_at'
     ];
 
- 
 
-    // public function indication()
-    // {
-    //     return $this->belongsTo(Indication::class, 'indication_mapping_indication_id');
-    // }
-
-    // public function generic()
-    // {
-    //     return $this->belongsTo(Generic::class, 'indication_mapping_generic_id');
-    // }.
 
     public function generic()
     {

@@ -13,6 +13,19 @@ use Yajra\DataTables\DataTables;
 
 class GenericController extends Controller
 {    
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+         
+            $userMapping = auth()->user()->user_mapping;
+            if (!empty($userMapping) && $userMapping->module_generic == 0) {
+                return redirect('admin/dashboard');
+            }
+    
+            return $next($request);
+        });
+    }
+
     use LogExceptions;
     public function index(Request $request)
     {        

@@ -8,9 +8,25 @@ use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use App\Traits\LogExceptions;
 use App\Models\News;
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class NewsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+         
+            $userMapping = auth()->user()->user_mapping;
+            if (!empty($userMapping) && $userMapping->module_news == 0) {
+                return redirect('admin/dashboard');
+            }
+    
+            return $next($request);
+        });
+    }
+
+
     use LogExceptions;
     public function index(Request $request)
     {        
@@ -45,10 +61,26 @@ class NewsController extends Controller
             $obj->news_publish_date = ($request->news_publish_date)? date('Y-m-d', strtotime($request->news_publish_date)): '';
             $obj->news_unpublish_date = ($request->news_unpublish_date)? date('Y-m-d', strtotime($request->news_unpublish_date)): '';
 
+            // if ($request->hasFile('news_image')) {
+            //     $file = $request->file('news_image');
+            //     $news_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/news', $news_image);
+            // }
             if ($request->hasFile('news_image')) {
                 $file = $request->file('news_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $news_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/news', $news_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/news/' . $news_image, $image);
             }
             $obj->news_image = $news_image ?? '';
             $obj->news_is_active = $request->news_is_active ?? '1';
@@ -115,10 +147,28 @@ class NewsController extends Controller
             $obj->news_publish_date = ($request->news_publish_date)? date('Y-m-d', strtotime($request->news_publish_date)): '';
             $obj->news_unpublish_date = ($request->news_unpublish_date)? date('Y-m-d', strtotime($request->news_unpublish_date)): '';
 
+            // if ($request->hasFile('news_image')) {
+            //     $file = $request->file('news_image');
+            //     $news_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/news', $news_image);
+            //     $obj->news_image = $news_image ?? '';
+            // }
+
             if ($request->hasFile('news_image')) {
                 $file = $request->file('news_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $news_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/news', $news_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/news/' . $news_image, $image);
                 $obj->news_image = $news_image ?? '';
             }
             

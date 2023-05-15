@@ -62,90 +62,23 @@ class ManufacturerController extends Controller
         return view('frontend.manufacturer')->with(compact('id', 'manufacturer'));
     }
 
-    public function brand_detail($id){
-        return view('frontend.brand-detail')->with(compact('id'));
-
-       
+    public function manufacturer_alphabetically(Request $request, $start_letter){
+        try{ 
             
-                 
-            // $brands = Manufacturer::with('dosage_form', 'generic', 'manufacturer', 'strength')
-            //         ->where('brand_name', $brand->brand_name)
-            //         ->where('brand_is_active', 1)
-            //         ->get();
-                   
-            // $data = compact('brand', 'brands');
-           
-            
-            
-       
-    }
-
-    public function get_brand_detail($id){
-        try{  
-            
-            $data = Manufacturer::with('dosage_form', 'generic', 'manufacturer', 'strength', 'pack_size')
-                ->where('brand_id',$id)->first();
-
-            // dd($data);
-            return response()->json([
-                'message' => 'Get Manufacturer Detail', 
-                'data' => $data
-            ], 200);
-
+            if ($request->ajax()) {
+                $data = Manufacturer::where('manufacturer_name', 'like', $request->start_letter.'%') 
+                ->where('manufacturer_is_active',1)
+                ->orderBy('manufacturer_id', 'DESC')
+                ->get();                
+                return DataTables::of($data)->make(true);
+            }
+            // dd("asdasdasasas");
+            return view('frontend.manufacturer-alphabetically')->with(compact('start_letter'));
+     
         } catch (\Exception $ex) {
                 
             $this->logException($ex, \Route::currentRouteName(), __METHOD__);
-            return response()->json([
-                'message' => 'Something went wrong! Get Manufacturer Detail',
-                'error' => $ex,
-                'message' => $ex->getMessage()
-            ], 400);
-        }
-    }
-
-    public function brand_information($id){
-        return view('frontend.brand-information')->with(compact('id'));
-
-       
             
-                 
-            // $brands = Manufacturer::with('dosage_form', 'generic', 'manufacturer', 'strength')
-            //         ->where('brand_name', $brand->brand_name)
-            //         ->where('brand_is_active', 1)
-            //         ->get();
-                   
-            // $data = compact('brand', 'brands');
-           
-            
-            
-       
-    }
-
-    public function get_brand_information($id){
-        try{  
-            
-            $data = Manufacturer::with('dosage_form', 'generic', 'manufacturer', 'strength', 'pack_size')
-                ->where('brand_id',$id)->first();
-
-            $data['brands'] = Manufacturer::with('dosage_form', 'generic', 'manufacturer', 'strength', 'pack_size')
-                    ->where('brand_name', $data->brand_name)
-                    ->where('brand_is_active', 1)
-                    ->get();
-
-            // dd($data);
-            return response()->json([
-                'message' => 'Get Manufacturer Detail', 
-                'data' => $data
-            ], 200);
-
-        } catch (\Exception $ex) {
-                
-            $this->logException($ex, \Route::currentRouteName(), __METHOD__);
-            return response()->json([
-                'message' => 'Something went wrong! Get Manufacturer Detail',
-                'error' => $ex,
-                'message' => $ex->getMessage()
-            ], 400);
         }
     }
 }

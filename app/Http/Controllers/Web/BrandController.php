@@ -37,6 +37,32 @@ class BrandController extends Controller
         }
     }
 
+    public function get_highlight_brand(Request $request){
+        try{
+
+            $data = Brand::with('generic', 'strength')->select('*')
+                // ->where($request->condition, 1)
+                ->where('brand_is_hightlight',1)
+                ->orderBy('brand_id', 'DESC')
+                ->limit($request->limit ?? 10)
+                ->get();      
+
+            return response()->json([
+                'message' => 'Get Highlight Brand', 
+                'data' => $data
+            ], 200);
+
+        } catch (\Exception $ex) {
+
+            $this->logException($ex, \Route::currentRouteName(), __METHOD__);
+            return response()->json([
+                    'message' => 'Something went wrong!',
+                    'error' => $ex,
+                    'message' => $ex->getMessage()
+                ], 400);
+        }
+    }
+
     public function herbal_list(Request $request){
         if ($request->ajax()) {
             // dd("ajax");
@@ -165,5 +191,32 @@ class BrandController extends Controller
         }
 
         return view('frontend.brand-all')->with(compact('id', 'brand'));
+    }
+
+    public function brand_alphabetically(Request $request, $start_letter){
+        try{  
+            
+            // dd($start_letter);
+            // $brand = Brand::where('brand_id', $start_letter)->first();
+            
+            if ($request->ajax()) {
+
+                $data = Brand::with('generic', 'dosage_form', 'strength', 'pack_size')
+                ->where('brand_name', 'like', $request->start_letter.'%') 
+                ->where('brand_is_active',1)
+                ->orderBy('brand_id', 'DESC');
+                  
+                
+                return DataTables::of($data)->make(true);
+            }
+            // dd("asdasdasasas");
+            return view('frontend.brand-alphabetically')->with(compact('start_letter'));
+     
+
+        } catch (\Exception $ex) {
+                
+            $this->logException($ex, \Route::currentRouteName(), __METHOD__);
+            
+        }
     }
 }

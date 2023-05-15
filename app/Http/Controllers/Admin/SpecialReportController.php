@@ -8,9 +8,23 @@ use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use App\Traits\LogExceptions;
 use App\Models\SpecialReport;
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class SpecialReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+         
+            $userMapping = auth()->user()->user_mapping;
+            if (!empty($userMapping) && $userMapping->module_special_report == 0) {
+                return redirect('admin/dashboard');
+            }
+    
+            return $next($request);
+        });
+    }
     use LogExceptions;
     public function index(Request $request)
     {        
@@ -42,10 +56,27 @@ class SpecialReportController extends Controller
             $obj->special_report_link_address = $request->special_report_link_address ?? '';
 
 
+            // if ($request->hasFile('special_report_image')) {
+            //     $file = $request->file('special_report_image');
+            //     $special_report_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/special_report', $special_report_image);
+            // }
+
             if ($request->hasFile('special_report_image')) {
                 $file = $request->file('special_report_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $special_report_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/special_report', $special_report_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/special_report/' . $special_report_image, $image);
             }
             $obj->special_report_image = $special_report_image ?? '';
             
@@ -112,10 +143,28 @@ class SpecialReportController extends Controller
             $obj->special_report_link_address = $request->special_report_link_address ?? '';
 
 
+            // if ($request->hasFile('special_report_image')) {
+            //     $file = $request->file('special_report_image');
+            //     $special_report_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/special_report', $special_report_image);
+            //     $obj->special_report_image = $special_report_image ?? '';
+            // }
+
             if ($request->hasFile('special_report_image')) {
                 $file = $request->file('special_report_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $special_report_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/special_report', $special_report_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/special_report/' . $special_report_image, $image);
                 $obj->special_report_image = $special_report_image ?? '';
             }
             

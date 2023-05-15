@@ -31,7 +31,7 @@ use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\MigrationLiveController;
 use App\Http\Controllers\SiteSettingController;
-
+use App\Http\Controllers\Web\AddressController as WebAddressController;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\BrandController as WebBrandController;
 use App\Http\Controllers\Web\CityController as WebCityController;
@@ -44,6 +44,7 @@ use App\Http\Controllers\Web\SpecializationController as WebSpecializationContro
 use App\Http\Controllers\Web\SpecialReportController as WebSpecialReportController;
 use App\Http\Controllers\Web\VideoController as WebVideoController;
 use App\Http\Controllers\Web\GenericController as WebGenericController;
+use App\Http\Controllers\Web\IndicationController as WebIndicationController;
 use App\Http\Controllers\Web\ManufacturerController as WebManufacturerController;
 
 
@@ -81,13 +82,16 @@ use Illuminate\Support\Facades\DB;
 // });
 Route::get('/',[HomeController::class,'index'])->name('home');
 
+    // Route::get('/login',[AuthController::class,'index'])->name('login');
+    Route::get('/login', [AuthController::class,'index'])->name('login_page');
 
 Route::group(['middleware'=>'guest'],function(){
     Route::get('/adminpanel',[AuthController::class,'index']);
-    Route::post('login',[AuthController::class,'login'])->name('login')->middleware('throttle:2,1');
-
+    // ->middleware('throttle:2,1')
+    Route::post('authenticate',[AuthController::class,'authenticate'])->name('authenticate');
+    // ->middleware('throttle:2,1')
     Route::get('register',[AuthController::class,'register_view']);
-    Route::post('register',[AuthController::class,'register'])->name('register')->middleware('throttle:2,1');
+    Route::post('register',[AuthController::class,'register'])->name('register');
 });
 
 
@@ -105,7 +109,14 @@ Route::group(['middleware'=>'auth'],function(){
     // Route::get('/admin/generic/edit/{id}', [GenericController::class, 'edit'])->name('generic.edit');
     // Route::delete('/admin/generic/destroy/{id}', [GenericController::class, 'destroy'])->name('generic.destroy');
 
-Route::prefix('/admin')->group(function(){
+Route::prefix('/admin')->middleware(['auth', 'web'])->group(function(){
+
+    
+    Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
+    Route::get('/profile_update', [HomeController::class, 'profile_update'])->name('profile_update');
+
+    
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 
     // Generic Controller
     Route::prefix('/generic')->name('generic.')->group(function(){
@@ -369,6 +380,9 @@ Route::prefix('/admin')->group(function(){
 
 
 Route::get('/get_brand', [WebBrandController::class, 'get_brand'])->name('web_get_brand');
+Route::get('/get_highlight_brand', [WebBrandController::class, 'get_highlight_brand'])->name('web_get_highlight_brand');
+
+
 Route::get('/get_home_doctor', [WebDoctorController::class, 'get_home_doctor'])->name('web_get_home_doctor');
 Route::get('/get_home_special_report', [WebSpecialReportController::class, 'get_home_special_report'])->name('web_get_home_special_report');
 Route::get('/get_home_job', [WebJobController::class, 'get_home_job'])->name('web_get_home_job');
@@ -413,8 +427,43 @@ Route::get('/manufacturer_detail/{id?}',[WebManufacturerController::class,'manuf
 Route::get('/brand_all/{id?}',[WebBrandController::class,'brand_all'])->name('web_page_brand_all');
 
 Route::get('/search',[HomeController::class,'search'])->name('search');
+Route::get('/search_start',[HomeController::class,'search_start'])->name('search_start');
+
+Route::get('/indication_detail/{id}',[WebIndicationController::class,'indication_detail'])->name('web_page_indication_detail');
+// Route::get('/get_indication_detail/{id}',[WebIndicationController::class,'get_indication_detail'])->name('web_page_get_indication_detail');
+Route::get('/search/brand/{id}',[WebBrandController::class,'brand_alphabetically'])->name('web_page_brand_alphabetically');
+Route::get('/search/generic/{id}',[WebGenericController::class,'generic_alphabetically'])->name('web_page_generic_alphabetically');
+Route::get('/search/indication/{id}',[WebIndicationController::class,'indication_alphabetically'])->name('web_page_indication_alphabetically');
+Route::get('/search/manufacturer/{id}',[WebManufacturerController::class,'manufacturer_alphabetically'])->name('web_page_manufacturer_alphabetically');
+
+Route::get('/address/{id?}',[WebAddressController::class,'index'])->name('web_page_address');
+Route::get('/get_address',[WebAddressController::class,'get_address'])->name('web_page_get_address');
+Route::get('/get_address_category',[WebAddressController::class,'get_address_category'])->name('web_get_address_category');
+
+Route::get('/special_report', [WebSpecialReportController::class, 'index'])->name('web_special_report');
+
+Route::get('/get_special_report', [WebSpecialReportController::class, 'get_special_report'])->name('web_get_special_report');
+
+Route::get('/special_report_detail/{id}',[WebSpecialReportController::class,'special_report_detail'])->name('web_page_special_report_detail');
+Route::get('/get_special_report_detail/{id}',[WebSpecialReportController::class,'get_special_report_detail'])->name('web_page_get_special_report_detail');
+
+Route::get('/job', [WebJobController::class, 'index'])->name('web_get_job');
+
+Route::get('/job_detail/{id}',[WebJobController::class,'job_detail'])->name('web_page_job_detail');
+Route::get('/get_job_detail/{id}',[WebJobController::class,'get_job_detail'])->name('web_page_get_job_detail');
 
 
+Route::get('/news', [WebNewsController::class, 'index'])->name('web_news');
+
+Route::get('/get_news', [WebNewsController::class, 'get_news'])->name('web_get_news');
+
+Route::get('/news_detail/{id}',[WebNewsController::class,'news_detail'])->name('web_page_news_detail');
+Route::get('/get_news_detail/{id}',[WebNewsController::class,'get_news_detail'])->name('web_page_get_news_detail');
+
+
+Route::get('/videos', [WebVideoController::class, 'index'])->name('web_videos');
+Route::get('/get_videos', [WebVideoController::class, 'get_videos'])->name('web_get_videos');
+Route::get('/get_count', [HomeController::class, 'get_count'])->name('web_get_count');
 
 
 // Artisan Routes

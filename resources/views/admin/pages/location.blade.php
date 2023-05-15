@@ -192,7 +192,7 @@
                             console.log(error);
                         console.groupEnd();   
 
-                        if(xhr.responseJSON.message){
+                        if(xhr.responseJSON && xhr.responseJSON.message){
 
                             Toast.fire({
                                 icon: 'error',
@@ -213,11 +213,14 @@
             }
     
             function fetchState(){
-                console.log("fetchState Trigger")
+                console.log("fetchState Trigger");
+             
                 var id = $("select[name=location_country_id]").val();
+                console.log("id->", id)
                 var url = "{{ route('setting.state.fetch_country', ':id') }}";
                 url = url.replace(':id', id);
-                $.ajax({
+                if(id != ''){
+                    $.ajax({
                     url: url, 
                     type: 'GET',             
                     // data: $(this).serialize(), // new FormData($("#create-post-form")[0]), //
@@ -247,7 +250,7 @@
                             console.log(error);
                         console.groupEnd();   
 
-                        if(xhr.responseJSON.message){
+                        if(xhr.responseJSON && xhr.responseJSON.message){
 
                             Toast.fire({
                                 icon: 'error',
@@ -265,6 +268,8 @@
                                         
                     }
                 });
+                }
+                
             }
 
             $('select[name=location_country_id]').on('change', function(){
@@ -313,7 +318,7 @@
                             console.log(error);
                         console.groupEnd();   
 
-                        if(xhr.responseJSON.message){
+                        if(xhr.responseJSON && xhr.responseJSON.message){
 
                             Toast.fire({
                                 icon: 'error',
@@ -393,7 +398,7 @@
                     select2El.append($('<option value="" selected="selected"></option>').text('Select Item'));
                     $('select[name="location_country_id"]').val('').trigger('change')
 
-                    fetchAddress();
+                    // fetchAddress();
 
                 $("#modal_create_form").modal('show');
             });

@@ -3,7 +3,7 @@
         <button class="navbar-toggler menu-btn no-outline" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation" id="navbarMenuButton">
             <i class="fas fa-bars"></i>
         </button>
-        <a class="navbar-brand mr-md-auto" href="#">
+        <a class="navbar-brand mr-md-auto" href="{{url('/')}}">
             <img class="logo d-lg-none" src="{{ url('/') }}/frontend/images/logo/logo-mobile.svg" alt="Rx MiMS Bangladesh">
 
             <img style="width:180px;" class="logo d-none d-lg-block" src="{{ url('/') }}/frontend/images/logo/Gv2.png" alt="Rx MiMS Bangladesh">
@@ -15,7 +15,7 @@
             <div class="container2222 d-flex navbar-container main-menu-top-bar">
                 <ul class="navbar-nav mt-2 mt-lg-0 main-menu mr-auto ml-auto">
                     <li id="mainMenuHome" class="nav-item">
-                        <a class="nav-link mims-nav-link home-link mims-main-menu" href="#">Home</a>
+                        <a class="nav-link mims-nav-link home-link mims-main-menu" href="{{url('/')}}">Home</a>
                     </li>
                     <li id="mainMenuDoctor" class="nav-item">
                         <a class="nav-link mims-nav-link doctor-link mims-main-menu" href="{{ route('web_page_doctor') }}">Doctor</a>
@@ -65,20 +65,22 @@
 
                 <div class="form-inline my-2 my-lg-0 d-flex flex-row-reverse flex-lg-row justify-content-end" id="user-login-status">
 
-                    <a class="btn btn-success my-2 my-sm-0 mims-nav-link-cta-primary" href="#">User name</a>
+                    @if(auth()->check())
+                    <a class="btn btn-success my-2 my-sm-0 mims-nav-link-cta-primary" href="{{ route('profile') }}">Info</a>
 
 
 
-                    <a class="btn btn-success my-2 my-sm-0 mims-nav-link-cta-primary" href="#">Logout</a>';
-                    <a href="#" class="btn btn-success my-2 my-sm-0 mims-nav-link-cta-primary" style="
+                    <a class="btn btn-success my-2 my-sm-0 mims-nav-link-cta-primary" href="{{ route('logout') }}">Logout</a>';
+                    @else
+                    <a href="{{ route('login_page') }}" class="btn btn-success my-2 my-sm-0 mims-nav-link-cta-primary" style="
                         margin: 0px 10px !important;
-                    " onclick="UserObject.showLoginModal()">Login</a>
+                    ">Login</a>
 
 
 
-                    <a href="#" class="btn btn-success my-2 my-sm-0 mims-nav-link-cta-primary">Register</a>';
-                    }
-                    ?>
+                    {{-- <a href="#" class="btn btn-success my-2 my-sm-0 mims-nav-link-cta-primary">Register</a>'; --}}
+                    @endif
+                    
                 </div>
             </div>
         </div>

@@ -10,9 +10,25 @@ use App\Traits\LogExceptions;
 use App\Models\Doctor;
 use App\Models\Specialization;
 use App\Models\SpecializationMapping;
+use Illuminate\Support\Facades\Storage;
+use Image;
+
 
 class DoctorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+         
+            $userMapping = auth()->user()->user_mapping;
+            if (!empty($userMapping) && $userMapping->module_doctor == 0) {
+                return redirect('admin/dashboard');
+            }
+    
+            return $next($request);
+        });
+    }
+
     use LogExceptions;
     public function index(Request $request)
     {        
@@ -62,9 +78,27 @@ class DoctorController extends Controller
 
             if ($request->hasFile('doctor_image')) {
                 $file = $request->file('doctor_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $doctor_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/doctor', $doctor_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/doctor/' . $doctor_image, $image);
+ 
             }
+
+            // if ($request->hasFile('doctor_image')) {
+            //     $file = $request->file('doctor_image');
+            //     $doctor_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/doctor', $doctor_image);
+            // }
             $obj->doctor_image = $doctor_image ?? '';
 
             $obj->doctor_bio_notes = $request->doctor_bio_notes ?? '';
@@ -166,12 +200,31 @@ class DoctorController extends Controller
 
             }
 
+            // if ($request->hasFile('doctor_image')) {
+            //     $file = $request->file('doctor_image');
+            //     $doctor_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/doctor', $doctor_image);
+            //     $obj->doctor_image = $doctor_image ?? '';
+
+            // }
+
+
             if ($request->hasFile('doctor_image')) {
                 $file = $request->file('doctor_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $doctor_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/doctor', $doctor_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/doctor/' . $doctor_image, $image);
                 $obj->doctor_image = $doctor_image ?? '';
-
             }
 
             $obj->doctor_bio_notes = $request->doctor_bio_notes ?? '';

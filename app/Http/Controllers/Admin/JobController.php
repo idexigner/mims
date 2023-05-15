@@ -9,9 +9,26 @@ use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use App\Traits\LogExceptions;
 use App\Models\Job;
+use Illuminate\Support\Facades\Storage;
+use Image;
+
 
 class JobController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+         
+            $userMapping = auth()->user()->user_mapping;
+            if (!empty($userMapping) && $userMapping->module_job == 0) {
+                return redirect('admin/dashboard');
+            }
+    
+            return $next($request);
+        });
+    }
+
     use LogExceptions;
     public function index(Request $request)
     {        
@@ -51,10 +68,27 @@ class JobController extends Controller
             $obj->job_title = $request->job_title ?? '';
             $obj->job_organization = $request->job_organization ?? '';
             
+            // if ($request->hasFile('job_organization_logo')) {
+            //     $file = $request->file('job_organization_logo');
+            //     $job_organization_logo = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/job', $job_organization_logo);
+            // }
+
             if ($request->hasFile('job_organization_logo')) {
                 $file = $request->file('job_organization_logo');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $job_organization_logo = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/job', $job_organization_logo);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/job/' . $job_organization_logo, $image);
             }
 
             $obj->job_organization_logo = $job_organization_logo ?? '';
@@ -66,10 +100,27 @@ class JobController extends Controller
             $obj->job_publish_date = ($request->job_publish_date)? date('Y-m-d', strtotime($request->job_publish_date)): '';
 
             
+            // if ($request->hasFile('job_image')) {
+            //     $file = $request->file('job_image');
+            //     $job_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/job', $job_image);
+            // }
+
             if ($request->hasFile('job_image')) {
                 $file = $request->file('job_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $job_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/job', $job_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/job/' . $job_image, $image);
             }
 
             $obj->job_image = $job_image ?? '';
@@ -153,10 +204,28 @@ class JobController extends Controller
             $obj->job_title = $request->job_title ?? '';
             $obj->job_organization = $request->job_organization ?? '';
             
+            // if ($request->hasFile('job_organization_logo')) {
+            //     $file = $request->file('job_organization_logo');
+            //     $job_organization_logo = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/job', $job_organization_logo);
+            //     $obj->job_organization_logo = $job_organization_logo ?? '';
+            // }
+
             if ($request->hasFile('job_organization_logo')) {
                 $file = $request->file('job_organization_logo');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $job_organization_logo = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/job', $job_organization_logo);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/job/' . $job_organization_logo, $image);
                 $obj->job_organization_logo = $job_organization_logo ?? '';
             }
 
@@ -169,10 +238,28 @@ class JobController extends Controller
             $obj->job_publish_date = ($request->job_publish_date)? date('Y-m-d', strtotime($request->job_publish_date)): '';
 
             
+            // if ($request->hasFile('job_image')) {
+            //     $file = $request->file('job_image');
+            //     $job_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $file->storeAs('public/images/job', $job_image);
+            //     $obj->job_image = $job_image ?? '';
+            // }
+
             if ($request->hasFile('job_image')) {
                 $file = $request->file('job_image');
+                $image = Image::make($file);
+            
+                // Check if the image width is greater than 2000 pixels
+                if ($image->getWidth() > 2000) {
+                    $image->resize(2000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+            
+                // Compress with 60% quality and save
                 $job_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $file->storeAs('public/images/job', $job_image);
+                $image->encode('jpg', 60);
+                Storage::disk('public')->put('images/job/' . $job_image, $image);
                 $obj->job_image = $job_image ?? '';
             }
 

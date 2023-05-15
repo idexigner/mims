@@ -14,9 +14,28 @@ use App\Models\AddressCategory;
 
 class AddressController extends Controller
 {
+
+    
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+         
+            $userMapping = auth()->user()->user_mapping;
+            if (!empty($userMapping) && $userMapping->module_address == 0) {
+                return redirect('admin/dashboard');
+            }
+    
+            return $next($request);
+        });
+    }
+
+   
     use LogExceptions;
     public function index(Request $request)
     {        
+        // $value = session('user_mapping');
+        // $value = $request->session()->get('user_mapping');
+        // dd($value);
         if ($request->ajax()) {
             // dd("ajax");
             $data = Address::with('category')->select('*')->orderBy('address_id', 'DESC');

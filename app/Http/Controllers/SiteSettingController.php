@@ -19,6 +19,10 @@ class SiteSettingController extends Controller
     }
 
     public function scroller(){
+        // dd(auth()->user());
+        if(auth()->user()->user_mapping->module_scroller == 0){
+            return redirect('admin/dashboard');
+        }
         return view('admin.pages.scroller');
     }
 
