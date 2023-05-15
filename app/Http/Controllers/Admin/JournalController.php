@@ -56,28 +56,28 @@ class JournalController extends Controller
             $obj->journal_type = $request->journal_type ?? '';
 
 
-            // if ($request->hasFile('journal_image')) {
-            //     $file = $request->file('journal_image');
-            //     $journal_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-            //     $file->storeAs('public/images/journal', $journal_image);
-            // }
-
             if ($request->hasFile('journal_image')) {
                 $file = $request->file('journal_image');
-                $image = Image::make($file);
-            
-                // Check if the image width is greater than 2000 pixels
-                if ($image->getWidth() > 2000) {
-                    $image->resize(2000, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                }
-            
-                // Compress with 60% quality and save
                 $journal_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $image->encode('jpg', 60);
-                Storage::disk('public')->put('images/journal/' . $journal_image, $image);
+                $file->storeAs('public/images/journal', $journal_image);
             }
+
+            // if ($request->hasFile('journal_image')) {
+            //     $file = $request->file('journal_image');
+            //     $image = Image::make($file);
+            
+            //     // Check if the image width is greater than 2000 pixels
+            //     if ($image->getWidth() > 2000) {
+            //         $image->resize(2000, null, function ($constraint) {
+            //             $constraint->aspectRatio();
+            //         });
+            //     }
+            
+            //     // Compress with 60% quality and save
+            //     $journal_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $image->encode('jpg', 60);
+            //     Storage::disk('public')->put('images/journal/' . $journal_image, $image);
+            // }
             $obj->journal_image = $journal_image ?? '';
             $obj->journal_is_active = $request->journal_is_active ?? '1';
             $obj->save();
@@ -138,30 +138,30 @@ class JournalController extends Controller
             $obj->journal_category = $request->journal_category ?? '';
             $obj->journal_type = $request->journal_type ?? '';
 
-            // if ($request->hasFile('journal_image')) {
-            //     $file = $request->file('journal_image');
-            //     $journal_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-            //     $file->storeAs('public/images/journal', $journal_image);
-            //     $obj->journal_image = $journal_image ?? '';
-            // }
-            
             if ($request->hasFile('journal_image')) {
                 $file = $request->file('journal_image');
-                $image = Image::make($file);
-            
-                // Check if the image width is greater than 2000 pixels
-                if ($image->getWidth() > 2000) {
-                    $image->resize(2000, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                }
-            
-                // Compress with 60% quality and save
                 $journal_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
-                $image->encode('jpg', 60);
-                Storage::disk('public')->put('images/journal/' . $journal_image, $image);
+                $file->storeAs('public/images/journal', $journal_image);
                 $obj->journal_image = $journal_image ?? '';
             }
+            
+            // if ($request->hasFile('journal_image')) {
+            //     $file = $request->file('journal_image');
+            //     $image = Image::make($file);
+            
+            //     // Check if the image width is greater than 2000 pixels
+            //     if ($image->getWidth() > 2000) {
+            //         $image->resize(2000, null, function ($constraint) {
+            //             $constraint->aspectRatio();
+            //         });
+            //     }
+            
+            //     // Compress with 60% quality and save
+            //     $journal_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
+            //     $image->encode('jpg', 60);
+            //     Storage::disk('public')->put('images/journal/' . $journal_image, $image);
+            //     $obj->journal_image = $journal_image ?? '';
+            // }
             $obj->journal_is_active = $request->journal_is_active ?? '1';
             $obj->save();
 

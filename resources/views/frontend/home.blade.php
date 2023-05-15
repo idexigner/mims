@@ -1200,7 +1200,7 @@
                         $('#home-special-report-slider').append(`
                             <div class="home-special-report-slide">
                                 <img src="{{ url('/') }}/storage/images/special_report/${specialReport.special_report_image}"  alt="" onerror="this.src=\'https://image.ibb.co/cBMMNq/default-placeholder.png\'">
-                                <p class="home-special-report-slide-title"><a href="${specialReport.special_report_id}">${specialReport.special_report_title}</a></p>
+                                <p class="home-special-report-slide-title"><a href="{{ url('/') }}/special_report_detail/${specialReport.special_report_id}">${specialReport.special_report_title}</a></p>
                             </div>
                         `);
                        
@@ -1248,7 +1248,7 @@
                     $.each(response.data, function(index, job) {
 
                         $('#medical_job').append(`
-                            <a href="#">
+                            <a href="{{ url('/') }}/job_detail/${job.job_id}">
                                 <div class="media-list-left-image">
                                     <div class="media">
                                         <div class="media-left">
@@ -1296,7 +1296,7 @@
                     $.each(response.data, function(index, job) {
 
                         $('#pharma_job').append(`
-                            <a href="#">
+                            <a href="{{ url('/') }}/job_detail/${job.job_id}">
                                 <div class="media-list-left-image">
                                     <div class="media">
                                         <div class="media-left">

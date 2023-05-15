@@ -145,7 +145,7 @@
 				?> --}}
 			</div>
 			<div class="in-page-advert journal-advert-bottom">
-				<img src="{{ url('/') }}/application/views/images/add-12.png" alt="">
+				<img src="{{ url('/') }}/images/add-12.png" alt="">
 			</div>
 		</div>
         <div class="col-md-4 col-12">
@@ -153,12 +153,12 @@
                 <div class="row side-bar-mimslearning-title">
                     <!-- special reports -->
                     <div class="content-section col-12" style="padding: 0; height: auto; max-height: none;">
-                        <a href="https://www.dental-practice.biz/emagazine/dpbangladesh1-1/"> <img src="{{ url('/') }}/application/views/images/dantal.jpeg" alt=""></a>
+                        <a href="https://www.dental-practice.biz/emagazine/dpbangladesh1-1/"> <img src="{{ url('/') }}/images/dantal.jpeg" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="in-page-advert side-col doctor-sidebar-advert">
-                        <img src="{{ url('/') }}/application/views/images/add-4.png" alt="">
+                        <img src="{{ url('/') }}/images/add-4.png" alt="">
                     </div>
                 </div>
 
@@ -304,20 +304,20 @@
                         // ?= 'https://'.$_SERVER['HTTP_HOST'].'/'.('application/views/images/icons/')?pdf-icon-4.png
                         // ?= 'https://'.$_SERVER['HTTP_HOST'].'/'.('application/views/images/icons/')?>website-icon-11.png
                         var html = '';
-                        if (journal.journal_type == 'pdf') { 
-                            html += '<a class="journal row d-flex align-items-center" target="_blank" href="#">';
+                        if (journal.journal_type == 'pdf' || journal.journal_type == 'PDF' ) { 
+                            html += '<a class="journal row d-flex align-items-center" target="_blank" href="{{ url('/') }}/storage/images/journal/'+journal.journal_image+'">';
                             html += '<div class="journal-icon d-md-flex d-none">';
-                            html += '<img src="#">';
+                            html += '<img class="img-fluid" src="{{ url('/') }}/images/icons/pdf-icon-4.png">';
                             html += '</div>';
                             html += '<div class="journal-info">';
                             html += '<p class="journal-name">'+journal.journal_title+'</p>';
                             html += '<p class="journal-type">PDF</p>';
                             html += '</div></a>'; 
                             
-                        } else if ($journal['JournalType'] == 'link') { 
+                        } else if (journal.journal_type == 'link' || journal.journal_type == 'LINK') { 
                             html += '<a class="journal row d-flex align-items-center" target="_blank" href="'+journal.journal_type+'">';
                             html += '<div class="journal-icon d-md-flex d-none">';
-                            html += '<img src="#">';
+                            html += '<img class="img-fluid" src="{{ url('/') }}/images/icons/website-icon-11.png">';
                             html += '</div>';
                             html += '<div class="journal-info">';
                             html += '<p class="journal-name">'+journal.journal_title+'</p>';

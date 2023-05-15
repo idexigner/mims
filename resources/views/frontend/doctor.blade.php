@@ -248,12 +248,12 @@
                 <div class="row side-bar-mimslearning-title">
                     <!-- special reports -->
                     <div class="content-section col-12" style="padding: 0; height: auto; max-height: none;">
-                        <a href="https://www.dental-practice.biz/emagazine/dpbangladesh1-1/"> <img src="{{ url('/') }}/application/views/images/dantal.jpeg" alt=""></a>
+                        <a href="https://www.dental-practice.biz/emagazine/dpbangladesh1-1/"> <img src="{{ url('/') }}/images/dantal.jpeg" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="in-page-advert side-col doctor-sidebar-advert">
-                        <img src="{{ url('/') }}/application/views/images/add-4.png" alt="">
+                        <img src="{{ url('/') }}/images/add-4.png" alt="">
                     </div>
                 </div>
 

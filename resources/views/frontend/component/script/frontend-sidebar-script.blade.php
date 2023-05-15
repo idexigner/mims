@@ -14,26 +14,26 @@
                     <div class="row side-bar-important-address-title">
                         <div class="content-section col-12" style="padding: 0; max-height: none;">
                             <div class="section-header own-pad">
-                                <span><img src="{{ url('/') }}/application/views/images/icons/briefcase.svg" alt="*"></span>Important Information
+                                <span><img src="{{ url('/') }}/images/icons/briefcase.svg" alt="*"></span>Important Information
                             </div>
                             <ul class="address-list sidebar-assress">
                                 <li class="address">
-                                    <a href="#">24 hours Pharmacy</a>
+                                    <a href="{{ url('/') }}/address/2">24 hours Pharmacy</a>
                                 </li>    
                                 <li class="address">
-                                    <a href="#">Ambulance Service</a>
+                                    <a href="{{ url('/') }}/address/3">Ambulance Service</a>
                                 </li>
                                 <li class="address">
-                                    <a href="#">Blood Bank</a>
+                                    <a href="{{ url('/') }}/address/4">Blood Bank</a>
                                 </li>
                                 <li class="address">
-                                    <a href="#">Cancer Hospital</a>
+                                    <a href="{{ url('/') }}/address/5">Cancer Hospital</a>
                                 </li>
                                 <li class="address">
-                                    <a href="#">Cardiac Hospitals</a>
+                                    <a href="{{ url('/') }}/address/6">Cardiac Hospitals</a>
                                 </li>
 
-                                <a href="https://mimsbangladesh.com/index.php/Address/getAllImportantAddress" class="see-more-btn no-outline">See All Adresses</a>
+                                <a href="{{ url('/') }}/address" class="see-more-btn no-outline">See All Adresses</a>
                             </ul>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                     
                     <div class="content-section col-12" style="padding: 0; height: auto; max-height: none;">
                         <div class="section-header own-pad" style="margin-bottom: 16px;">
-                            <span><img src="{{ url('/') }}/application/views/images/icons/briefcase.svg" alt="*"></span>Job Circular
+                            <span><img src="{{ url('/') }}/images/icons/briefcase.svg" alt="*"></span>Job Circular
                         </div>
                         <div class="section-tab sidebar-tab">
 
@@ -90,7 +90,7 @@
                     $.each(response.data, function(index, job) {
 
                         $('#medical_job_sidebar').append(`
-                            <a href="#">
+                            <a href="{{ url('/') }}/job_detail/${job.job_id}">
                                 <div class="media-list-left-image">
                                     <div class="media">
                                         <div class="media-left">
@@ -138,7 +138,7 @@
                     $.each(response.data, function(index, job) {
 
                         $('#pharma_job_sidebar').append(`
-                            <a href="#">
+                            <a href="{{ url('/') }}/job_detail/${job.job_id}">
                                 <div class="media-list-left-image">
                                     <div class="media">
                                         <div class="media-left">
@@ -178,7 +178,7 @@
                     <!-- special reports -->
                     <div class="content-section col-12" style="padding: 0; height: auto; max-height: none;">
                         <div class="section-header own-pad">
-                            <span><img src="{{ url('/') }}/application/views/images/icons/briefcase.svg" alt="*"></span>Special Reports
+                            <span><img src="{{ url('/') }}/images/icons/briefcase.svg" alt="*"></span>Special Reports
                         </div>
                         <div class="container sidebar-special-reports"></div>
                     </div>
@@ -205,7 +205,7 @@
                                 </div>
                                 <div class="col-9" style="padding-right: 0; padding-left: 7px">
                                     <p class="news-title side-col">
-                                        <a href="${specialReport.special_report_id}">${special_report_title}...</a>
+                                        <a href="{{ url('/') }}/special_report_detail/${specialReport.special_report_id}">${special_report_title}...</a>
                                     </p>
                                 </div>
                             </div> 
@@ -231,7 +231,7 @@
                     <!-- special reports -->
                     <div class="content-section col-12" style="padding: 0; height: auto; max-height: none;">
                         <div class="section-header own-pad">
-                            <span><img src="{{ url('/') }}/application/views/images/icons/newspaper.svg" alt="*"></span>Pharma News
+                            <span><img src="{{ url('/') }}/images/icons/newspaper.svg" alt="*"></span>Pharma News
                         </div>
                         <div class="container sidebar-news"></div>
                     </div>
@@ -257,7 +257,7 @@
                                 </div>
                                 <div class="col-9" style="padding-right: 0; padding-left: 7px">
                                     <p class="news-title side-col">
-                                        <a href="${news.news_id}">${news_title}...</a>
+                                        <a href="{{ url('/') }}/news_detail/${news.news_id}">${news_title}...</a>
                                     </p>
                                 </div>
                             </div> 
