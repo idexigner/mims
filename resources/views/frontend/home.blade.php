@@ -967,6 +967,7 @@
     $(document).ready(function() {
 
 
+        getAdvertisements('home');
         drugUpdate.getNewProduct();
         drugUpdate.getNewBrand();
         drugUpdate.getNewPresentation();

@@ -32,6 +32,7 @@ use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\MigrationLiveController;
 use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\Web\AddressController as WebAddressController;
+use App\Http\Controllers\Web\AdvertisementController as WebAdvertisementController;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\BrandController as WebBrandController;
 use App\Http\Controllers\Web\CityController as WebCityController;
@@ -212,7 +213,7 @@ Route::prefix('/admin')->middleware(['auth', 'web'])->group(function(){
     Route::prefix('/advertisement')->name('advertisement.')->group(function(){
         Route::get('/', [AdvertisementController::class, 'index'])->name('index');
         Route::post('/store', [AdvertisementController::class, 'store'])->name('store');
-        Route::put('/update', [AdvertisementController::class, 'update'])->name('update');
+        Route::post('/update', [AdvertisementController::class, 'update'])->name('update');
         Route::get('/edit/{id}', [AdvertisementController::class, 'edit'])->name('edit');
         Route::delete('/destroy/{id}', [AdvertisementController::class, 'destroy'])->name('destroy');
     });
@@ -465,6 +466,8 @@ Route::get('/videos', [WebVideoController::class, 'index'])->name('web_videos');
 Route::get('/get_videos', [WebVideoController::class, 'get_videos'])->name('web_get_videos');
 Route::get('/get_count', [HomeController::class, 'get_count'])->name('web_get_count');
 
+
+Route::get('/get_home_advertisement', [WebAdvertisementController::class, 'get_home_advertisement'])->name('get_home_advertisement');
 
 // Artisan Routes
 

@@ -74,6 +74,7 @@ class AdvertisementController extends Controller
             $obj->advertisement_publish = ($request->advertisement_publish)? date('Y-m-d', strtotime($request->advertisement_publish)): '';
             $obj->advertisement_unpublish = ($request->advertisement_unpublish)? date('Y-m-d', strtotime($request->advertisement_unpublish)): '';
             
+            
             // if ($request->hasFile('advertisement_image')) {
             //     $file = $request->file('advertisement_image');
             //     $advertisement_image = rand(1, 1000000) . '__' . $file->getClientOriginalName();
@@ -126,7 +127,7 @@ class AdvertisementController extends Controller
     {
        try{
 
-            $data = Advertisement::findOrFail($id);            
+            $data = Advertisement::with('brand', 'generic', 'indication')->findOrFail($id);            
             return response()->json([
                 'message' => 'Edit', 
                 'data' => $data
@@ -149,6 +150,7 @@ class AdvertisementController extends Controller
 
     public function update(Request $request)
     {
+        // dd($request->all());
         try{
             $validator = Validator::make($request->all(), [
                 'advertisement_organization' => 'required',
@@ -157,11 +159,11 @@ class AdvertisementController extends Controller
                 'advertisement_unpublish' => 'required',
                
             ]);
-
+          
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
-
+            
             $obj = Advertisement::findOrFail($request->id);
             $obj->advertisement_title = $request->advertisement_title ?? '';
             $obj->advertisement_organization = $request->advertisement_organization ?? '';

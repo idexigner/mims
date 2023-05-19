@@ -141,13 +141,21 @@
                             </div>
                            
                             <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Link</label>
+                                <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Link" name="advertisement_link" data-parsley-maxlength="500">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Published Date <span class="text-red">*</span></label>
                                 <div class="col-sm-9">
                                     <div class="input-group date" id="advertisement_publish" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" data-target="#advertisement_publish" name="advertisement_publish" required/>
-                                        <div class="input-group-append" data-target="#advertisement_publish" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
+                                        
+                                    </div>
+                                    <div class="input-group-append" data-target="#advertisement_publish" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -157,19 +165,20 @@
                                 <div class="col-sm-9">
                                     <div class="input-group date" id="advertisement_unpublish" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" data-target="#advertisement_unpublish" name="advertisement_unpublish" required/>
-                                        <div class="input-group-append" data-target="#advertisement_unpublish" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
+                                        
+                                    </div>
+                                    <div class="input-group-append" data-target="#advertisement_unpublish" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
                                 </div>
                             </div>
                             
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Is Featured </label>
+                                <label class="col-sm-3 col-form-label">All in </label>
                                 <div class="col-sm-9">
                                 <select class="form-control" name="advertisement_is_featured">
                                     <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="0" selected>No</option>
                                 </select>                        
                                 </div>
                             </div>
@@ -422,10 +431,19 @@
             // handle click event for "Add" button
             $('.add_new').on('click', function(){
 
+                $("select[name=advertisement_position]").val('').trigger('change')
+                $("select[name=advertisement_brand_id]").val('').trigger('change')
+                $("select[name=advertisement_indication_id]").val('').trigger('change')
+                $("select[name=advertisement_generic_id]").val('').trigger('change')
+                $("#generic").addClass("d-none");
+                $("#brand").addClass("d-none");
+                $("#indication").addClass("d-none");
+
+
                 $("#create_form_btn").show();
                 $("#update_form_btn").hide();
                 $("#modal_create_form .modal-title").text("Add New Advertisement Record");
-
+                $("#advertisement_image").attr('required', true)
 
                 $("#create-form")[0].reset();               
 
@@ -457,7 +475,7 @@
                 
                 if($('#create_form_btn').is(':hidden')){
                     url = $("#update_form_btn").data('url');
-                    type = "PUT";
+                    // type = "PUT";
                 }
                 
                 $.ajax({
@@ -510,7 +528,8 @@
 
             // handle click event for "Edit" button
             table.on('click', '.edit', function() {
-            
+
+            $("#advertisement_image").attr('required', false)
                 $("#modal_create_form .modal-title").text("Update Advertisement Form Record");
 
                 var id = $(this).data('id');
@@ -525,43 +544,63 @@
                         var data = response.data;  
                         console.log("data==>", data)
 
+                        $("#generic").addClass("d-none");
+                    $("#brand").addClass("d-none");
+                    $("#indication").addClass("d-none");
+
                         $("input[name=id]").val(data.advertisement_id);
                         $("input[name=advertisement_organization]").val(data.advertisement_organization);
                         $("select[name=advertisement_category]").val(data.advertisement_category);
                         
 
-                        var url = "{{ route('generic.edit', ':id') }}";
-                        url = url.replace(':id', data.advertisement_generic_id);
-                        $.ajax({
-                            url: url,
-                            dataType: 'json',
-                            success: function(d) {                                
-                                var option = new Option(d.data.generic_name, d.data.generic_id, true, true);
-                                $("select[name=advertisement_generic_id]").append(option).trigger('change');
-                            }
-                        });
 
-                        var url = "{{ route('brand.edit', ':id') }}";
-                        url = url.replace(':id', data.advertisement_brand_id);
-                        $.ajax({
-                            url: url,
-                            dataType: 'json',
-                            success: function(d) {                                
-                                var option = new Option(d.data.generic_name, d.data.generic_id, true, true);
-                                $("select[name=advertisement_brand_id]").append(option).trigger('change');
-                            }
-                        });
+                        
+                        // var url = "{{ route('generic.edit', ':id') }}";
+                        // url = url.replace(':id', data.advertisement_generic_id);
+                        // $.ajax({
+                        //     url: url,
+                        //     dataType: 'json',
+                        //     success: function(d) {                                
+                        //         var option = new Option(d.data.generic_name, d.data.generic_id, true, true);
+                        //         $("select[name=advertisement_generic_id]").append(option).trigger('change');
+                        //     }
+                        // });
 
-                        var url = "{{ route('indication.edit', ':id') }}";
-                        url = url.replace(':id', data.advertisement_indication_id);
-                        $.ajax({
-                            url: url,
-                            dataType: 'json',
-                            success: function(d) {                                
-                                var option = new Option(d.data.generic_name, d.data.generic_id, true, true);
-                                $("select[name=advertisement_indication_id]").append(option).trigger('change');
-                            }
-                        });
+                        if(data.advertisement_category == 'brand'){
+                            var option = new Option(data.brand.brand_name, data.brand.brand_id, true, true);
+                            $("select[name=advertisement_brand_id]").append(option).trigger('change');
+                            $("#brand").removeClass("d-none");
+                        }else if(data.advertisement_category == 'indication'){
+                            var option = new Option(data.indication.indication_name, data.indication.indication_id, true, true);
+                            $("select[name=advertisement_indication_id]").append(option).trigger('change');
+                            $("#indication").removeClass("d-none");
+                        }else if(data.advertisement_category == 'generic'){
+                            var option = new Option(data.generic.generic_name, data.generic.generic_id, true, true);
+                            $("select[name=advertisement_generic_id]").append(option).trigger('change');
+                            $("#generic").removeClass("d-none");
+                        }
+                        
+
+                        // var url = "{{ route('brand.edit', ':id') }}";
+                        // url = url.replace(':id', data.advertisement_brand_id);
+                        // $.ajax({
+                        //     url: url,
+                        //     dataType: 'json',
+                        //     success: function(d) {                                
+                                
+                        //     }
+                        // });
+
+                        // var url = "{{ route('indication.edit', ':id') }}";
+                        // url = url.replace(':id', data.advertisement_indication_id);
+                        // $.ajax({
+                        //     url: url,
+                        //     dataType: 'json',
+                        //     success: function(d) {                                
+                        //         var option = new Option(d.data.generic_name, d.data.generic_id, true, true);
+                        //         $("select[name=advertisement_indication_id]").append(option).trigger('change');
+                        //     }
+                        // });
 
 
                         
@@ -574,6 +613,7 @@
 
                         }
                         $("input[name=advertisement_title]").val(data.advertisement_title);
+                        $("input[name=advertisement_link]").val(data.advertisement_link);
                         $("input[name=advertisement_publish]").val(formatDate(data.advertisement_publish));
                         $("input[name=advertisement_unpublish]").val(formatDate(data.advertisement_unpublish));
 
