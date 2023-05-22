@@ -671,7 +671,7 @@
                             console.log(error);
                         console.groupEnd();   
 
-                        if(xhr.responseJSON.messags){
+                        if(xhr.responseJSON && xhr.responseJSON.message){
 
                             Toast.fire({
                                 icon: 'error',

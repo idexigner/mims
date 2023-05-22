@@ -127,7 +127,7 @@ class AdvertisementController extends Controller
     {
        try{
 
-            $data = Advertisement::with('brand', 'generic', 'indication')->findOrFail($id);            
+            $data = Advertisement::with('brand', 'generic', 'indication', 'manufacturer')->findOrFail($id);            
             return response()->json([
                 'message' => 'Edit', 
                 'data' => $data

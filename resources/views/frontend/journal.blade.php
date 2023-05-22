@@ -94,17 +94,13 @@
 <!-- change the img tag accordingly (e.g: <ins> tag) -->
 <div class="container">
     <div class="row" id="my_left_r">
-        <div class="col-md-6 col-12">
-            <div class="in-page-advert doctor-advert-top-left"></div>
-            <div class="in-page-advert doctor-advert-top-right"></div>
+        {{-- <div class="col-md-6 col-12">
+            <div class="in-page-advert journal-advert-top-left"></div>
         </div>
         <div class="col-md-6 col-12">
-            <img src="https://dev.mimsbangladesh.com/application/views/images/logo/Gv2.png" alt="" width="80%px" style="
-    padding: 30px;
-    background: white;
-    margin-top: 30px;
-">
-        </div>
+            <div class="in-page-advert journal-advert-top-right"></div>
+        </div> --}}
+       
     </div>
 </div>
 
@@ -144,23 +140,21 @@
 				}
 				?> --}}
 			</div>
-			<div class="in-page-advert journal-advert-bottom">
-				<img src="{{ url('/') }}/images/add-12.png" alt="">
+			<div class="in-page-advert advert-bottom">
 			</div>
 		</div>
         <div class="col-md-4 col-12">
             <div class="container" id="sidebar">
-                <div class="row side-bar-mimslearning-title">
+                {{-- <div class="row side-bar-mimslearning-title">
                     <!-- special reports -->
                     <div class="content-section col-12" style="padding: 0; height: auto; max-height: none;">
                         <a href="https://www.dental-practice.biz/emagazine/dpbangladesh1-1/"> <img src="{{ url('/') }}/images/dantal.jpeg" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="in-page-advert side-col doctor-sidebar-advert">
-                        <img src="{{ url('/') }}/images/add-4.png" alt="">
+                    <div class="in-page-advert side-col journal-sidebar-advert">
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>
@@ -269,7 +263,7 @@
 
         $('.select2').select2()
 
-
+        getAdvertisements('journal');
         journalMethods.getJournalList();
         // doctorMethods.getCity();
         // doctorMethods.getSpecialization();

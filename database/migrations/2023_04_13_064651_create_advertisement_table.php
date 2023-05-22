@@ -26,6 +26,9 @@ return new class extends Migration
             $table->integer('advertisement_generic_id')->nullable();
             $table->integer('advertisement_brand_id')->nullable();
             $table->integer('advertisement_indication_id')->nullable();
+            $table->integer('advertisement_manufacturer_id')->nullable();
+
+            
             $table->integer('advertisement_position')->nullable();
 
             $table->tinyInteger('advertisement_is_featured')->nullable()->default(0);

@@ -8,7 +8,7 @@ use App\Models\AdvertisementPosition;
 use Illuminate\Http\Request;
 use App\Traits\LogExceptions;
 use Yajra\DataTables\DataTables;
-
+use Carbon\Carbon;
 
 
 class AdvertisementController extends Controller
@@ -25,17 +25,12 @@ class AdvertisementController extends Controller
     public function get_home_advertisement(Request $request){
         try{
 
-            // $data = Advertisement::with('advertisement_position')
-            //     where('')
+            $data['home_product_slider'] = $this->get_advertisement_slider("Home Page Product Slider Advertisement", 10);
+            $data['home_advert_container_top'] = $this->get_advertisement_slider("Home Page Container Top Advertisement", 1);
+            $data['home_page_middle_side'] = $this->get_advertisement_slider("Home Page middle Side", 3);
+            $data['home_advert_container_mid'] = $this->get_advertisement_slider("Home Page Container Mid Advertisement", 1);
 
-            // $data = Advertisement::with('specializations')
-            // // select('address_id', 'address_name', 'address_specialization', 'address_image')
-            //     ->where('address_is_active', 1)
-            //     ->where('address_is_featured',1)
-            //     ->limit(3)
-            //     ->orderBy('address_id', 'DESC')
-            //     ->get();      
-            $data = 'asd';
+            // $data = "asd";
             return response()->json([
                 'message' => 'Get Advertisement', 
                 'data' => $data
@@ -51,60 +46,38 @@ class AdvertisementController extends Controller
                 ], 400);
         }
     }
-
-    public function get_address(Request $request ){
+    public function get_page_advertisement(Request $request){
         try{
-            
 
-            if ($request->ajax()) {
-            
-                // $data = Brand::with('dosage_form', 'strength', 'pack_size')
-                //     ->where($condition, 1)
-                //     ->where('brand_is_active',1)
-                //     ->orderBy('brand_id', 'DESC');
+            // $advertisements = $this->get_advertisements_page([
+            //     "Doctor Page Sidebar Advertisement",
+            //     "Doctor Page Top Left Advertisement",
+            //     "Doctor Page Top Right Advertisement",
+            //     "Doctor Page Bottom Advertisement"
+            // ]);
+            // // dd("asd");
 
-                    $data = Advertisement::where('address_is_active', 1);
-                    if ($request->has('address_category_id') && $request->address_category_id != '') {           
-                        $data = $data->where('address_category', $request->address_category_id);
-                    }
-                    if ($request->has('city_id') && $request->city_id != '') {           
-                        $data = $data->where('address_detail', 'like','%'.$request->city_id.'%');
-                    }
+            // $data['doctor_sidebar_advert'] = $advertisements["Doctor Page Sidebar Advertisement"] ?? null;
+            // $data['doctor_advert_top_left'] = $advertisements["Doctor Page Top Left Advertisement"] ?? null;
+            // $data['doctor_advert_top_right'] = $advertisements["Doctor Page Top Right Advertisement"] ?? null;
+            // $data['doctor_advert_bottom'] = $advertisements["Doctor Page Bottom Advertisement"] ?? null;
 
 
-                    // dd($data);
-    
-                
-                return DataTables::of($data)->make(true);
-            }
-            
-        
-            // if ($request->has('specialization_id')) {
-           
-            //     $data = $data->where('specialization_address_mapping.specialization_mapping_specialization_id', $request->specialization_id);
-            // }
-                        
-            // if ($request->has('country_id')) {
-            //     $data = $data->where('address_country_id', $request->country_id);
-            // }
-                        
-            // if ($request->has('city_id')) {
-            //     $data = $data->where('address_city_id', $request->city_id);
-            // }
+            $data['sidebar_advert'] = $this->get_advertisement_slider($request->position[0], 1);
+            $data['advert_top_left'] = $this->get_advertisement_slider($request->position[1], 1);
+            $data['advert_top_right'] = $this->get_advertisement_slider($request->position[2], 1);
+            $data['advert_bottom'] = $this->get_advertisement_slider($request->position[3], 1);
 
-            // if($request->has('gender_id')){
-            //     $data = $data->where('address_gender', $request->gender_id);
-            // }
 
-            // $data = $data->paginate(10)->appends(request()->query());
-
-            
-            // return response()->json([
-            //     'message' => 'Get All Advertisements', 
-            //     'data' => $data,
-            //     // 'current_page' => $data->currentPage(),
-            //     // 'last_page' => $data->lastPage()
-            // ], 200);
+            $data['sidebar_advert'] = $data['sidebar_advert'][0] ?? null;
+            $data['advert_top_left'] = $data['advert_top_left'][0] ?? null;
+            $data['advert_top_right'] = $data['advert_top_right'][0] ?? null;
+            $data['advert_bottom'] = $data['advert_bottom'][0] ?? null;
+            // $data = "asd";
+            return response()->json([
+                'message' => 'Get Advertisement', 
+                'data' => $data
+            ], 200);
 
         } catch (\Exception $ex) {
 
@@ -116,17 +89,27 @@ class AdvertisementController extends Controller
                 ], 400);
         }
     }
+    
+    public function get_page_id_advertisement(Request $request){
+        try{
 
-   
-    public function get_address_category(){
-        try{            
-            $data = AdvertisementPosition::where('address_category_is_active', 1)->get();
-          
+       
+            $data['sidebar_advert'] = $this->get_advertisement_slider_id($request->position[0], 1, $request->id, $request->condition);
+            $data['advert_top_left'] = $this->get_advertisement_slider_id($request->position[1], 1, $request->id, $request->condition);
+            $data['advert_top_right'] = $this->get_advertisement_slider_id($request->position[2], 1, $request->id, $request->condition);
+            $data['advert_bottom'] = $this->get_advertisement_slider_id($request->position[3], 1, $request->id, $request->condition);
+
+
+            $data['sidebar_advert'] = $data['sidebar_advert'][0] ?? null;
+            $data['advert_top_left'] = $data['advert_top_left'][0] ?? null;
+            $data['advert_top_right'] = $data['advert_top_right'][0] ?? null;
+            $data['advert_bottom'] = $data['advert_bottom'][0] ?? null;
+            // $data = "asd";
             return response()->json([
-                'message' => 'Get Advertisement Category', 
+                'message' => 'Get Advertisement', 
                 'data' => $data
             ], 200);
-            
+
         } catch (\Exception $ex) {
 
             $this->logException($ex, \Route::currentRouteName(), __METHOD__);
@@ -136,6 +119,121 @@ class AdvertisementController extends Controller
                     'message' => $ex->getMessage()
                 ], 400);
         }
+    }
+    // public function get_herbal_advertisement(Request $request){
+    //     try{
+
+    //         $data['herbal_sidebar_advert'] = $this->get_advertisement_slider("Herbal Related Page Sidebar Advertisement", 1);
+    //         $data['herbal_advert_top_left'] = $this->get_advertisement_slider("Herbal Related Page Top Left Advertisement", 1);
+    //         $data['herbal_advert_top_right'] = $this->get_advertisement_slider("Herbal Related Page Top Right Advertisement", 1);
+    //         $data['herbal_advert_bottom'] = $this->get_advertisement_slider("Herbal Related Page Bottom Advertisement", 1);
+
+    //         // $data = "asd";
+    //         return response()->json([
+    //             'message' => 'Get Advertisement', 
+    //             'data' => $data
+    //         ], 200);
+
+    //     } catch (\Exception $ex) {
+
+    //         $this->logException($ex, \Route::currentRouteName(), __METHOD__);
+    //         return response()->json([
+    //                 'message' => 'Something went wrong!',
+    //                 'error' => $ex,
+    //                 'message' => $ex->getMessage()
+    //             ], 400);
+    //     }
+    // }
+    // public function get_journal_advertisement(Request $request){
+    //     try{
+
+    //         $data['journal_sidebar_advert'] = $this->get_advertisement_slider("Journal Page Sidebar Advertisement", 1);
+    //         $data['journal_advert_top_left'] = $this->get_advertisement_slider("Journal Page Top Left Advertisement", 1);
+    //         $data['journal_advert_top_right'] = $this->get_advertisement_slider("Journal Page Top Right Advertisement", 1);
+    //         $data['journal_advert_bottom'] = $this->get_advertisement_slider("Journal Page Bottom Advertisement", 1);
+
+    //         // $data = "asd";
+    //         return response()->json([
+    //             'message' => 'Get Advertisement', 
+    //             'data' => $data
+    //         ], 200);
+
+    //     } catch (\Exception $ex) {
+
+    //         $this->logException($ex, \Route::currentRouteName(), __METHOD__);
+    //         return response()->json([
+    //                 'message' => 'Something went wrong!',
+    //                 'error' => $ex,
+    //                 'message' => $ex->getMessage()
+    //             ], 400);
+    //     }
+    // }
+
+    
+
+    public function get_advertisement_slider($position, $limit) 
+    {
+        $today = Carbon::today()->toDateString();
+        return Advertisement::with('advertisement_position')
+                ->whereHas('advertisement_position', function ($query) use ($position) {
+                    $query->where('advertisement_position_name', $position);
+                })
+                ->where('advertisement_is_active',1)
+                ->whereDate('advertisement_publish', '<=', $today)
+                ->whereDate('advertisement_unpublish', '>=', $today)
+                ->limit($limit ?? 1)
+                ->orderBy('advertisement_id', 'desc')
+                ->get();
+    }
+    public function get_advertisement_slider_id($position, $limit, $id, $condition) 
+    {
+        $today = Carbon::today()->toDateString();
+        $result= Advertisement::with('advertisement_position')
+                ->whereHas('advertisement_position', function ($query) use ($position) {
+                    $query->where('advertisement_position_name', $position);
+                })
+                ->where('advertisement_is_active',1)
+                ->where(function ($query) use ($id, $condition) {
+                    $query->where($condition, $id)
+                        ->orWhere(function ($query) use ($condition) {
+                            $query->whereNull($condition)
+                                ->where('advertisement_is_featured', 1);
+                        });
+                })
+                ->whereDate('advertisement_publish', '<=', $today)
+                ->whereDate('advertisement_unpublish', '>=', $today)
+                ->limit($limit ?? 1)
+                ->orderBy('advertisement_id', 'desc')
+                ->get();
+
+        return $result;
+    }
+
+    
+
+    public function get_advertisements_page($positions) 
+    {
+        $today = Carbon::today()->toDateString();
+        $advertisementIds = AdvertisementPosition::whereIn('advertisement_position_name', $positions)
+            ->pluck('advertisement_position_id');
+    
+        $advertisements = Advertisement::with('advertisement_position')
+            ->whereIn('advertisement_position', $advertisementIds)
+            ->where('advertisement_is_active', 1)
+            ->whereDate('advertisement_publish', '<=', $today)
+            ->whereDate('advertisement_unpublish', '>=', $today)
+            ->latest('advertisement_id')
+            ->get();
+            // dd($advertisements);
+        $result = [];
+        foreach ($positions as $position) {
+            $result[$position] = $advertisements
+                ->where('advertisement_position.advertisement_position_name', $position)
+                ->first() ?? null;
+        }
+        dd($result);
+        return $result;
+
     }
 
 }

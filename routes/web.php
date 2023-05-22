@@ -108,9 +108,9 @@ Route::group(['middleware'=>'auth'],function(){
     // Route::post('/admin/generic/store', [GenericController::class, 'store'])->name('generic.store');
     // Route::put('/admin/generic/update', [GenericController::class, 'update'])->name('generic.update');
     // Route::get('/admin/generic/edit/{id}', [GenericController::class, 'edit'])->name('generic.edit');
-    // Route::delete('/admin/generic/destroy/{id}', [GenericController::class, 'destroy'])->name('generic.destroy');
+    // Route::delete('/admin/generic/destroy/{id}', [GenericController::class, 'destroy'])->name('generic.destroy');->middleware(['auth', 'web'])
 
-Route::prefix('/admin')->middleware(['auth', 'web'])->group(function(){
+Route::prefix('/admin')->group(function(){
 
     
     Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
@@ -468,6 +468,12 @@ Route::get('/get_count', [HomeController::class, 'get_count'])->name('web_get_co
 
 
 Route::get('/get_home_advertisement', [WebAdvertisementController::class, 'get_home_advertisement'])->name('get_home_advertisement');
+Route::get('/get_page_advertisement', [WebAdvertisementController::class, 'get_page_advertisement'])->name('get_page_advertisement');
+Route::get('/get_page_id_advertisement', [WebAdvertisementController::class, 'get_page_id_advertisement'])->name('get_page_id_advertisement');
+
+
+Route::get('/get_herbal_advertisement', [WebAdvertisementController::class, 'get_herbal_advertisement'])->name('get_herbal_advertisement');
+Route::get('/get_journal_advertisement', [WebAdvertisementController::class, 'get_journal_advertisement'])->name('get_journal_advertisement');
 
 // Artisan Routes
 

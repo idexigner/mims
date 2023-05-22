@@ -539,14 +539,14 @@
 @include('frontend.component.search')
 
 
-<!-- home product slider -->
+<!-- home product slider class="slider" -->
 <div class="home-product-slider-container container">
     <div class="home-product-slider-wrapper">
         <div id="home-product-slider"></div>
     </div>
 </div>
 <!-- home advert -->
-<div class="container advert-container home-advert-container1 home-advert-container-top"></div>
+<div class="container advert-container home-advert-container1 home-advert-container-top mt-4 pr-0"></div>
 <!-- content -->
 <div class="container">
     <div class="row" id="jhaiyam_more">
@@ -630,15 +630,8 @@
 
     </div>
     <!-- drug update -->
-    <div class="row">
+    <div class="row home_page_middle_side">
 
-        <div class="col-md-4 col-12">
-            <div class="content-section">
-                <div class="important-information-col">
-                    <img src="#" alt="">
-                </div>
-            </div>
-        </div>
 
 
 

@@ -93,7 +93,7 @@
 <!-- change the img tag accordingly (e.g: <ins> tag) -->
 <div class="container">
     <div class="row" id="my_left_r">
-        <div class="col-md-6 col-12">
+        {{-- <div class="col-md-6 col-12">
             <div class="in-page-advert doctor-advert-top-left"></div>
             <div class="in-page-advert doctor-advert-top-right"></div>
         </div>
@@ -102,7 +102,7 @@
     padding: 30px;
     background: white;
     margin-top: 30px;">
-        </div>
+        </div> --}}
     </div>
 </div>
 
@@ -183,11 +183,11 @@
             <nav class="mims-pagination" style="margin-top: 36px;">
                 <ul class="pagination" id="search-generic-pagination" style="display: none;"><li class="page-item active"><a class="page-link" href="#">1</a></li></ul>
             </nav>
-            <div class="in-page-advert herbal-advert-bottom"></div>
+            <div class="in-page-advert advert-bottom"></div>
         </div>
         <div class="col-md-4 col-12">
             <div class="container" id="sidebar">
-                <div class="row side-bar-mimslearning-title">
+                {{-- <div class="row side-bar-mimslearning-title">
                     <!-- special reports -->
                     <div class="content-section col-12" style="padding: 0; height: auto; max-height: none;">
                         <a href="https://www.dental-practice.biz/emagazine/dpbangladesh1-1/"> <img src="{{ url('/') }}/application/views/images/dantal.jpeg" alt=""></a>
@@ -197,7 +197,7 @@
                     <div class="in-page-advert side-col doctor-sidebar-advert">
                         <img src="{{ url('/') }}/application/views/images/add-4.png" alt="">
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>
@@ -252,7 +252,7 @@
 
         $('.select2').select2()
 
-
+        getAdvertisements('generic', {{$id}});
         genericMethod.getDetail({{$id}});
         sidebar.getSidebar();
       

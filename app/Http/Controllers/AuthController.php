@@ -47,16 +47,16 @@ class AuthController extends Controller
 
     public function register(Request $request){
         // validate 
-        $request->validate([
-            'name'=>'required',
-            'email' => 'required|unique:users|email',
-            'password'=>'required|confirmed'
-        ]);
+        // $request->validate([
+        //     'name'=>'required',
+        //     'email' => 'required|unique:users|email',
+        //     'password'=>'required|confirmed'
+        // ]);
 
         // save in users table 
         
         User::create([
-            'name'=>$request->name,
+            'username'=>$request->name,
             'email'=>$request->email,
             'password'=> \Hash::make($request->password)
         ]);
@@ -80,15 +80,18 @@ class AuthController extends Controller
 
     public function dashboard(){
 
+        
         $brand = Brand::where('brand_is_active', 1)->count();   
         $generic = Generic::where('generic_is_active', 1)->count();   
         $herbal = Brand::where('brand_is_active', 1)->where('brand_type','Herbal')->count();  
         $pharma = News::where('news_is_active', 1)->count();  
         $doctor = Doctor::where('doctor_is_active', 1)->count();   
 
-
+      
         $data = compact('brand', 'generic', 'herbal', 'pharma', 'doctor');
+  
         return view('admin.pages.dashboard')->with($data);
+        
     }
 
      public function logout(){

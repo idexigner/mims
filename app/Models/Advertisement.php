@@ -50,6 +50,10 @@ class Advertisement extends Model
     {
         return $this->belongsTo(Indication::class, 'advertisement_indication_id');
     }
+    public function manufacturer()
+    {
+        return $this->belongsTo(Manufacturer::class, 'advertisement_manufacturer_id');
+    }
 
     public function advertisement_position()
     {

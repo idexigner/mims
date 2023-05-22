@@ -83,6 +83,7 @@
                                     <option value="generic">Generic</option>
                                     <option value="brand">Brand</option>
                                     <option value="indication">Indication</option>
+                                    <option value="manufacturer">Manufacturer</option>
                                 </select>                        
                                 </div>
                             </div>
@@ -108,6 +109,15 @@
                                 <label class="col-sm-3 col-form-label">Indication</label>
                                 <div class="col-sm-9">
                                 <select class="form-control select2" style="width:100%" name="advertisement_indication_id">
+                                    <option value="">Select Item</option>
+   
+                                </select>                        
+                                </div>
+                            </div>
+                            <div class="form-group row d-none" id="manufacturer">
+                                <label class="col-sm-3 col-form-label">Manufacturer</label>
+                                <div class="col-sm-9">
+                                <select class="form-control select2" style="width:100%" name="advertisement_manufacturer_id">
                                     <option value="">Select Item</option>
    
                                 </select>                        
@@ -313,7 +323,7 @@
                             console.log(error);
                         console.groupEnd();   
 
-                        if(xhr.responseJSON.messags){
+                        if(xhr.responseJSON && xhr.responseJSON.message){
 
                             Toast.fire({
                                 icon: 'error',
@@ -371,6 +381,22 @@
                 }
             };
             initSelect2Dropdown($('select[name=advertisement_indication_id]'), indicationUrl, indicationFormat);
+
+
+            //Initializing manufacturer dropdown
+            var manufacturerUrl = "{{ route('manufacturer.list') }}";
+            var manufacturerFormat = {
+                id: function(item) {
+                    return item.manufacturer_id;
+                },
+                text: function(item) {
+                    return item.manufacturer_name;
+                }
+            };
+            initSelect2Dropdown($('select[name=advertisement_manufacturer_id]'), manufacturerUrl, manufacturerFormat);
+
+
+
 
 
 
@@ -434,10 +460,12 @@
                 $("select[name=advertisement_position]").val('').trigger('change')
                 $("select[name=advertisement_brand_id]").val('').trigger('change')
                 $("select[name=advertisement_indication_id]").val('').trigger('change')
+                $("select[name=advertisement_manufacturer_id]").val('').trigger('change')
                 $("select[name=advertisement_generic_id]").val('').trigger('change')
                 $("#generic").addClass("d-none");
                 $("#brand").addClass("d-none");
                 $("#indication").addClass("d-none");
+                $("#manufacturer").addClass("d-none");
 
 
                 $("#create_form_btn").show();
@@ -458,14 +486,23 @@
                 if(v == "generic"){
                     $("select[name=advertisement_brand_id]").val(null).trigger('change');
                     $("select[name=advertisement_indication_id]").val(null).trigger('change');
+                    $("select[name=advertisement_manufacturer_id]").val(null).trigger('change');
 
                 } else if (v == "brand"){
                     $("select[name=advertisement_generic_id]").val(null).trigger('change');
                     $("select[name=advertisement_indication_id]").val(null).trigger('change');
+                    $("select[name=advertisement_manufacturer_id]").val(null).trigger('change');
 
                 } else if (v == "indication"){
                     $("select[name=advertisement_generic_id]").val(null).trigger('change');
                     $("select[name=advertisement_brand_id]").val(null).trigger('change');
+                    $("select[name=advertisement_manufacturer_id]").val(null).trigger('change');
+
+                } 
+                else if (v == "manufacturer"){
+                    $("select[name=advertisement_generic_id]").val(null).trigger('change');
+                    $("select[name=advertisement_brand_id]").val(null).trigger('change');
+                    $("select[name=advertisement_indication_id]").val(null).trigger('change');
 
                 } 
 
@@ -506,7 +543,7 @@
                             console.log(error);
                         console.groupEnd();   
 
-                        if(xhr.responseJSON.messags){
+                        if(xhr.responseJSON && xhr.responseJSON.message){
 
                             Toast.fire({
                                 icon: 'error',
@@ -529,7 +566,7 @@
             // handle click event for "Edit" button
             table.on('click', '.edit', function() {
 
-            $("#advertisement_image").attr('required', false)
+                $("#advertisement_image").attr('required', false)
                 $("#modal_create_form .modal-title").text("Update Advertisement Form Record");
 
                 var id = $(this).data('id');
@@ -545,8 +582,9 @@
                         console.log("data==>", data)
 
                         $("#generic").addClass("d-none");
-                    $("#brand").addClass("d-none");
-                    $("#indication").addClass("d-none");
+                        $("#brand").addClass("d-none");
+                        $("#indication").addClass("d-none");
+                        $("#manufacturer").addClass("d-none");
 
                         $("input[name=id]").val(data.advertisement_id);
                         $("input[name=advertisement_organization]").val(data.advertisement_organization);
@@ -578,6 +616,10 @@
                             var option = new Option(data.generic.generic_name, data.generic.generic_id, true, true);
                             $("select[name=advertisement_generic_id]").append(option).trigger('change');
                             $("#generic").removeClass("d-none");
+                        }else if(data.advertisement_category == 'manufacturer'){
+                            var option = new Option(data.manufacturer.manufacturer_name, data.manufacturer.manufacturer_id, true, true);
+                            $("select[name=advertisement_manufacturer_id]").append(option).trigger('change');
+                            $("#manufacturer").removeClass("d-none");
                         }
                         
 
@@ -634,7 +676,7 @@
                             console.log(error);
                         console.groupEnd();   
 
-                        if(xhr.responseJSON.messags){
+                        if(xhr.responseJSON && xhr.responseJSON.message){
 
                             Toast.fire({
                                 icon: 'error',
